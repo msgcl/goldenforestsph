@@ -1,7 +1,7 @@
 import { AnimatedPage } from "@/components/layout/AnimatedPage";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
-import { Fingerprint, FileSpreadsheet, MapPin, PlaneTakeoff, ShieldCheck } from "lucide-react";
+import { Fingerprint, FileSpreadsheet, MapPin, PlaneTakeoff, ShieldCheck, Calendar } from "lucide-react";
 
 export default function ClientServices() {
   return (

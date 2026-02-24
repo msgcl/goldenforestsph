@@ -1,7 +1,7 @@
 import { AnimatedPage } from "@/components/layout/AnimatedPage";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
-import { Building2, Globe2, Network, Target } from "lucide-react";
+import { Building2, Globe2, Network, Target, ArrowRight } from "lucide-react";
 
 export default function About() {
   return (
