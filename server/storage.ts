@@ -1,38 +1,54 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { db } from "./db";
+import {
+  teamMembers,
+  operationalUpdates,
+  nurseryStats,
+  type TeamMemberResponse,
+  type OperationalUpdateResponse,
+  type NurseryStatsResponse,
+  type InsertTeamMember,
+  type InsertOperationalUpdate,
+  type InsertNurseryStats,
+} from "@shared/schema";
+import { desc } from "drizzle-orm";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  getTeamMembers(): Promise<TeamMemberResponse[]>;
+  getOperationalUpdates(): Promise<OperationalUpdateResponse[]>;
+  getLatestNurseryStats(): Promise<NurseryStatsResponse | undefined>;
+  createTeamMember(member: InsertTeamMember): Promise<TeamMemberResponse>;
+  createOperationalUpdate(update: InsertOperationalUpdate): Promise<OperationalUpdateResponse>;
+  createNurseryStats(stats: InsertNurseryStats): Promise<NurseryStatsResponse>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async getTeamMembers(): Promise<TeamMemberResponse[]> {
+    return await db.select().from(teamMembers).orderBy(teamMembers.orderIndex);
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async getOperationalUpdates(): Promise<OperationalUpdateResponse[]> {
+    return await db.select().from(operationalUpdates).orderBy(desc(operationalUpdates.date)).limit(10);
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async getLatestNurseryStats(): Promise<NurseryStatsResponse | undefined> {
+    const results = await db.select().from(nurseryStats).orderBy(desc(nurseryStats.lastUpdated)).limit(1);
+    return results[0];
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async createTeamMember(member: InsertTeamMember): Promise<TeamMemberResponse> {
+    const [created] = await db.insert(teamMembers).values(member).returning();
+    return created;
+  }
+
+  async createOperationalUpdate(update: InsertOperationalUpdate): Promise<OperationalUpdateResponse> {
+    const [created] = await db.insert(operationalUpdates).values(update).returning();
+    return created;
+  }
+
+  async createNurseryStats(stats: InsertNurseryStats): Promise<NurseryStatsResponse> {
+    const [created] = await db.insert(nurseryStats).values(stats).returning();
+    return created;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
