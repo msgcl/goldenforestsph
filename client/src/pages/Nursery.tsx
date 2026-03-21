@@ -1,40 +1,218 @@
 import { AnimatedPage } from "@/components/layout/AnimatedPage";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sprout, Droplets, Bug, Microscope, ThermometerSun } from "lucide-react";
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
-
-const growthData = [
-  { month: "Jan", height: 12, target: 15 },
-  { month: "Feb", height: 18, target: 20 },
-  { month: "Mar", height: 25, target: 26 },
-  { month: "Apr", height: 32, target: 32 },
-  { month: "May", height: 42, target: 40 },
-  { month: "Jun", height: 55, target: 50 },
-];
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
+import { Sprout, Droplets, Bug, Microscope, ThermometerSun, TrendingUp } from "lucide-react";
+import { useNurseryStats } from "@/hooks/use-nursery-stats";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "wouter";
+import { useEffect, useRef, useState } from "react";
+import { useGalleryMedia } from "@/hooks/use-gallery-media";
+import { defaultInventoryValues, saleInventory } from "@/lib/publicInventory";
+import { useSiteCopy } from "@/hooks/use-site-copy";
+import { defaultSiteCopy } from "@shared/siteCopy";
 
 export default function Nursery() {
+  const { data: stats, isLoading } = useNurseryStats();
+  const { data: mediaItems = [] } = useGalleryMedia();
+  const { data: siteCopy } = useSiteCopy();
+  const copy = siteCopy?.nursery ?? defaultSiteCopy.nursery;
+  const galleryRef = useRef<HTMLDivElement | null>(null);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const nurseryGalleryImages = mediaItems
+    .filter((item) => item.category === "nursery")
+    .map((item) => ({
+      src: item.mediaUrl,
+      label: item.title,
+      date: item.date ? `Captured ${new Date(item.date).toLocaleDateString()}` : "",
+      mediaType: item.mediaType,
+    }));
+  const showCarouselControls = nurseryGalleryImages.length > 3;
+  const inventoryDateLabel = new Date(stats?.inventoryDate ?? defaultInventoryValues.inventoryDate).toLocaleDateString(
+    "en-US",
+    { month: "long", day: "numeric", year: "numeric" }
+  );
+
+  useEffect(() => {
+    const root = galleryRef.current;
+    if (!root) return;
+
+    const videos = Array.from(
+      root.querySelectorAll("video[data-autoplay='true']")
+    ) as HTMLVideoElement[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+            void video.play().catch(() => undefined);
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: [0.6] }
+    );
+
+    videos.forEach((video) => observer.observe(video));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!carouselApi || nurseryGalleryImages.length <= 1) return;
+
+    const interval = window.setInterval(() => {
+      carouselApi.scrollNext();
+    }, 3500);
+
+    return () => window.clearInterval(interval);
+  }, [carouselApi, nurseryGalleryImages.length]);
+
   return (
     <AnimatedPage>
       <PageHeader 
-        badge="Propagation Site"
-        title="Nursery Operations" 
-        description="Our state-of-the-art nursery facility establishes the critical foundation for the plantation, ensuring only premium, disease-resistant saplings graduate to the out-planting phase."
+        badge={copy.header.badge}
+        title={copy.header.title} 
+        description={copy.header.description}
       />
+
+      <div className="mb-10 space-y-5">
+        <section className="overflow-hidden rounded-[2rem] border border-[#2B5949] bg-[radial-gradient(circle_at_top_left,rgba(200,160,112,0.12),transparent_26%),linear-gradient(135deg,#17392E_0%,#0F2E28_100%)] shadow-[0_22px_48px_rgba(0,0,0,0.2)]">
+          <div className="border-b border-white/8 px-5 py-5 sm:px-7">
+            <p className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-[#C8A070]">{copy.overviewEyebrow}</p>
+            <h2 className="font-outfit mt-2 text-[1.8rem] font-semibold leading-tight text-[#FBFCF7] sm:text-[2.2rem]">
+              {copy.overviewTitle}
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#D9E4DB]">
+              {copy.overviewDescription}
+            </p>
+          </div>
+
+          <div className="grid gap-4 p-4 sm:p-6 lg:grid-cols-2">
+            <article className="rounded-[1.55rem] border border-[#325F50] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-5 shadow-inner">
+              <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-[#C8A070]">
+                {copy.stockLabels[0] ?? ""}
+              </p>
+              <p className="font-outfit mt-4 text-5xl font-semibold leading-none text-[#FBFCF7] sm:text-6xl">
+                {(stats?.agarwoodSeedlings ?? defaultInventoryValues.agarwoodSeedlings).toLocaleString()}
+              </p>
+              <div className="mt-4 h-px w-16 bg-[#C8A070]/45" />
+              <p className="mt-4 text-sm leading-relaxed text-[#D9E4DB]">
+                {copy.stockDescriptions[0] ?? ""}
+              </p>
+            </article>
+
+            <article className="rounded-[1.55rem] border border-[#325F50] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-5 shadow-inner">
+              <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-[#C8A070]">
+                {copy.stockLabels[1] ?? ""}
+              </p>
+              <p className="font-outfit mt-4 text-5xl font-semibold leading-none text-[#FBFCF7] sm:text-6xl">
+                {(stats?.mangoSeedlings ?? defaultInventoryValues.mangoSeedlings).toLocaleString()}
+              </p>
+              <div className="mt-4 h-px w-16 bg-[#C8A070]/45" />
+              <p className="mt-4 text-sm leading-relaxed text-[#D9E4DB]">
+                {copy.stockDescriptions[1] ?? ""}
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section className="overflow-hidden rounded-[1.9rem] border border-[#2B5949] bg-[linear-gradient(135deg,#20483C_0%,#17392E_100%)] shadow-[0_18px_42px_rgba(0,0,0,0.18)]">
+          <div className="border-b border-white/8 px-6 py-4 sm:px-7">
+            <p className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-[#C8A070]">
+              {copy.saleHeaderPrefix} {inventoryDateLabel}
+            </p>
+          </div>
+
+          <div className="grid gap-4 p-4 sm:p-6 md:grid-cols-3">
+            {saleInventory.map((item) => (
+              <article
+                key={item.label}
+                className="rounded-[1.35rem] border border-[#315E4F] bg-[rgba(8,33,28,0.22)] p-4"
+              >
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-[#C8A070]">
+                  {item.note}
+                </p>
+                <p className="font-outfit mt-3 text-4xl font-semibold leading-none text-[#FBFCF7] sm:text-5xl">
+                  {Number(stats?.[item.field] ?? defaultInventoryValues[item.field]).toLocaleString()}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-[#D9E4DB]">{item.label}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      {/* Seedling Photo Gallery */}
+      <div className="mb-16 py-8">
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="mb-2 text-2xl sm:text-3xl font-bold font-outfit">{copy.galleryTitle}</h2>
+          </div>
+          <Link href="/photo-gallery" className="text-sm font-medium text-primary hover:underline">
+            {copy.galleryLinkLabel}
+          </Link>
+        </div>
+
+        <div ref={galleryRef} className="mx-auto max-w-6xl">
+          <Carousel
+            setApi={setCarouselApi}
+            opts={{ align: "start", loop: true }}
+            className="w-full px-8 sm:px-10 lg:px-12"
+          >
+          <CarouselContent>
+            {nurseryGalleryImages.map((item, index) => (
+              <CarouselItem key={`${item.src}-${index}`} className="basis-[88%] sm:basis-1/2 lg:basis-1/3">
+                <div className="rounded-2xl overflow-hidden border border-border/50 shadow-lg hover-elevate">
+                  <div className="aspect-[4/3] bg-muted relative">
+                    {item.mediaType === "video" ? (
+                      <video
+                        src={item.src}
+                        preload="metadata"
+                        muted
+                        loop
+                        playsInline
+                        data-autoplay="true"
+                        className="w-full h-full object-cover"
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <img
+                        src={item.src}
+                        alt={item.label}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <div className="p-3 bg-card">
+                    <p className="text-sm font-medium text-foreground">{item.label}</p>
+                    {item.date ? <p className="text-xs text-muted-foreground">{item.date}</p> : null}
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          {showCarouselControls ? <CarouselPrevious className="left-2" /> : null}
+          {showCarouselControls ? <CarouselNext className="right-2" /> : null}
+          </Carousel>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold font-outfit text-foreground mb-4">Stock Propagation</h3>
+          <h3 className="text-2xl font-bold font-outfit text-foreground mb-4">{copy.propagationTitle}</h3>
           
           <Card className="hover-elevate shadow-sm overflow-hidden border-border/60">
             <div className="flex flex-col sm:flex-row">
               <div className="bg-primary/5 p-6 flex flex-col items-center justify-center sm:w-1/3 border-b sm:border-b-0 sm:border-r border-border/50">
                 <Sprout className="w-12 h-12 text-primary mb-3" />
-                <span className="font-bold text-xl font-outfit text-center">Aquilaria<br/>crassna</span>
+                <span className="font-bold text-xl font-outfit text-center text-primary">Aquilaria<br/>crassna</span>
               </div>
               <div className="p-6 sm:w-2/3">
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  We utilize DNA-accredited stock exclusively. Rigorous sorting protocols mean that weaker saplings are culled early. A 15% surplus buffer is maintained specifically to immediately replace any mortalities post-planting.
+                  {copy.propagationDescriptions[0] ?? ""}
                 </p>
               </div>
             </div>
@@ -43,12 +221,14 @@ export default function Nursery() {
           <Card className="hover-elevate shadow-sm overflow-hidden border-border/60">
             <div className="flex flex-col sm:flex-row">
               <div className="bg-accent/5 p-6 flex flex-col items-center justify-center sm:w-1/3 border-b sm:border-b-0 sm:border-r border-border/50">
-                <img src="/favicon.png" alt="Mango icon placeholder" className="w-10 h-10 opacity-20 mb-3 grayscale" />
-                <span className="font-bold text-xl font-outfit text-center text-accent">Sweet Elena<br/>Mango</span>
+                <div className="w-12 h-12 mb-3 rounded-full bg-accent/15 border border-accent/30 flex items-center justify-center">
+                  <span className="text-2xl leading-none" role="img" aria-label="Mango">🥭</span>
+                </div>
+                <span className="font-bold text-xl font-outfit text-center text-accent">Sweet Elena Carabao<br/>Mango</span>
               </div>
               <div className="p-6 sm:w-2/3">
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Dwarf Sweet Elena Carabao Mango trees are propagated using advanced grafting techniques, accelerating the timeline to fruiting while managing canopy spread for the intercropping design.
+                  {copy.propagationDescriptions[1] ?? ""}
                 </p>
               </div>
             </div>
@@ -56,52 +236,73 @@ export default function Nursery() {
         </div>
 
         <div>
-          <h3 className="text-2xl font-bold font-outfit text-foreground mb-4">Growth Dashboard</h3>
-          <Card className="shadow-md border-border/60 h-[calc(100%-3rem)] flex flex-col">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg">Average Seedling Height Progression (cm)</CardTitle>
-            </CardHeader>
-            <CardContent className="flex-1 min-h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={growthData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="colorHeight" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
-                    itemStyle={{ color: 'hsl(var(--foreground))' }}
-                  />
-                  <Area type="monotone" dataKey="height" stroke="hsl(var(--primary))" strokeWidth={3} fillOpacity={1} fill="url(#colorHeight)" />
-                  <Area type="monotone" dataKey="target" stroke="hsl(var(--muted-foreground))" strokeWidth={2} strokeDasharray="5 5" fillOpacity={0} />
-                </AreaChart>
-              </ResponsiveContainer>
-              <div className="flex gap-4 mt-4 text-xs justify-center">
-                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-primary rounded-sm"></div> Actual Height</div>
-                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-muted-foreground/30 border border-muted-foreground rounded-sm border-dashed"></div> Target Benchmark</div>
-              </div>
-            </CardContent>
-          </Card>
+          <h3 className="text-2xl font-bold font-outfit text-foreground mb-4">{copy.dashboardTitle}</h3>
+          <div className="space-y-3">
+            {isLoading ? (
+              <>
+                <Skeleton className="h-24 rounded-lg" />
+                <Skeleton className="h-24 rounded-lg" />
+              </>
+            ) : stats ? (
+              <>
+                <Card className="hover-elevate shadow-sm border-border/60 bg-gradient-to-br from-primary/5 to-transparent">
+                  <CardContent className="p-4">
+                    <div className="space-y-1">
+                      <p className="text-xs text-muted-foreground font-medium">{copy.growthLabels[0] ?? ""}</p>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-3xl font-bold text-primary">{stats.agarwoodHeightCm}</span>
+                        <span className="text-sm text-muted-foreground">cm</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{copy.growthDescriptions[0] ?? ""}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover-elevate shadow-sm border-border/60 bg-gradient-to-br from-accent/5 to-transparent">
+                  <CardContent className="p-4">
+                    <div className="space-y-1">
+                      <p className="text-xs text-muted-foreground font-medium">{copy.growthLabels[1] ?? ""}</p>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-3xl font-bold text-accent">{stats.mangoHeightCm}</span>
+                        <span className="text-sm text-muted-foreground">cm</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{copy.growthDescriptions[1] ?? ""}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="shadow-sm border-border/60">
+                  <CardContent className="p-4 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">{copy.mortalityLabel}</p>
+                      <p className="text-xl font-semibold text-foreground">{stats.mortalityRate}</p>
+                    </div>
+                    <TrendingUp className="w-5 h-5 text-muted-foreground" />
+                  </CardContent>
+                </Card>
+
+                <p className="text-xs text-muted-foreground text-center pt-1">
+                  {copy.updatedPrefix} {stats.lastUpdated ? new Date(stats.lastUpdated).toLocaleDateString() : 'N/A'}
+                </p>
+              </>
+            ) : (
+              <Card className="shadow-sm border-border/60">
+                <CardContent className="p-6 text-center text-muted-foreground">
+                  No data available
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
       </div>
 
-      <h3 className="text-2xl font-bold font-outfit text-foreground mb-6 mt-12">Nursery Technology Protocol</h3>
+      <h3 className="text-2xl font-bold font-outfit text-foreground mb-6 mt-12">{copy.technologyTitle}</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { icon: Droplets, title: "Smart Irrigation", desc: "Automated moisture-based watering systems reduce water waste and prevent root rot." },
-          { icon: ThermometerSun, title: "Climate Control", desc: "UV-filtered shade netting and ambient temperature regulation for optimized photosynthesis." },
-          { icon: Bug, title: "Pest Management", desc: "Organic, preemptive prophylactic treatments to ensure robust disease resistance." },
-          { icon: Microscope, title: "Soil Analytics", desc: "Continuous pH and macronutrient monitoring of custom substrate blends." }
-        ].map((item, i) => (
+        {[Droplets, ThermometerSun, Bug, Microscope].map((Icon, i) => (
           <div key={i} className="bg-card p-6 rounded-2xl border border-border/50 shadow-sm hover-elevate">
-            <item.icon className="w-8 h-8 text-primary mb-4" />
-            <h4 className="font-bold mb-2">{item.title}</h4>
-            <p className="text-sm text-muted-foreground">{item.desc}</p>
+            <Icon className="w-8 h-8 text-primary mb-4" />
+            <h4 className="font-bold mb-2">{copy.technologyTitles[i] ?? ""}</h4>
+            <p className="text-sm text-muted-foreground">{copy.technologyDescriptions[i] ?? ""}</p>
           </div>
         ))}
       </div>

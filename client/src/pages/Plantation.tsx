@@ -1,39 +1,131 @@
 import { AnimatedPage } from "@/components/layout/AnimatedPage";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Layers, LeafyGreen, Tractor, Box, ScanLine } from "lucide-react";
+import { Calendar, Layers, LeafyGreen, Tractor, ScanLine } from "lucide-react";
+import { useGalleryMedia } from "@/hooks/use-gallery-media";
+import { defaultInventoryValues } from "@/lib/publicInventory";
+import { useNurseryStats } from "@/hooks/use-nursery-stats";
+import { useSiteCopy } from "@/hooks/use-site-copy";
+import { defaultSiteCopy } from "@shared/siteCopy";
+
+const agarwoodLifecycle = [
+  {
+    title: "Years 0-2: Establishment",
+    description:
+      "Field planting, cassava shade support, irrigation setup, and structured nutrition management focus on strong root anchoring and early canopy development.",
+  },
+  {
+    title: "Years 3-6: Monitoring & Maintenance",
+    description:
+      "Trees remain under scheduled pruning, weed suppression, and AI-assisted health monitoring while trunk and canopy mass build toward inoculation maturity.",
+  },
+  {
+    title: "Years 7-8: Innoculation",
+    description:
+      "Aquilaria crassna enters the controlled inoculation phase, using documented technical protocols to induce resin formation in mature trees.",
+  },
+  {
+    title: "Years 9-10: Harvest & Extraction",
+    description:
+      "Harvest and resin extraction are scheduled across years 9 and 10 under documented compliance workflows and controlled realization planning.",
+  },
+];
+
+const mangoLifecycle = [
+  {
+    title: "Year 0: Grafting & Nursery",
+    description:
+      "Carabao-Elena hybrid mangoes are prepared on dwarf rootstock for high-density planting, with nursery conditioning aligned to the field rollout.",
+  },
+  {
+    title: "Years 1-4: Establishment & Growth",
+    description:
+      "Young trees receive regular care, irrigation, pruning, induced flowering applications, and pest & disease management to build canopy structure and orchard stability.",
+  },
+  {
+    title: "Years 5-9: Fruiting & Yield Ramp-Up",
+    description:
+      "First fruiting begins in year 5 at about 30 kg per tree, then ramps up annually through years 6 to 9 as productivity increases toward mature output.",
+  },
+  {
+    title: "Years 10-25: Stable Production, Harvest & Sales",
+    description:
+      "Trees target about 100 kg per year under stable annual production, with flower induction supporting harvest cycles and output allocated across export and domestic sales.",
+  },
+];
 
 export default function Plantation() {
+  const { data: stats } = useNurseryStats();
+  const { data: mediaItems = [] } = useGalleryMedia();
+  const { data: siteCopy } = useSiteCopy();
+  const copy = siteCopy?.plantation ?? defaultSiteCopy.plantation;
+  const plantationGalleryItems = mediaItems.filter((item) => item.category === "plantation");
+
   return (
     <AnimatedPage>
       <PageHeader 
-        badge="Field Execution"
-        title="Plantation Operations" 
-        description="The scientific implementation of intercropped timber and fruit assets across our secure Zambales site."
+        badge={copy.header.badge}
+        title={copy.header.title} 
+        description={copy.header.description}
       />
 
-      {/* Out-Planting Target Hero */}
-      <div className="bg-primary/5 border border-primary/20 rounded-3xl p-8 md:p-12 mb-12 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 -mr-10 -mt-10 opacity-5">
-          <Calendar className="w-64 h-64" />
-        </div>
-        <div className="flex-1 relative z-10">
-          <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-2">Key Milestone</h2>
-          <h3 className="text-4xl md:text-5xl font-outfit font-bold text-foreground mb-4">Target: July 2026</h3>
-          <p className="text-lg text-muted-foreground max-w-xl">
-            Commencement of massive out-planting operations coinciding with the optimal monsoon season window to ensure maximum survival and root establishment rates.
-          </p>
-        </div>
-        <div className="bg-background shadow-xl rounded-2xl p-6 border border-border/50 text-center min-w-[200px] z-10">
-          <div className="text-5xl font-black text-primary font-outfit mb-1">16</div>
-          <div className="text-sm font-medium text-muted-foreground uppercase tracking-widest">Months Away</div>
+      {/* Land Preparation Photo Gallery */}
+      <div className="mb-10 py-4">
+        <h2 className="mb-3 text-[1.9rem] font-bold font-outfit sm:text-3xl">{copy.galleryTitle}</h2>
+        <p className="mb-8 text-base text-muted-foreground sm:text-lg">{copy.galleryDescription}</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {plantationGalleryItems.map((item) => (
+            <div key={item.id} className="rounded-2xl overflow-hidden border border-border/50 shadow-lg hover-elevate">
+              <div className="aspect-video bg-muted relative">
+                {item.mediaType === "video" ? (
+                  <video
+                    src={item.mediaUrl}
+                    className="w-full h-full object-cover"
+                    controls
+                    preload="metadata"
+                  />
+                ) : (
+                  <img
+                    src={item.thumbnailUrl || item.mediaUrl}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                )}
+              </div>
+              <div className="p-4 bg-card">
+                <p className="text-sm font-medium text-foreground mb-1">{item.title}</p>
+                <p className="text-xs text-muted-foreground mb-2">{new Date(item.date).toLocaleDateString()}</p>
+                <p className="text-sm text-muted-foreground">{item.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* July Out-Planting Timeline */}
+      <div className="relative mb-16 overflow-hidden rounded-3xl border border-primary/20 bg-primary/5 p-5 sm:p-8 md:p-12">
+        <div className="relative z-10">
+          <h2 className="mb-4 text-[1.9rem] font-bold font-outfit sm:text-3xl">{copy.milestoneTitle}</h2>
+          <p className="mb-6 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            {copy.milestoneDescription}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            {copy.milestoneLabels.map((label, index) => (
+              <div key={label} className="bg-background rounded-xl p-4 border border-border/50">
+                <p className="text-sm font-bold text-primary mb-1">{label}</p>
+                <p className="text-2xl font-outfit font-bold">{copy.milestoneValues[index] ?? ""}</p>
+                <p className="text-xs text-muted-foreground mt-1">{copy.milestoneNotes[index] ?? ""}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
         <div>
           <h3 className="text-3xl font-bold font-outfit mb-6 flex items-center gap-3">
-            <Layers className="text-primary w-8 h-8" /> Land Preparation
+            <Layers className="text-primary w-8 h-8" /> {copy.landPreparationTitle}
           </h3>
           <div className="space-y-6">
             <Card className="hover-elevate">
@@ -43,32 +135,15 @@ export default function Plantation() {
                     <Tractor className="w-5 h-5 text-foreground" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-lg mb-2">Soil Protocol</h4>
+                    <h4 className="font-bold text-lg mb-2">{copy.soilProtocolTitle}</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Deep ripping and mechanical leveling. Construction of complex contour drainage and terracing to prevent soil erosion during heavy rains while capturing optimal surface moisture.
+                      {copy.soilProtocolDescription}
                     </p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="hover-elevate">
-              <CardContent className="p-6">
-                <div className="flex gap-4">
-                  <div className="mt-1 bg-muted p-2 rounded-lg shrink-0">
-                    <Box className="w-5 h-5 text-foreground" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg mb-2">Spacing Geometry</h4>
-                    <ul className="text-sm text-muted-foreground space-y-2">
-                      <li><strong className="text-foreground">Agarwood (Timber):</strong> 3m x 2m grid configuration, yielding approximately 1,667 trees per hectare.</li>
-                      <li><strong className="text-foreground">Mango (Fruit):</strong> 6m x 4m spacing, yielding 416 trees per hectare interspersed among the timber.</li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
             <Card className="hover-elevate bg-accent/5 border-accent/20">
               <CardContent className="p-6">
                 <div className="flex gap-4">
@@ -76,9 +151,9 @@ export default function Plantation() {
                     <LeafyGreen className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-lg text-accent-foreground mb-2">Cassava Intercropping</h4>
+                    <h4 className="font-bold text-lg text-white mb-2">{copy.cassavaTitle}</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      During years 1-2, Cassava is planted between saplings to provide vital shade, fix nitrogen, and suppress weed growth. 100% of this harvest is donated to the local community.
+                      {copy.cassavaDescription}
                     </p>
                   </div>
                 </div>
@@ -89,24 +164,54 @@ export default function Plantation() {
 
         <div>
           <h3 className="text-3xl font-bold font-outfit mb-6 flex items-center gap-3">
-            <ScanLine className="text-primary w-8 h-8" /> Lifecycle Management
+            <ScanLine className="text-primary w-8 h-8" /> {copy.lifecycleTitle}
           </h3>
-          <div className="relative border-l-2 border-border ml-4 space-y-8 pb-4">
-            <div className="relative pl-8">
-              <div className="absolute w-4 h-4 rounded-full bg-background border-2 border-primary -left-[9px] top-1"></div>
-              <h4 className="font-bold text-lg font-outfit text-foreground">Years 0-2: Establishment</h4>
-              <p className="text-sm text-muted-foreground mt-2">Intense weed control, regular NPK fertilization, and canopy shaping. Focus is entirely on rapid vegetative growth and root anchoring.</p>
-            </div>
-            <div className="relative pl-8">
-              <div className="absolute w-4 h-4 rounded-full bg-background border-2 border-primary/60 -left-[9px] top-1"></div>
-              <h4 className="font-bold text-lg font-outfit text-foreground">Years 3-7: Monitoring & Fruit Yield</h4>
-              <p className="text-sm text-muted-foreground mt-2">Dwarf Mango trees enter commercial fruiting (managed via chemical flower induction for year-round yield). Timber requires lower maintenance but continuous drone surveillance.</p>
-            </div>
-            <div className="relative pl-8">
-              <div className="absolute w-4 h-4 rounded-full bg-background border-2 border-accent -left-[9px] top-1"></div>
-              <h4 className="font-bold text-lg font-outfit text-foreground">Years 8-10: Inoculation & Harvest</h4>
-              <p className="text-sm text-muted-foreground mt-2">Proprietary chemical inoculation of Aquilaria trees to trigger immune response (resin formation). Followed by highly secure, CITES-documented harvest and export logistics.</p>
-            </div>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <Card className="hover-elevate">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="bg-primary/10 p-2 rounded-lg">
+                    <LeafyGreen className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-xl font-outfit text-foreground">{copy.agarwoodLabel}</h4>
+                    <p className="text-sm text-muted-foreground">{copy.agarwoodSubtitle}</p>
+                  </div>
+                </div>
+                <div className="relative border-l-2 border-border ml-4 space-y-8 pb-1">
+                  {copy.agarwoodLifecycleTitles.map((title, index) => (
+                    <div key={title} className="relative pl-8">
+                      <div className={`absolute w-4 h-4 rounded-full bg-background -left-[9px] top-1 border-2 ${index === copy.agarwoodLifecycleTitles.length - 1 ? "border-accent" : "border-primary"}`}></div>
+                      <h5 className="font-bold text-lg font-outfit text-foreground">{title}</h5>
+                      <p className="text-sm text-muted-foreground mt-2">{copy.agarwoodLifecycleDescriptions[index] ?? ""}</p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="hover-elevate">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="bg-accent/15 p-2 rounded-lg">
+                    <Calendar className="w-5 h-5 text-accent" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-xl font-outfit text-foreground">{copy.mangoLabel}</h4>
+                    <p className="text-sm text-muted-foreground">{copy.mangoSubtitle}</p>
+                  </div>
+                </div>
+                <div className="relative border-l-2 border-border ml-4 space-y-8 pb-1">
+                  {copy.mangoLifecycleTitles.map((title, index) => (
+                    <div key={title} className="relative pl-8">
+                      <div className={`absolute w-4 h-4 rounded-full bg-background -left-[9px] top-1 border-2 ${index === copy.mangoLifecycleTitles.length - 1 ? "border-accent" : "border-primary/60"}`}></div>
+                      <h5 className="font-bold text-lg font-outfit text-foreground">{title}</h5>
+                      <p className="text-sm text-muted-foreground mt-2">{copy.mangoLifecycleDescriptions[index] ?? ""}</p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

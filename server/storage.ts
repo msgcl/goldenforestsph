@@ -3,22 +3,40 @@ import {
   teamMembers,
   operationalUpdates,
   nurseryStats,
+  galleryMedia,
+  contactMessages,
   type TeamMemberResponse,
   type OperationalUpdateResponse,
   type NurseryStatsResponse,
+  type GalleryMediaResponse,
+  type ContactMessageResponse,
   type InsertTeamMember,
   type InsertOperationalUpdate,
   type InsertNurseryStats,
+  type InsertGalleryMedia,
+  type InsertContactMessage,
 } from "@shared/schema";
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 export interface IStorage {
   getTeamMembers(): Promise<TeamMemberResponse[]>;
   getOperationalUpdates(): Promise<OperationalUpdateResponse[]>;
   getLatestNurseryStats(): Promise<NurseryStatsResponse | undefined>;
+  getGalleryMedia(): Promise<GalleryMediaResponse[]>;
+  getContactMessages(): Promise<ContactMessageResponse[]>;
   createTeamMember(member: InsertTeamMember): Promise<TeamMemberResponse>;
   createOperationalUpdate(update: InsertOperationalUpdate): Promise<OperationalUpdateResponse>;
   createNurseryStats(stats: InsertNurseryStats): Promise<NurseryStatsResponse>;
+  createGalleryMedia(item: InsertGalleryMedia): Promise<GalleryMediaResponse>;
+  createContactMessage(message: InsertContactMessage): Promise<ContactMessageResponse>;
+  updateTeamMember(id: number, member: Partial<InsertTeamMember>): Promise<TeamMemberResponse | undefined>;
+  updateOperationalUpdate(id: number, update: Partial<InsertOperationalUpdate>): Promise<OperationalUpdateResponse | undefined>;
+  updateGalleryMedia(id: number, item: Partial<InsertGalleryMedia>): Promise<GalleryMediaResponse | undefined>;
+  deleteContactMessage(id: number): Promise<boolean>;
+  deleteAllContactMessages(): Promise<number>;
+  deleteTeamMember(id: number): Promise<boolean>;
+  deleteOperationalUpdate(id: number): Promise<boolean>;
+  deleteGalleryMedia(id: number): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -27,12 +45,23 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getOperationalUpdates(): Promise<OperationalUpdateResponse[]> {
-    return await db.select().from(operationalUpdates).orderBy(desc(operationalUpdates.date)).limit(10);
+    return await db.select().from(operationalUpdates).orderBy(desc(operationalUpdates.date));
   }
 
   async getLatestNurseryStats(): Promise<NurseryStatsResponse | undefined> {
-    const results = await db.select().from(nurseryStats).orderBy(desc(nurseryStats.lastUpdated)).limit(1);
+    const results = await db.select().from(nurseryStats).orderBy(desc(nurseryStats.id)).limit(1);
     return results[0];
+  }
+
+  async getGalleryMedia(): Promise<GalleryMediaResponse[]> {
+    return await db
+      .select()
+      .from(galleryMedia)
+      .orderBy(galleryMedia.category, galleryMedia.sortOrder, desc(galleryMedia.date));
+  }
+
+  async getContactMessages(): Promise<ContactMessageResponse[]> {
+    return await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
   }
 
   async createTeamMember(member: InsertTeamMember): Promise<TeamMemberResponse> {
@@ -48,6 +77,68 @@ export class DatabaseStorage implements IStorage {
   async createNurseryStats(stats: InsertNurseryStats): Promise<NurseryStatsResponse> {
     const [created] = await db.insert(nurseryStats).values(stats).returning();
     return created;
+  }
+
+  async createGalleryMedia(item: InsertGalleryMedia): Promise<GalleryMediaResponse> {
+    const [created] = await db.insert(galleryMedia).values(item).returning();
+    return created;
+  }
+
+  async createContactMessage(message: InsertContactMessage): Promise<ContactMessageResponse> {
+    const [created] = await db.insert(contactMessages).values(message).returning();
+    return created;
+  }
+
+  async updateTeamMember(id: number, member: Partial<InsertTeamMember>): Promise<TeamMemberResponse | undefined> {
+    const [updated] = await db
+      .update(teamMembers)
+      .set(member)
+      .where(eq(teamMembers.id, id))
+      .returning();
+    return updated;
+  }
+
+  async updateOperationalUpdate(id: number, update: Partial<InsertOperationalUpdate>): Promise<OperationalUpdateResponse | undefined> {
+    const [updated] = await db
+      .update(operationalUpdates)
+      .set(update)
+      .where(eq(operationalUpdates.id, id))
+      .returning();
+    return updated;
+  }
+
+  async updateGalleryMedia(id: number, item: Partial<InsertGalleryMedia>): Promise<GalleryMediaResponse | undefined> {
+    const [updated] = await db
+      .update(galleryMedia)
+      .set(item)
+      .where(eq(galleryMedia.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteTeamMember(id: number): Promise<boolean> {
+    const result = await db.delete(teamMembers).where(eq(teamMembers.id, id));
+    return (result.rowCount ?? 0) > 0;
+  }
+
+  async deleteOperationalUpdate(id: number): Promise<boolean> {
+    const result = await db.delete(operationalUpdates).where(eq(operationalUpdates.id, id));
+    return (result.rowCount ?? 0) > 0;
+  }
+
+  async deleteGalleryMedia(id: number): Promise<boolean> {
+    const result = await db.delete(galleryMedia).where(eq(galleryMedia.id, id));
+    return (result.rowCount ?? 0) > 0;
+  }
+
+  async deleteContactMessage(id: number): Promise<boolean> {
+    const result = await db.delete(contactMessages).where(eq(contactMessages.id, id));
+    return (result.rowCount ?? 0) > 0;
+  }
+
+  async deleteAllContactMessages(): Promise<number> {
+    const result = await db.delete(contactMessages);
+    return result.rowCount ?? 0;
   }
 }
 
