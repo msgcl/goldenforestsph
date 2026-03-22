@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useGalleryMedia } from "@/hooks/use-gallery-media";
 import { useState } from "react";
 import { useNurseryStats } from "@/hooks/use-nursery-stats";
-import { defaultInventoryValues, physicalInventory, saleInventory } from "@/lib/publicInventory";
+import { defaultInventoryValues, saleInventory } from "@/lib/publicInventory";
 import logoImage from "@assets/logo.png";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
@@ -137,15 +137,15 @@ export default function Home() {
 
             <div className="rounded-[1.5rem] border border-[#D8B88A] bg-[linear-gradient(135deg,#F0D1A1_0%,#DCA96E_100%)] p-3.5 shadow-[0_12px_28px_rgba(162,111,49,0.11)]">
               <p className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-[#6D451B]">
-                Available for sale as of {inventoryDateLabel}
+                {copy.saleHeaderPrefix} {inventoryDateLabel}
               </p>
               <div className="mx-auto mt-3 grid w-full max-w-6xl gap-3 sm:grid-cols-3">
-                {saleInventory.map((item) => (
-                  <div key={item.label} className="flex min-h-[8.5rem] flex-col justify-center rounded-[1.1rem] border border-[#F8E7CC] bg-[rgba(255,248,239,0.34)] p-3.5 backdrop-blur-sm sm:min-h-[9rem]">
+                {saleInventory.map((item, index) => (
+                  <div key={item.field} className="flex min-h-[8.5rem] flex-col justify-center rounded-[1.1rem] border border-[#F8E7CC] bg-[rgba(255,248,239,0.34)] p-3.5 backdrop-blur-sm sm:min-h-[9rem]">
                     <p className="font-outfit text-[2rem] font-semibold text-[#6B4320] sm:text-[2.35rem]">
                       {Number(latestStats?.[item.field] ?? defaultInventoryValues[item.field]).toLocaleString()}
                     </p>
-                    <p className="mt-1.5 text-[0.85rem] leading-relaxed text-[#7A5936]">{item.label}</p>
+                    <p className="mt-1.5 text-[0.85rem] leading-relaxed text-[#7A5936]">{copy.saleCardLabels[index] ?? item.label}</p>
                   </div>
                 ))}
               </div>
@@ -156,7 +156,7 @@ export default function Home() {
             <Card className="border border-[#E0C199] bg-[#F3DEC0] shadow-sm">
               <CardHeader className="pb-1">
                 <CardDescription className="font-medium text-[#9B6B35]">{copy.summaryCardLabels[0] ?? ""}</CardDescription>
-                <CardTitle className="font-outfit text-[1.7rem] font-semibold text-[#7B5224]">July 2026</CardTitle>
+                <CardTitle className="font-outfit text-[1.7rem] font-semibold text-[#7B5224]">{copy.deploymentMilestoneValue}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-xs text-[#8D6336]">{copy.summaryCardDescriptions[0] ?? ""}</p>

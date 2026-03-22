@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { api, type SiteCopyResponse } from "@shared/routes";
+import { normalizeSiteCopy } from "@shared/siteCopy";
 
 export function useSiteCopy() {
   return useQuery({
@@ -8,7 +9,7 @@ export function useSiteCopy() {
       const res = await fetch(api.siteCopy.get.path, { credentials: "include" });
       if (!res.ok) throw new Error("Failed to fetch site copy");
       const data = await res.json();
-      return api.siteCopy.get.responses[200].parse(data) as SiteCopyResponse;
+      return normalizeSiteCopy(data) as SiteCopyResponse;
     },
   });
 }

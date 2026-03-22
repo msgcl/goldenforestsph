@@ -226,12 +226,12 @@ export default function PhotoGallery() {
 
                   <div className="mt-6 grid grid-cols-2 gap-3">
                     <div className="rounded-[1.2rem] border border-white/10 bg-white/8 p-4 backdrop-blur-sm">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#C8A070]">Category Count</p>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#C8A070]">{copy.categoryCountLabel}</p>
                       <p className="font-outfit mt-2 text-3xl font-semibold text-[#FBFCF7]">{categoryCounts[activeCategory]}</p>
                     </div>
                     <div className="rounded-[1.2rem] border border-white/10 bg-white/8 p-4 backdrop-blur-sm">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#C8A070]">Showing</p>
-                      <p className="mt-2 text-sm font-semibold text-[#FBFCF7]">{searchQuery.trim() ? "Filtered Results" : "Current Collection"}</p>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#C8A070]">{copy.showingLabel}</p>
+                      <p className="mt-2 text-sm font-semibold text-[#FBFCF7]">{searchQuery.trim() ? copy.filteredResultsLabel : copy.currentCollectionValueLabel}</p>
                     </div>
                   </div>
 
@@ -256,7 +256,7 @@ export default function PhotoGallery() {
                     <p className="mt-1 text-sm text-[#4A3F2E]">{copy.browseCollectionsDescription}</p>
                   </div>
                   <Badge variant="secondary" className="rounded-full border border-[#D7C09A] bg-[#FBF4E8] px-3 py-1 text-[#17392E]">
-                    {Object.keys(categoryMeta).length} collections
+                    {Object.keys(categoryMeta).length} {copy.collectionsLabelSuffix}
                   </Badge>
                 </div>
 
@@ -314,17 +314,17 @@ export default function PhotoGallery() {
         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="font-outfit text-2xl font-semibold text-foreground">
-              {searchQuery.trim() ? "Search Results" : `${activeMeta.label} Full Gallery`}
+              {searchQuery.trim() ? copy.searchResultsTitle : `${activeMeta.label} ${copy.fullGallerySuffix}`}
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
               {searchQuery.trim()
-                ? `Found ${displayPhotos.length} item${displayPhotos.length !== 1 ? "s" : ""} matching "${searchQuery}".`
-                : `${displayPhotos.length} media ${displayPhotos.length !== 1 ? "items" : "item"} available in this collection.`}
+                ? `${copy.searchSummaryPrefix} ${displayPhotos.length} item${displayPhotos.length !== 1 ? "s" : ""} ${copy.searchSummaryMatchSuffix} "${searchQuery}".`
+                : `${displayPhotos.length} ${displayPhotos.length !== 1 ? copy.collectionSummaryPlural : copy.collectionSummarySingular}`}
             </p>
           </div>
           {!searchQuery.trim() ? (
             <div className="text-sm text-muted-foreground">
-              Click any photo to open the full media view.
+              {copy.viewHint}
             </div>
           ) : null}
         </div>

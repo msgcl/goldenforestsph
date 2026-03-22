@@ -1,6 +1,7 @@
-import { pgTable, text, serial, timestamp, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, integer, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+import { siteCopySchema, type SiteCopy } from "./siteCopy";
 
 export const teamMembers = pgTable("team_members", {
   id: serial("id").primaryKey(),
@@ -58,6 +59,24 @@ export const contactMessages = pgTable("contact_messages", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const siteCopyContent = pgTable("site_copy_content", {
+  id: serial("id").primaryKey(),
+  data: jsonb("data").$type<SiteCopy>().notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const siteInventorySettings = pgTable("site_inventory_settings", {
+  id: serial("id").primaryKey(),
+  panayPlanted: integer("panay_planted").notNull(),
+  saleAgarwoodSeedlings: integer("sale_agarwood_seedlings").notNull(),
+  saleMangoSeedlings: integer("sale_mango_seedlings").notNull(),
+  saleCarabaoMango: integer("sale_carabao_mango").notNull(),
+  inventoryDate: timestamp("inventory_date").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export const insertTeamMemberSchema = createInsertSchema(teamMembers).omit({ 
   id: true, 
   createdAt: true 
@@ -83,6 +102,18 @@ export const insertContactMessageSchema = createInsertSchema(contactMessages).om
   createdAt: true,
 });
 
+export const insertSiteCopyContentSchema = createInsertSchema(siteCopyContent).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertSiteInventorySettingsSchema = createInsertSchema(siteInventorySettings).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type TeamMember = typeof teamMembers.$inferSelect;
 export type InsertTeamMember = z.infer<typeof insertTeamMemberSchema>;
 export type TeamMemberResponse = TeamMember;
@@ -102,3 +133,11 @@ export type GalleryMediaResponse = GalleryMedia;
 export type ContactMessage = typeof contactMessages.$inferSelect;
 export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
 export type ContactMessageResponse = ContactMessage;
+
+export type SiteCopyContent = typeof siteCopyContent.$inferSelect;
+export type InsertSiteCopyContent = z.infer<typeof insertSiteCopyContentSchema>;
+export type SiteCopyContentResponse = SiteCopyContent;
+
+export type SiteInventorySettings = typeof siteInventorySettings.$inferSelect;
+export type InsertSiteInventorySettings = z.infer<typeof insertSiteInventorySettingsSchema>;
+export type SiteInventorySettingsResponse = SiteInventorySettings;

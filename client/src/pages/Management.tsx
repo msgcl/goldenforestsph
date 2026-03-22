@@ -15,7 +15,7 @@ export default function Management() {
   type TeamMember = NonNullable<typeof members>[number];
   const toFormalSummary = (text: string | undefined) => {
     const cleaned = (text || "").replace(/\s+/g, " ").trim();
-    if (!cleaned) return "Details available upon request.";
+    if (!cleaned) return copy.fallbackDetailText;
     return /[.!?]$/.test(cleaned) ? cleaned : `${cleaned}.`;
   };
 

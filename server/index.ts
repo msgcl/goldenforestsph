@@ -1,20 +1,17 @@
 import "dotenv/config";
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
 import path from "path";
 import fs from "fs";
+import { pool } from "./db";
 
 const app = express();
 const httpServer = createServer(app);
-
-if (process.env.NODE_ENV === "production") {
-  // Render and similar hosts terminate HTTPS at a proxy, so secure
-  // session cookies need Express to trust that proxy.
-  app.set("trust proxy", 1);
-}
+const PgSession = connectPgSimple(session);
 
 if (process.env.NODE_ENV === "production") {
   // Render and similar hosts terminate HTTPS at a proxy, so secure
@@ -46,6 +43,10 @@ if (!fs.existsSync(uploadsDir)) {
 
 app.use(
   session({
+    store: new PgSession({
+      pool,
+      createTableIfMissing: true,
+    }),
     secret: process.env.SESSION_SECRET || "cadi-admin-session-secret",
     resave: false,
     saveUninitialized: false,

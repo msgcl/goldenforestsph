@@ -5,58 +5,14 @@ import { Plane, Route, MapPin, Compass, Hotel, Palmtree, Waves } from "lucide-re
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
 
-const featuredDestinations = [
-  {
-    name: "San Antonio Beaches, Zambales",
-    details: "Pundaquit, Anawangin, Nagsasa, and Capones",
-    image: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Anawangin_Cove_at_Sunrise.jpg",
-  },
-  {
-    name: "Sundowners Resort, Botolan",
-    details: "Signature luxury stop in the Zambales route",
-    image: "/gallery/sundowners.jpg",
-  },
-  {
-    name: "Clark International Airport (CRK)",
-    details: "Primary flight gateway to island destinations",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/9/92/Clark_International_Airport_%28Mabalacat%2C_Pampanga%3B_04-22-2024%29.jpg",
-  },
-  {
-    name: "Cebu",
-    details: "Historical landmarks and beach destinations",
-    image: "https://upload.wikimedia.org/wikipedia/commons/9/90/Osme%C3%B1a_Peak%2C_Cebu%2C_Philippines.jpg",
-  },
-  {
-    name: "Coron",
-    details: "Lagoons, limestone cliffs, and diving routes",
-    image: "/gallery/coron.jpg",
-  },
-  {
-    name: "Boracay",
-    details: "White Beach, clear waters, and sunset shoreline",
-    image: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Boracay_White_Beach.png",
-  },
-  {
-    name: "Bohol",
-    details: "Chocolate Hills, Panglao, and eco-attractions",
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/68/Chocolate_Hills_Bohol_Philippines.jpg",
-  },
-  {
-    name: "El Nido",
-    details: "Palawan gateway for island-hopping lagoons",
-    image: "https://upload.wikimedia.org/wikipedia/commons/c/c7/El_Nido_Bay_December_2018.jpg",
-  },
-  {
-    name: "Surigao / Siargao Gateway",
-    details: "Cloud 9 surf routes and Sohoton access",
-    image: "/gallery/cloud9.webp",
-  },
-];
-
 export default function Ecotourism() {
   const { data: siteCopy } = useSiteCopy();
   const copy = siteCopy?.ecotourism ?? defaultSiteCopy.ecotourism;
+  const featuredDestinations = copy.featuredDestinationNames.map((name, index) => ({
+    name,
+    details: copy.featuredDestinationDetails[index] ?? "",
+    image: copy.featuredDestinationImages[index] ?? "",
+  }));
 
   return (
     <AnimatedPage>

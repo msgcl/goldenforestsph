@@ -5,18 +5,24 @@ import {
   nurseryStats,
   galleryMedia,
   contactMessages,
+  siteCopyContent,
+  siteInventorySettings,
   type TeamMemberResponse,
   type OperationalUpdateResponse,
   type NurseryStatsResponse,
   type GalleryMediaResponse,
   type ContactMessageResponse,
+  type SiteCopyContentResponse,
+  type SiteInventorySettingsResponse,
   type InsertTeamMember,
   type InsertOperationalUpdate,
   type InsertNurseryStats,
   type InsertGalleryMedia,
   type InsertContactMessage,
+  type InsertSiteInventorySettings,
 } from "@shared/schema";
 import { desc, eq } from "drizzle-orm";
+import type { SiteCopy } from "@shared/siteCopy";
 
 export interface IStorage {
   getTeamMembers(): Promise<TeamMemberResponse[]>;
@@ -24,11 +30,15 @@ export interface IStorage {
   getLatestNurseryStats(): Promise<NurseryStatsResponse | undefined>;
   getGalleryMedia(): Promise<GalleryMediaResponse[]>;
   getContactMessages(): Promise<ContactMessageResponse[]>;
+  getLatestSiteCopyContent(): Promise<SiteCopyContentResponse | undefined>;
+  getLatestSiteInventorySettings(): Promise<SiteInventorySettingsResponse | undefined>;
   createTeamMember(member: InsertTeamMember): Promise<TeamMemberResponse>;
   createOperationalUpdate(update: InsertOperationalUpdate): Promise<OperationalUpdateResponse>;
   createNurseryStats(stats: InsertNurseryStats): Promise<NurseryStatsResponse>;
   createGalleryMedia(item: InsertGalleryMedia): Promise<GalleryMediaResponse>;
   createContactMessage(message: InsertContactMessage): Promise<ContactMessageResponse>;
+  createSiteCopyContent(data: SiteCopy): Promise<SiteCopyContentResponse>;
+  createSiteInventorySettings(settings: InsertSiteInventorySettings): Promise<SiteInventorySettingsResponse>;
   updateTeamMember(id: number, member: Partial<InsertTeamMember>): Promise<TeamMemberResponse | undefined>;
   updateOperationalUpdate(id: number, update: Partial<InsertOperationalUpdate>): Promise<OperationalUpdateResponse | undefined>;
   updateGalleryMedia(id: number, item: Partial<InsertGalleryMedia>): Promise<GalleryMediaResponse | undefined>;
@@ -64,6 +74,16 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
   }
 
+  async getLatestSiteCopyContent(): Promise<SiteCopyContentResponse | undefined> {
+    const results = await db.select().from(siteCopyContent).orderBy(desc(siteCopyContent.id)).limit(1);
+    return results[0];
+  }
+
+  async getLatestSiteInventorySettings(): Promise<SiteInventorySettingsResponse | undefined> {
+    const results = await db.select().from(siteInventorySettings).orderBy(desc(siteInventorySettings.id)).limit(1);
+    return results[0];
+  }
+
   async createTeamMember(member: InsertTeamMember): Promise<TeamMemberResponse> {
     const [created] = await db.insert(teamMembers).values(member).returning();
     return created;
@@ -86,6 +106,16 @@ export class DatabaseStorage implements IStorage {
 
   async createContactMessage(message: InsertContactMessage): Promise<ContactMessageResponse> {
     const [created] = await db.insert(contactMessages).values(message).returning();
+    return created;
+  }
+
+  async createSiteCopyContent(data: SiteCopy): Promise<SiteCopyContentResponse> {
+    const [created] = await db.insert(siteCopyContent).values({ data }).returning();
+    return created;
+  }
+
+  async createSiteInventorySettings(settings: InsertSiteInventorySettings): Promise<SiteInventorySettingsResponse> {
+    const [created] = await db.insert(siteInventorySettings).values(settings).returning();
     return created;
   }
 

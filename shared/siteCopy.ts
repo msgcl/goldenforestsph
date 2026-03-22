@@ -9,6 +9,30 @@ const pageHeaderSchema = z.object({
   description: nonEmptyString,
 });
 
+const siteCopySectionMetaSchema = z.object({
+  updatedAt: nonEmptyString,
+});
+
+const siteCopyMetaSchema = z.object({
+  updatedAt: nonEmptyString,
+  sections: z.object({
+    contact: siteCopySectionMetaSchema,
+    about: siteCopySectionMetaSchema,
+    compliance: siteCopySectionMetaSchema,
+    technology: siteCopySectionMetaSchema,
+    impact: siteCopySectionMetaSchema,
+    clientServices: siteCopySectionMetaSchema,
+    mangoProgram: siteCopySectionMetaSchema,
+    agarwoodLifeCycle: siteCopySectionMetaSchema,
+    ecotourism: siteCopySectionMetaSchema,
+    home: siteCopySectionMetaSchema,
+    nursery: siteCopySectionMetaSchema,
+    plantation: siteCopySectionMetaSchema,
+    management: siteCopySectionMetaSchema,
+    photoGallery: siteCopySectionMetaSchema,
+  }),
+});
+
 export const contactPageCopySchema = z.object({
   badge: nonEmptyString,
   intro: nonEmptyString,
@@ -27,6 +51,25 @@ export const contactPageCopySchema = z.object({
   websiteLabel: nonEmptyString,
   salesOfficeLabel: nonEmptyString,
   managementOfficeLabel: nonEmptyString,
+  firstNamePlaceholder: nonEmptyString,
+  lastNamePlaceholder: nonEmptyString,
+  emailPlaceholder: nonEmptyString,
+  messagePlaceholder: nonEmptyString,
+  successTitle: nonEmptyString,
+  successDescription: nonEmptyString,
+  errorTitle: nonEmptyString,
+  errorDescription: nonEmptyString,
+  phoneNumbers: nonEmptyStringArray,
+  emailValue: nonEmptyString,
+  emailHref: nonEmptyString,
+  websiteValue: nonEmptyString,
+  websiteHref: nonEmptyString,
+  holdingCompanyLabel: nonEmptyString,
+  holdingCompanyAddress: nonEmptyStringArray,
+  salesOfficeTitle: nonEmptyString,
+  salesOfficeCompany: nonEmptyString,
+  salesOfficeAddress: nonEmptyStringArray,
+  managementOfficeAddress: nonEmptyStringArray,
 });
 
 export const aboutPageCopySchema = z.object({
@@ -120,6 +163,9 @@ export const ecotourismPageCopySchema = z.object({
   contextTitle: nonEmptyString,
   contextItems: nonEmptyStringArray,
   galleryTitle: nonEmptyString,
+  featuredDestinationNames: nonEmptyStringArray,
+  featuredDestinationDetails: nonEmptyStringArray,
+  featuredDestinationImages: nonEmptyStringArray,
 });
 
 export const homePageCopySchema = z.object({
@@ -135,8 +181,11 @@ export const homePageCopySchema = z.object({
   liveMetricsTitle: nonEmptyString,
   currentStockLabel: nonEmptyString,
   stockLabels: nonEmptyStringArray,
+  saleHeaderPrefix: nonEmptyString,
+  saleCardLabels: nonEmptyStringArray,
   summaryCardLabels: nonEmptyStringArray,
   summaryCardDescriptions: nonEmptyStringArray,
+  deploymentMilestoneValue: nonEmptyString,
   nurseryCtaLabel: nonEmptyString,
   snapshotTitle: nonEmptyString,
   snapshotDescription: nonEmptyString,
@@ -158,6 +207,8 @@ export const nurseryPageCopySchema = z.object({
   stockLabels: nonEmptyStringArray,
   stockDescriptions: nonEmptyStringArray,
   saleHeaderPrefix: nonEmptyString,
+  saleCardLabels: nonEmptyStringArray,
+  saleCardNotes: nonEmptyStringArray,
   galleryTitle: nonEmptyString,
   galleryLinkLabel: nonEmptyString,
   propagationTitle: nonEmptyString,
@@ -167,6 +218,7 @@ export const nurseryPageCopySchema = z.object({
   growthDescriptions: nonEmptyStringArray,
   mortalityLabel: nonEmptyString,
   updatedPrefix: nonEmptyString,
+  emptyStateLabel: nonEmptyString,
   technologyTitle: nonEmptyString,
   technologyTitles: nonEmptyStringArray,
   technologyDescriptions: nonEmptyStringArray,
@@ -201,6 +253,7 @@ export const managementPageCopySchema = z.object({
   header: pageHeaderSchema,
   helperText: nonEmptyString,
   categoryTitles: nonEmptyStringArray,
+  fallbackDetailText: nonEmptyString,
 });
 
 export const photoGalleryPageCopySchema = z.object({
@@ -216,6 +269,17 @@ export const photoGalleryPageCopySchema = z.object({
   noResultsDescription: nonEmptyString,
   searchPlaceholder: nonEmptyString,
   viewHint: nonEmptyString,
+  categoryCountLabel: nonEmptyString,
+  showingLabel: nonEmptyString,
+  filteredResultsLabel: nonEmptyString,
+  currentCollectionValueLabel: nonEmptyString,
+  collectionsLabelSuffix: nonEmptyString,
+  searchResultsTitle: nonEmptyString,
+  fullGallerySuffix: nonEmptyString,
+  searchSummaryPrefix: nonEmptyString,
+  searchSummaryMatchSuffix: nonEmptyString,
+  collectionSummarySingular: nonEmptyString,
+  collectionSummaryPlural: nonEmptyString,
   categoryLabels: nonEmptyStringArray,
   categorySubtitles: nonEmptyStringArray,
 });
@@ -235,9 +299,12 @@ export const siteCopySchema = z.object({
   plantation: plantationPageCopySchema,
   management: managementPageCopySchema,
   photoGallery: photoGalleryPageCopySchema,
+  _meta: siteCopyMetaSchema,
 });
 
 export type SiteCopy = z.infer<typeof siteCopySchema>;
+
+const defaultSiteCopyUpdatedAt = "2026-03-22T00:00:00.000Z";
 
 export const defaultSiteCopy: SiteCopy = {
   contact: {
@@ -259,6 +326,31 @@ export const defaultSiteCopy: SiteCopy = {
     websiteLabel: "Website",
     salesOfficeLabel: "Sales & Marketing Head Office",
     managementOfficeLabel: "Plantation Management Office",
+    firstNamePlaceholder: "First name",
+    lastNamePlaceholder: "Last name",
+    emailPlaceholder: "Email",
+    messagePlaceholder: "Message",
+    successTitle: "Message sent",
+    successDescription: "Your message has been received.",
+    errorTitle: "Submission failed",
+    errorDescription: "Please try again in a moment.",
+    phoneNumbers: ["+971 (0) 50 974 5232", "+971 (0) 50 944 0661"],
+    emailValue: "office@goldenforests.ai",
+    emailHref: "mailto:office@goldenforests.ai",
+    websiteValue: "www.goldenforests.ai",
+    websiteHref: "https://www.goldenforests.ai/",
+    holdingCompanyLabel: "Golden Forests ADGM Holding Company",
+    holdingCompanyAddress: [
+      "ADGM, Office 3702, Floor 37, Addax Port Office Tower, Tamouh, Abu Dhabi, Al Reem Island, United Arab Emirates",
+    ],
+    salesOfficeTitle: "Sales & Marketing",
+    salesOfficeCompany: "Golden Forests Agroforestry Intelligence Investment in Agricultural Enterprises & Management FZCO",
+    salesOfficeAddress: [
+      "IDZA Business Park, DDP 75773-001, A1-3641379065, Dubai Digital Park, Dubai Silicon Oasis, Dubai, UAE",
+    ],
+    managementOfficeAddress: [
+      "Level 24, Philippines Stock Exchange Tower, One Bonafacio Street, 5th Ave Cor. 28th Street, BGC, Taguig City, Philippines",
+    ],
   },
   about: {
     header: {
@@ -547,6 +639,39 @@ export const defaultSiteCopy: SiteCopy = {
       "Clients can structure visits as: Zambales coast + resort + island destination.",
     ],
     galleryTitle: "Destination Gallery",
+    featuredDestinationNames: [
+      "San Antonio Beaches, Zambales",
+      "Sundowners Resort, Botolan",
+      "Clark International Airport (CRK)",
+      "Cebu",
+      "Coron",
+      "Boracay",
+      "Bohol",
+      "El Nido",
+      "Surigao / Siargao Gateway",
+    ],
+    featuredDestinationDetails: [
+      "Pundaquit, Anawangin, Nagsasa, and Capones",
+      "Signature luxury stop in the Zambales route",
+      "Primary flight gateway to island destinations",
+      "Historical landmarks and beach destinations",
+      "Lagoons, limestone cliffs, and diving routes",
+      "White Beach, clear waters, and sunset shoreline",
+      "Chocolate Hills, Panglao, and eco-attractions",
+      "Palawan gateway for island-hopping lagoons",
+      "Cloud 9 surf routes and Sohoton access",
+    ],
+    featuredDestinationImages: [
+      "https://upload.wikimedia.org/wikipedia/commons/c/cf/Anawangin_Cove_at_Sunrise.jpg",
+      "/gallery/sundowners.jpg",
+      "https://upload.wikimedia.org/wikipedia/en/9/92/Clark_International_Airport_%28Mabalacat%2C_Pampanga%3B_04-22-2024%29.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/9/90/Osme%C3%B1a_Peak%2C_Cebu%2C_Philippines.jpg",
+      "/gallery/coron.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/c/cd/Boracay_White_Beach.png",
+      "https://upload.wikimedia.org/wikipedia/commons/6/68/Chocolate_Hills_Bohol_Philippines.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/c/c7/El_Nido_Bay_December_2018.jpg",
+      "/gallery/cloud9.webp",
+    ],
   },
   home: {
     heroBadge: "Golden Forests Philippines",
@@ -572,12 +697,19 @@ export const defaultSiteCopy: SiteCopy = {
     liveMetricsTitle: "Live Nursery Metrics",
     currentStockLabel: "Current nursery stock",
     stockLabels: ["Aquilaria crassna agarwood seedlings", "Sweet Elena Carabao mango seedlings"],
+    saleHeaderPrefix: "Available for sale as of",
+    saleCardLabels: [
+      "Agarwood seedlings available for sale",
+      "Sweet Elena mango seedlings available for sale",
+      "Carabao mango inventory available for sale",
+    ],
     summaryCardLabels: ["Field Deployment", "Panay Planting", "Inventory Date"],
     summaryCardDescriptions: [
       "Zambales rollout for agarwood and Sweet Elena mango",
       "Carabao mango trees currently planted in Panay",
       "Current stock and sales inventory shown as of this date",
     ],
+    deploymentMilestoneValue: "July 2026",
     nurseryCtaLabel: "View Full Dashboard",
     snapshotTitle: "Operations Snapshot",
     snapshotDescription: "Visual documentation from nursery, plantation, and support facilities.",
@@ -619,6 +751,12 @@ export const defaultSiteCopy: SiteCopy = {
       "Healthy nursery stock prepared for the current Sweet Elena Carabao program.",
     ],
     saleHeaderPrefix: "Available for sale as of",
+    saleCardLabels: [
+      "Agarwood seedlings available for sale",
+      "Sweet Elena mango seedlings available for sale",
+      "Carabao mango inventory available for sale",
+    ],
+    saleCardNotes: ["Current inventory", "Current inventory", "Current inventory"],
     galleryTitle: "Live Seedling Gallery",
     galleryLinkLabel: "View full gallery",
     propagationTitle: "Stock Propagation",
@@ -634,6 +772,7 @@ export const defaultSiteCopy: SiteCopy = {
     ],
     mortalityLabel: "Mortality Rate",
     updatedPrefix: "Updated:",
+    emptyStateLabel: "No data available",
     technologyTitle: "Nursery Technology Protocol",
     technologyTitles: ["Smart Irrigation", "Climate Control", "Pest Management", "Soil Analytics"],
     technologyDescriptions: [
@@ -709,6 +848,7 @@ export const defaultSiteCopy: SiteCopy = {
     },
     helperText: "Click any profile card to view the member's full profile.",
     categoryTitles: ["Executive Management", "Board of Directors", "Senior Management"],
+    fallbackDetailText: "Details available upon request.",
   },
   photoGallery: {
     backButtonLabel: "Back to Home",
@@ -724,6 +864,17 @@ export const defaultSiteCopy: SiteCopy = {
     noResultsDescription: "Try a different search term or switch to another category to browse the archive.",
     searchPlaceholder: "Search by title, description, or location...",
     viewHint: "Click any photo to open the full media view.",
+    categoryCountLabel: "Category Count",
+    showingLabel: "Showing",
+    filteredResultsLabel: "Filtered Results",
+    currentCollectionValueLabel: "Current Collection",
+    collectionsLabelSuffix: "collections",
+    searchResultsTitle: "Search Results",
+    fullGallerySuffix: "Full Gallery",
+    searchSummaryPrefix: "Found",
+    searchSummaryMatchSuffix: "matching",
+    collectionSummarySingular: "media item available in this collection.",
+    collectionSummaryPlural: "media items available in this collection.",
     categoryLabels: ["Nursery", "Plantation", "Facilities", "Team"],
     categorySubtitles: [
       "Propagation, conditioning, and seedling health tracking",
@@ -732,4 +883,104 @@ export const defaultSiteCopy: SiteCopy = {
       "Management, field staff, and personnel documentation",
     ],
   },
+  _meta: {
+    updatedAt: defaultSiteCopyUpdatedAt,
+    sections: {
+      contact: { updatedAt: defaultSiteCopyUpdatedAt },
+      about: { updatedAt: defaultSiteCopyUpdatedAt },
+      compliance: { updatedAt: defaultSiteCopyUpdatedAt },
+      technology: { updatedAt: defaultSiteCopyUpdatedAt },
+      impact: { updatedAt: defaultSiteCopyUpdatedAt },
+      clientServices: { updatedAt: defaultSiteCopyUpdatedAt },
+      mangoProgram: { updatedAt: defaultSiteCopyUpdatedAt },
+      agarwoodLifeCycle: { updatedAt: defaultSiteCopyUpdatedAt },
+      ecotourism: { updatedAt: defaultSiteCopyUpdatedAt },
+      home: { updatedAt: defaultSiteCopyUpdatedAt },
+      nursery: { updatedAt: defaultSiteCopyUpdatedAt },
+      plantation: { updatedAt: defaultSiteCopyUpdatedAt },
+      management: { updatedAt: defaultSiteCopyUpdatedAt },
+      photoGallery: { updatedAt: defaultSiteCopyUpdatedAt },
+    },
+  },
 };
+
+export function normalizeSiteCopy(parsed: unknown): SiteCopy {
+  const data = (parsed ?? {}) as Partial<SiteCopy> & Record<string, any>;
+
+  return siteCopySchema.parse({
+    ...defaultSiteCopy,
+    ...data,
+    contact: { ...defaultSiteCopy.contact, ...(data.contact ?? {}) },
+    about: {
+      ...defaultSiteCopy.about,
+      ...(data.about ?? {}),
+      header: { ...defaultSiteCopy.about.header, ...(data.about?.header ?? {}) },
+    },
+    compliance: {
+      ...defaultSiteCopy.compliance,
+      ...(data.compliance ?? {}),
+      header: { ...defaultSiteCopy.compliance.header, ...(data.compliance?.header ?? {}) },
+    },
+    technology: {
+      ...defaultSiteCopy.technology,
+      ...(data.technology ?? {}),
+      header: { ...defaultSiteCopy.technology.header, ...(data.technology?.header ?? {}) },
+    },
+    impact: {
+      ...defaultSiteCopy.impact,
+      ...(data.impact ?? {}),
+      header: { ...defaultSiteCopy.impact.header, ...(data.impact?.header ?? {}) },
+    },
+    clientServices: {
+      ...defaultSiteCopy.clientServices,
+      ...(data.clientServices ?? {}),
+      header: {
+        ...defaultSiteCopy.clientServices.header,
+        ...(data.clientServices?.header ?? {}),
+      },
+    },
+    mangoProgram: {
+      ...defaultSiteCopy.mangoProgram,
+      ...(data.mangoProgram ?? {}),
+      header: { ...defaultSiteCopy.mangoProgram.header, ...(data.mangoProgram?.header ?? {}) },
+    },
+    agarwoodLifeCycle: {
+      ...defaultSiteCopy.agarwoodLifeCycle,
+      ...(data.agarwoodLifeCycle ?? {}),
+      header: {
+        ...defaultSiteCopy.agarwoodLifeCycle.header,
+        ...(data.agarwoodLifeCycle?.header ?? {}),
+      },
+    },
+    ecotourism: {
+      ...defaultSiteCopy.ecotourism,
+      ...(data.ecotourism ?? {}),
+      header: { ...defaultSiteCopy.ecotourism.header, ...(data.ecotourism?.header ?? {}) },
+    },
+    home: { ...defaultSiteCopy.home, ...(data.home ?? {}) },
+    nursery: {
+      ...defaultSiteCopy.nursery,
+      ...(data.nursery ?? {}),
+      header: { ...defaultSiteCopy.nursery.header, ...(data.nursery?.header ?? {}) },
+    },
+    plantation: {
+      ...defaultSiteCopy.plantation,
+      ...(data.plantation ?? {}),
+      header: { ...defaultSiteCopy.plantation.header, ...(data.plantation?.header ?? {}) },
+    },
+    management: {
+      ...defaultSiteCopy.management,
+      ...(data.management ?? {}),
+      header: { ...defaultSiteCopy.management.header, ...(data.management?.header ?? {}) },
+    },
+    photoGallery: { ...defaultSiteCopy.photoGallery, ...(data.photoGallery ?? {}) },
+    _meta: {
+      ...defaultSiteCopy._meta,
+      ...(data._meta ?? {}),
+      sections: {
+        ...defaultSiteCopy._meta.sections,
+        ...(data._meta?.sections ?? {}),
+      },
+    },
+  });
+}

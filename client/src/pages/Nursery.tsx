@@ -126,18 +126,18 @@ export default function Nursery() {
           </div>
 
           <div className="grid gap-4 p-4 sm:p-6 md:grid-cols-3">
-            {saleInventory.map((item) => (
+            {saleInventory.map((item, index) => (
               <article
-                key={item.label}
+                key={item.field}
                 className="rounded-[1.35rem] border border-[#315E4F] bg-[rgba(8,33,28,0.22)] p-4"
               >
                 <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-[#C8A070]">
-                  {item.note}
+                  {copy.saleCardNotes[index] ?? item.note}
                 </p>
                 <p className="font-outfit mt-3 text-4xl font-semibold leading-none text-[#FBFCF7] sm:text-5xl">
                   {Number(stats?.[item.field] ?? defaultInventoryValues[item.field]).toLocaleString()}
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-[#D9E4DB]">{item.label}</p>
+                <p className="mt-3 text-sm leading-relaxed text-[#D9E4DB]">{copy.saleCardLabels[index] ?? item.label}</p>
               </article>
             ))}
           </div>
@@ -286,11 +286,11 @@ export default function Nursery() {
                 </p>
               </>
             ) : (
-              <Card className="shadow-sm border-border/60">
-                <CardContent className="p-6 text-center text-muted-foreground">
-                  No data available
-                </CardContent>
-              </Card>
+                <Card className="shadow-sm border-border/60">
+                  <CardContent className="p-6 text-center text-muted-foreground">
+                  {copy.emptyStateLabel}
+                  </CardContent>
+                </Card>
             )}
           </div>
         </div>

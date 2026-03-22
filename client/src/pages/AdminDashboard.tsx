@@ -29,7 +29,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { defaultSiteCopy } from "@shared/siteCopy";
+import { defaultSiteCopy, normalizeSiteCopy } from "@shared/siteCopy";
 import { WebsiteCopyEditor } from "@/components/admin/WebsiteCopyEditor";
 
 function toDateInputValue(dateValue: Date | string | null | undefined): string {
@@ -304,14 +304,21 @@ export default function AdminDashboard() {
 
   const statsMutation = useMutation({
     mutationFn: async () => {
+      const autoTimestamp = new Date();
       await apiRequest("POST", "/api/admin/nursery-stats", {
         ...statsForm,
-        lastUpdated: new Date(statsForm.lastUpdated),
-        inventoryDate: new Date(statsForm.inventoryDate),
+        lastUpdated: autoTimestamp,
+        inventoryDate: autoTimestamp,
       });
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["/api/nursery-stats/latest"] });
+      const refreshedDate = toDateInputValue(new Date());
+      setStatsForm((current) => ({
+        ...current,
+        lastUpdated: refreshedDate,
+        inventoryDate: refreshedDate,
+      }));
       toast({ title: "Saved", description: "Nursery metrics updated." });
     },
   });
@@ -393,9 +400,12 @@ export default function AdminDashboard() {
 
   const siteCopyMutation = useMutation({
     mutationFn: async () => {
-      await apiRequest("POST", "/api/admin/site-copy", siteCopyForm);
+      const response = await apiRequest("POST", "/api/admin/site-copy", siteCopyForm);
+      return normalizeSiteCopy(await response.json());
     },
-    onSuccess: async () => {
+    onSuccess: async (savedSiteCopy) => {
+      setSiteCopyForm(savedSiteCopy);
+      queryClient.setQueryData(["/api/site-copy"], savedSiteCopy);
       await queryClient.invalidateQueries({ queryKey: ["/api/site-copy"] });
       toast({ title: "Saved", description: "Website copy updated." });
     },
@@ -497,24 +507,24 @@ export default function AdminDashboard() {
           ))}
         </motion.section>
 
-        <Tabs defaultValue="metrics" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-6 h-auto gap-2 bg-transparent p-0">
-            <TabsTrigger value="metrics" className="rounded-xl border border-border bg-card px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+        <Tabs defaultValue="metrics" className="space-y-5">
+          <TabsList className="grid h-auto w-full grid-cols-2 gap-2 rounded-[28px] border border-border/60 bg-white/70 p-2 shadow-sm backdrop-blur md:grid-cols-6">
+            <TabsTrigger value="metrics" className="rounded-2xl border border-transparent bg-transparent px-3 py-3 data-[state=active]:border-primary/20 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <LayoutDashboard className="w-4 h-4 mr-2" /> Metrics
             </TabsTrigger>
-            <TabsTrigger value="updates" className="rounded-xl border border-border bg-card px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="updates" className="rounded-2xl border border-transparent bg-transparent px-3 py-3 data-[state=active]:border-primary/20 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <CalendarDays className="w-4 h-4 mr-2" /> Updates
             </TabsTrigger>
-            <TabsTrigger value="team" className="rounded-xl border border-border bg-card px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="team" className="rounded-2xl border border-transparent bg-transparent px-3 py-3 data-[state=active]:border-primary/20 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Users className="w-4 h-4 mr-2" /> Team
             </TabsTrigger>
-            <TabsTrigger value="gallery" className="rounded-xl border border-border bg-card px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="gallery" className="rounded-2xl border border-transparent bg-transparent px-3 py-3 data-[state=active]:border-primary/20 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <ImagePlus className="w-4 h-4 mr-2" /> Gallery
             </TabsTrigger>
-            <TabsTrigger value="messages" className="rounded-xl border border-border bg-card px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="messages" className="rounded-2xl border border-transparent bg-transparent px-3 py-3 data-[state=active]:border-primary/20 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Mail className="w-4 h-4 mr-2" /> Messages
             </TabsTrigger>
-            <TabsTrigger value="site-copy" className="rounded-xl border border-border bg-card px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="site-copy" className="rounded-2xl border border-transparent bg-transparent px-3 py-3 data-[state=active]:border-primary/20 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <FileText className="w-4 h-4 mr-2" /> Website Copy
             </TabsTrigger>
           </TabsList>
@@ -565,11 +575,12 @@ export default function AdminDashboard() {
                     </div>
                     <div className="space-y-1">
                       <Label htmlFor="metrics-last-updated">Last Updated</Label>
-                      <Input id="metrics-last-updated" type="date" value={statsForm.lastUpdated} onChange={(e) => setStatsForm((s) => ({ ...s, lastUpdated: e.target.value }))} />
+                      <Input id="metrics-last-updated" type="date" value={statsForm.lastUpdated} readOnly disabled />
                     </div>
                     <div className="space-y-1">
                       <Label htmlFor="metrics-inventory-date">Inventory Date</Label>
-                      <Input id="metrics-inventory-date" type="date" value={statsForm.inventoryDate} onChange={(e) => setStatsForm((s) => ({ ...s, inventoryDate: e.target.value }))} />
+                      <Input id="metrics-inventory-date" type="date" value={statsForm.inventoryDate} readOnly disabled />
+                      <p className="text-xs text-muted-foreground">Both dates are now set automatically when you save metrics.</p>
                     </div>
                     <div className="md:col-span-3">
                       <Button type="submit" disabled={statsMutation.isPending}><Save className="w-4 h-4 mr-2" />{statsMutation.isPending ? "Saving..." : "Save Metrics"}</Button>
@@ -880,7 +891,7 @@ export default function AdminDashboard() {
           </TabsContent>
 
           <TabsContent value="site-copy">
-            <motion.div variants={panelAnim} initial="hidden" animate="visible">
+            <motion.div variants={panelAnim} initial="hidden" animate="visible" className="space-y-4">
               <WebsiteCopyEditor
                 value={siteCopyForm}
                 isSaving={siteCopyMutation.isPending}

@@ -1,17 +1,17 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import type { Server } from "http";
-import path from "path";
-import fs from "fs/promises";
 import { randomUUID } from "crypto";
 import { z } from "zod";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
+import { isCloudinaryConfigured, uploadDataUrlToCloudinary } from "./cloudinary";
+import { isContactEmailEnabled, sendContactFormEmail } from "./mailer";
 import {
   readSiteInventorySettings,
   writeSiteInventorySettings,
 } from "./siteInventory";
 import { readSiteCopy, writeSiteCopy } from "./siteCopy";
-import { siteCopySchema } from "@shared/siteCopy";
+import { normalizeSiteCopy, siteCopySchema } from "@shared/siteCopy";
 
 type RealtimeEventPayload = {
   queryKeys: string[];
@@ -161,7 +161,27 @@ export async function registerRoutes(
     if (!parsed.success) {
       return res.status(400).json({ message: "Invalid contact form payload" });
     }
+
     const created = await storage.createContactMessage(parsed.data);
+
+    if (!isContactEmailEnabled()) {
+      console.warn("Contact form email delivery skipped: SMTP is not configured.");
+      return res.status(201).json(created);
+    }
+
+    try {
+      await sendContactFormEmail({
+        ...parsed.data,
+        submittedAt: created.createdAt ?? new Date(),
+      });
+    } catch (error) {
+      console.error("Failed to deliver contact form email:", error);
+      return res.status(500).json({
+        message:
+          "Your message was saved, but email delivery failed. Please check the mail configuration.",
+      });
+    }
+
     res.status(201).json(created);
   });
 
@@ -306,21 +326,24 @@ export async function registerRoutes(
     if (!parsed.success) {
       return res.status(400).json({ message: "Invalid nursery stats payload" });
     }
+    const autoTimestamp = new Date();
     const {
       panayPlanted,
       saleAgarwoodSeedlings,
       saleMangoSeedlings,
       saleCarabaoMango,
-      inventoryDate,
       ...dbStats
     } = parsed.data;
-    const created = await storage.createNurseryStats(dbStats);
+    const created = await storage.createNurseryStats({
+      ...dbStats,
+      lastUpdated: autoTimestamp,
+    });
     await writeSiteInventorySettings({
       panayPlanted,
       saleAgarwoodSeedlings,
       saleMangoSeedlings,
       saleCarabaoMango,
-      inventoryDate: inventoryDate.toISOString(),
+      inventoryDate: autoTimestamp.toISOString(),
     });
     sendRealtimeEvent({
       queryKeys: [api.nurseryStats.latest.path],
@@ -333,7 +356,7 @@ export async function registerRoutes(
       saleAgarwoodSeedlings,
       saleMangoSeedlings,
       saleCarabaoMango,
-      inventoryDate,
+      inventoryDate: autoTimestamp,
     });
   });
 
@@ -417,18 +440,18 @@ export async function registerRoutes(
   });
 
   app.post(api.admin.siteCopy.update.path, requireAdmin, async (req, res) => {
-    const parsed = siteCopySchema.safeParse(req.body);
+    const parsed = siteCopySchema.safeParse(normalizeSiteCopy(req.body));
     if (!parsed.success) {
       return res.status(400).json({ message: "Invalid site copy payload" });
     }
 
-    await writeSiteCopy(parsed.data);
+    const savedSiteCopy = await writeSiteCopy(parsed.data);
     sendRealtimeEvent({
       queryKeys: [api.siteCopy.get.path],
       entity: "site-copy",
       action: "update",
     });
-    res.json(parsed.data);
+    res.json(savedSiteCopy);
   });
 
   app.post(api.admin.uploads.create.path, requireAdmin, async (req, res) => {
@@ -447,14 +470,17 @@ export async function registerRoutes(
       return res.status(400).json({ message: "Only image and video uploads are supported" });
     }
 
-    const originalName = parsed.data.fileName.replace(/[^\w.-]/g, "_");
-    const extension = path.extname(originalName) || (mimeType.startsWith("video/") ? ".mp4" : ".png");
-    const fileName = `${Date.now()}-${randomUUID()}${extension}`;
-    const outputPath = path.resolve(process.cwd(), "uploads", fileName);
-    const buffer = Buffer.from(match[2], "base64");
-    await fs.writeFile(outputPath, buffer);
+    if (!isCloudinaryConfigured()) {
+      return res.status(500).json({ message: "Cloudinary is not configured for uploads" });
+    }
 
-    res.status(201).json({ url: `/uploads/${fileName}` });
+    const originalName = parsed.data.fileName.replace(/[^\w.-]/g, "_");
+    const extensionMatch = originalName.match(/\.[^.]+$/);
+    const extension = extensionMatch?.[0] ?? (mimeType.startsWith("video/") ? ".mp4" : ".png");
+    const fileName = `${Date.now()}-${randomUUID()}${extension}`;
+    const uploaded = await uploadDataUrlToCloudinary(parsed.data.dataUrl, fileName, mimeType);
+
+    res.status(201).json({ url: uploaded.secure_url });
   });
 
   await seedDatabase();

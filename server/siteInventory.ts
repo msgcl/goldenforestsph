@@ -1,5 +1,4 @@
-import fs from "fs/promises";
-import path from "path";
+import { storage } from "./storage";
 
 export type SiteInventorySettings = {
   panayPlanted: number;
@@ -17,40 +16,25 @@ export const defaultSiteInventorySettings: SiteInventorySettings = {
   inventoryDate: "2026-03-19T00:00:00.000Z",
 };
 
-const settingsPath = path.resolve(process.cwd(), ".local", "site-inventory.json");
-
-async function ensureDirectory() {
-  await fs.mkdir(path.dirname(settingsPath), { recursive: true });
-}
-
 export async function readSiteInventorySettings(): Promise<SiteInventorySettings> {
-  try {
-    const raw = await fs.readFile(settingsPath, "utf8");
-    const parsed = JSON.parse(raw) as Partial<SiteInventorySettings>;
-    return {
-      panayPlanted: Number.isFinite(Number(parsed.panayPlanted))
-        ? Number(parsed.panayPlanted)
-        : defaultSiteInventorySettings.panayPlanted,
-      saleAgarwoodSeedlings: Number.isFinite(Number(parsed.saleAgarwoodSeedlings))
-        ? Number(parsed.saleAgarwoodSeedlings)
-        : defaultSiteInventorySettings.saleAgarwoodSeedlings,
-      saleMangoSeedlings: Number.isFinite(Number(parsed.saleMangoSeedlings))
-        ? Number(parsed.saleMangoSeedlings)
-        : defaultSiteInventorySettings.saleMangoSeedlings,
-      saleCarabaoMango: Number.isFinite(Number(parsed.saleCarabaoMango))
-        ? Number(parsed.saleCarabaoMango)
-        : defaultSiteInventorySettings.saleCarabaoMango,
-      inventoryDate:
-        typeof parsed.inventoryDate === "string" && parsed.inventoryDate
-          ? parsed.inventoryDate
-          : defaultSiteInventorySettings.inventoryDate,
-    };
-  } catch {
-    return defaultSiteInventorySettings;
-  }
+  const latest = await storage.getLatestSiteInventorySettings();
+  if (!latest) return defaultSiteInventorySettings;
+
+  return {
+    panayPlanted: latest.panayPlanted,
+    saleAgarwoodSeedlings: latest.saleAgarwoodSeedlings,
+    saleMangoSeedlings: latest.saleMangoSeedlings,
+    saleCarabaoMango: latest.saleCarabaoMango,
+    inventoryDate: latest.inventoryDate.toISOString(),
+  };
 }
 
 export async function writeSiteInventorySettings(settings: SiteInventorySettings): Promise<void> {
-  await ensureDirectory();
-  await fs.writeFile(settingsPath, JSON.stringify(settings, null, 2), "utf8");
+  await storage.createSiteInventorySettings({
+    panayPlanted: settings.panayPlanted,
+    saleAgarwoodSeedlings: settings.saleAgarwoodSeedlings,
+    saleMangoSeedlings: settings.saleMangoSeedlings,
+    saleCarabaoMango: settings.saleCarabaoMango,
+    inventoryDate: new Date(settings.inventoryDate),
+  });
 }

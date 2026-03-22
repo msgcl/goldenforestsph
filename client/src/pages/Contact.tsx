@@ -34,11 +34,11 @@ export default function Contact() {
       setLastName("");
       setEmail("");
       setMessage("");
-      toast({ title: "Message sent", description: "Your message has been received." });
+      toast({ title: copy.successTitle, description: copy.successDescription });
     } catch {
       toast({
-        title: "Submission failed",
-        description: "Please try again in a moment.",
+        title: copy.errorTitle,
+        description: copy.errorDescription,
         variant: "destructive",
       });
     } finally {
@@ -57,11 +57,11 @@ export default function Contact() {
         </p>
       </div>
 
-      <div className="grid max-w-6xl grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(340px,0.92fr)] xl:items-start">
+      <div className="max-w-6xl space-y-6">
         <Card className="border-border/60 bg-[#003a34] shadow-md">
           <CardContent className="p-5 md:p-7">
             <h2 className="mb-2 text-3xl font-outfit text-accent md:text-4xl">{copy.formTitle}</h2>
-            <p className="mb-6 max-w-xl text-sm leading-relaxed text-[#F3E9D6]/80">
+            <p className="mb-6 max-w-2xl text-sm leading-relaxed text-[#F3E9D6]/80">
               {copy.formDescription}
             </p>
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -74,7 +74,7 @@ export default function Contact() {
                     id="first-name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="First name"
+                    placeholder={copy.firstNamePlaceholder}
                     className="h-11 border-accent/20 bg-[#F3E9D6] text-[#1B1B1B] focus-visible:ring-accent"
                   />
                 </div>
@@ -87,7 +87,7 @@ export default function Contact() {
                     id="last-name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Last name"
+                    placeholder={copy.lastNamePlaceholder}
                     className="h-11 border-accent/20 bg-[#F3E9D6] text-[#1B1B1B] focus-visible:ring-accent"
                   />
                 </div>
@@ -103,7 +103,7 @@ export default function Contact() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email"
+                  placeholder={copy.emailPlaceholder}
                   className="h-11 border-accent/20 bg-[#F3E9D6] text-[#1B1B1B] focus-visible:ring-accent"
                 />
               </div>
@@ -117,7 +117,7 @@ export default function Contact() {
                   required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Message"
+                  placeholder={copy.messagePlaceholder}
                   className="min-h-[140px] border-accent/20 bg-[#F3E9D6] text-[#1B1B1B] focus-visible:ring-accent"
                 />
               </div>
@@ -129,80 +129,100 @@ export default function Contact() {
           </CardContent>
         </Card>
 
-        <Card className="border-border/60 shadow-md">
-          <CardContent className="p-6 md:p-7">
-            <div className="mb-5">
-              <h3 className="text-2xl font-outfit font-semibold text-foreground">{copy.detailsTitle}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {copy.detailsDescription}
-              </p>
-            </div>
+        <div className="space-y-5">
+          <div className="max-w-2xl">
+            <h3 className="text-2xl font-outfit font-semibold text-foreground">{copy.detailsTitle}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              {copy.detailsDescription}
+            </p>
+          </div>
 
-            <div className="space-y-4">
-              <a
-                href="tel:+9710509745232"
-                className="block rounded-xl border border-border/60 bg-card p-5 hover-elevate"
-              >
-                <div className="flex items-start gap-3">
-                  <Smartphone className="mt-0.5 h-5 w-5 text-primary" />
-                  <div>
-                    <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.mobileLabel}</p>
-                    <p className="text-lg font-semibold text-foreground">+971 (0) 50 974 5232</p>
-                    <p className="text-lg font-semibold text-foreground">+971 (0) 50 944 0661</p>
-                  </div>
+          <div className="grid gap-4 md:grid-cols-3 md:auto-rows-fr">
+            <a
+              href="tel:+9710509745232"
+              className="block h-full rounded-xl border border-border/60 bg-card p-5 hover-elevate"
+            >
+              <div className="flex items-start gap-3">
+                <Smartphone className="mt-0.5 h-5 w-5 text-primary" />
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.mobileLabel}</p>
+                  {copy.phoneNumbers.map((phone, index) => (
+                    <p key={`${phone}-${index}`} className={index === 0 ? "mt-2 text-base font-semibold leading-relaxed text-foreground" : "text-base font-semibold leading-relaxed text-foreground"}>
+                      {phone}
+                    </p>
+                  ))}
                 </div>
-              </a>
+              </div>
+            </a>
 
-              <a
-                href="mailto:office@goldenforests.ai"
-                className="block rounded-xl border border-border/60 bg-card p-5 hover-elevate"
-              >
-                <div className="flex items-center gap-3">
-                  <Mail className="h-6 w-6 shrink-0 text-primary" />
-                  <div>
-                    <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.emailInfoLabel}</p>
-                    <p className="text-lg font-semibold text-foreground whitespace-nowrap">office@goldenforests.ai</p>
-                  </div>
+            <a
+              href={copy.emailHref}
+              className="block h-full rounded-xl border border-border/60 bg-card p-5 hover-elevate"
+            >
+              <div className="flex items-start gap-3">
+                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.emailInfoLabel}</p>
+                  <p className="mt-2 text-base font-semibold leading-relaxed text-foreground break-words">{copy.emailValue}</p>
                 </div>
-              </a>
+              </div>
+            </a>
 
-              <a
-                href="https://www.goldenforests.ai/"
-                target="_blank"
-                rel="noreferrer"
-                className="block rounded-xl border border-border/60 bg-card p-5 hover-elevate"
-              >
-                <div className="flex items-center gap-3">
-                  <Globe className="h-5 w-5 shrink-0 text-primary" />
-                  <div>
-                    <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.websiteLabel}</p>
-                    <p className="text-lg font-semibold text-foreground whitespace-nowrap">www.goldenforests.ai</p>
-                  </div>
+            <a
+              href={copy.websiteHref}
+              target="_blank"
+              rel="noreferrer"
+              className="block h-full rounded-xl border border-border/60 bg-card p-5 hover-elevate"
+            >
+              <div className="flex items-start gap-3">
+                <Globe className="h-5 w-5 shrink-0 text-primary" />
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.websiteLabel}</p>
+                  <p className="mt-2 text-base font-semibold leading-relaxed text-foreground break-words">{copy.websiteValue}</p>
                 </div>
-              </a>
+              </div>
+            </a>
+          </div>
 
-              <div className="w-full rounded-2xl border border-border/60 bg-card p-6">
-                <div className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 h-5 w-5 text-primary" />
-                  <div className="w-full space-y-5">
-                    <div>
-                      <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.salesOfficeLabel}</p>
-                      <p className="mt-1 text-lg font-semibold text-foreground">
-                        Level 25, Al Sila Tower, Al Maryah Island, ADGM, Abu Dhabi, UAE
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.managementOfficeLabel}</p>
-                      <p className="mt-1 text-lg font-semibold text-foreground">
-                        Level 24, Philippines Stock Exchange Tower, One Bonafacio Street, 5th Ave Cor. 28th Street, BGC, Taguig City, Philippines.
-                      </p>
-                    </div>
-                  </div>
+          <div className="grid gap-4 md:grid-cols-3 md:auto-rows-fr">
+            <div className="h-full rounded-xl border border-border/60 bg-card p-5">
+              <div className="flex h-full items-start gap-3">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.holdingCompanyLabel}</p>
+                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-foreground">
+                    {copy.holdingCompanyAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
+                  </address>
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+
+            <div className="h-full rounded-xl border border-border/60 bg-card p-5">
+              <div className="flex h-full items-start gap-3">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.salesOfficeTitle}</p>
+                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-foreground">
+                    <p>{copy.salesOfficeCompany}</p>
+                    {copy.salesOfficeAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
+                  </address>
+                </div>
+              </div>
+            </div>
+
+            <div className="h-full rounded-xl border border-border/60 bg-card p-5">
+              <div className="flex h-full items-start gap-3">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.managementOfficeLabel}</p>
+                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-foreground">
+                    {copy.managementOfficeAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
+                  </address>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </AnimatedPage>
   );
