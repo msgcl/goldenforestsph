@@ -26,7 +26,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
+import { OptimizedImage } from "@/components/ui/optimized-media";
 import logoImage from "@assets/logo.png";
 
 const navigationGroups = [
@@ -68,6 +70,7 @@ const navigationGroups = [
 
 export function AppSidebar() {
   const [location] = useLocation();
+  const { isMobile, setOpenMobile } = useSidebar();
   const isItemActive = (url: string) => (url === "/" ? location === "/" : location.startsWith(url));
 
   return (
@@ -75,9 +78,11 @@ export function AppSidebar() {
       <SidebarHeader className="border-b border-white/8 p-4">
         <div className="flex items-center justify-center rounded-[1.5rem] border border-[#C8A070]/18 bg-white/5 px-3 py-5 shadow-inner shadow-black/10">
           <Link href="/" className="inline-flex flex-col items-center justify-center gap-0.5">
-            <img
+            <OptimizedImage
               src={logoImage}
               alt="Golden Forests Agroforestry Intelligence"
+              priority
+              sizes="56px"
               className="h-14 w-auto max-w-full object-contain drop-shadow-sm"
             />
             <span className="mt-1.5 font-outfit text-[15px] leading-none font-semibold tracking-[0.12em] text-[#C8A070]">
@@ -107,7 +112,15 @@ export function AppSidebar() {
                       isActive={isItemActive(item.url)}
                       className="my-0 rounded-xl transition-all data-[active=true]:bg-white/10 data-[active=true]:shadow-sm"
                     >
-                      <Link href={item.url} className="flex items-center gap-2.5 rounded-xl px-3 py-2.5">
+                      <Link
+                        href={item.url}
+                        className="flex items-center gap-2.5 rounded-xl px-3 py-2.5"
+                        onClick={() => {
+                          if (isMobile) {
+                            setOpenMobile(false);
+                          }
+                        }}
+                      >
                         <item.icon className="h-3.5 w-3.5 text-[#C8A070]" />
                         <span className="text-[13px] font-medium text-[#FBFCF7]/92">{item.title}</span>
                       </Link>

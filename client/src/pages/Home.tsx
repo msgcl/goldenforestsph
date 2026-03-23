@@ -10,6 +10,7 @@ import { defaultInventoryValues, saleInventory } from "@/lib/publicInventory";
 import logoImage from "@assets/logo.png";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
+import { OptimizedImage } from "@/components/ui/optimized-media";
 
 export default function Home() {
   const { data: latestStats } = useNurseryStats();
@@ -31,10 +32,12 @@ export default function Home() {
     <AnimatedPage>
       <section className="relative overflow-hidden rounded-3xl border border-accent/30 bg-[#17392E] text-primary-foreground shadow-xl shadow-black/10">
         {!heroImageHidden ? (
-          <img
+          <OptimizedImage
             src="https://www.goldenforests.ai/wp-content/uploads/2024/01/close-up-of-mangoes-on-branch.jpg"
             alt=""
             aria-hidden="true"
+            priority
+            sizes="100vw"
             onError={() => setHeroImageHidden(true)}
             className="absolute inset-0 h-full w-full object-cover opacity-20"
           />
@@ -54,9 +57,11 @@ export default function Home() {
                 {copy.heroTitlePrefix} <span className="sm:whitespace-nowrap">{copy.heroTitleHighlight}</span>
               </h1>
               <div className="flex h-[5.5rem] w-[5.5rem] shrink-0 items-center justify-center rounded-[1.5rem] bg-white/8 p-3 shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm sm:hidden">
-                <img
+                <OptimizedImage
                   src={logoImage}
                   alt="Golden Forests logo"
+                  priority
+                  sizes="88px"
                   className="h-full w-full object-contain"
                 />
               </div>
@@ -76,9 +81,11 @@ export default function Home() {
 
           <div className="hidden justify-center sm:flex lg:justify-end">
             <div className="flex h-44 w-44 items-center justify-center rounded-[2rem] bg-white/8 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.2)] backdrop-blur-sm sm:h-64 sm:w-64 sm:p-5 lg:h-80 lg:w-80">
-              <img
+              <OptimizedImage
                 src={logoImage}
                 alt="Golden Forests logo"
+                priority
+                sizes="(min-width: 1024px) 320px, 256px"
                 className="h-full w-full object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.32)]"
               />
             </div>
@@ -208,9 +215,10 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <Link href="/nursery" className="group overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm hover-elevate">
             <div className="aspect-video overflow-hidden bg-muted">
-              <img
+              <OptimizedImage
                 src={nurseryPreview || "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=900&h=600&fit=crop"}
                 alt="Nursery operations"
+                sizes="(min-width: 1024px) 33vw, 100vw"
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
@@ -222,9 +230,10 @@ export default function Home() {
 
           <Link href="/plantation" className="group overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm hover-elevate">
             <div className="aspect-video overflow-hidden bg-muted">
-              <img
+              <OptimizedImage
                 src={plantationPreview || "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&h=600&fit=crop"}
                 alt="Plantation operations"
+                sizes="(min-width: 1024px) 33vw, 100vw"
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
@@ -236,9 +245,10 @@ export default function Home() {
 
           <Link href="/technology" className="group overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm hover-elevate">
             <div className="aspect-video overflow-hidden bg-muted">
-              <img
+              <OptimizedImage
                 src={operationsPreview || "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&h=600&fit=crop"}
                 alt="Field technology"
+                sizes="(min-width: 1024px) 33vw, 100vw"
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>

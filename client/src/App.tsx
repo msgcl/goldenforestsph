@@ -28,6 +28,7 @@ import Ecotourism from "@/pages/Ecotourism";
 import AdminLogin from "@/pages/AdminLogin";
 import AdminDashboard from "@/pages/AdminDashboard";
 import logoImage from "@assets/logo.png";
+import { OptimizedImage } from "@/components/ui/optimized-media";
 
 function Router() {
   return (
@@ -85,7 +86,7 @@ function App() {
                       />
                       <div className="flex items-center gap-2">
                         <div className="flex h-10 w-10 items-center justify-center">
-                          <img src={logoImage} alt="Golden Forests logo" className="h-6.5 w-6.5 object-contain" />
+                          <OptimizedImage src={logoImage} alt="Golden Forests logo" priority sizes="26px" className="h-6.5 w-6.5 object-contain" />
                         </div>
                         <div>
                           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-accent">Plantation Management Portal</p>

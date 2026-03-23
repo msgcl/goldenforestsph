@@ -11,6 +11,7 @@ import { useGalleryMedia } from "@/hooks/use-gallery-media";
 import { defaultInventoryValues, saleInventory } from "@/lib/publicInventory";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
+import { OptimizedImage, OptimizedVideo } from "@/components/ui/optimized-media";
 
 export default function Nursery() {
   const { data: stats, isLoading } = useNurseryStats();
@@ -23,6 +24,7 @@ export default function Nursery() {
     .filter((item) => item.category === "nursery")
     .map((item) => ({
       src: item.mediaUrl,
+      thumbnail: item.thumbnailUrl || item.mediaUrl,
       label: item.title,
       date: item.date ? `Captured ${new Date(item.date).toLocaleDateString()}` : "",
       mediaType: item.mediaType,
@@ -167,21 +169,20 @@ export default function Nursery() {
                 <div className="rounded-2xl overflow-hidden border border-border/50 shadow-lg hover-elevate">
                   <div className="aspect-[4/3] bg-muted relative">
                     {item.mediaType === "video" ? (
-                      <video
+                      <OptimizedVideo
                         src={item.src}
-                        preload="metadata"
+                        poster={item.thumbnail}
                         muted
                         loop
                         playsInline
                         data-autoplay="true"
                         className="w-full h-full object-cover"
-                      >
-                        Your browser does not support the video tag.
-                      </video>
+                      />
                     ) : (
-                      <img
+                      <OptimizedImage
                         src={item.src}
                         alt={item.label}
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 88vw"
                         className="w-full h-full object-cover"
                       />
                     )}

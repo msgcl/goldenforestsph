@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { OptimizedImage, OptimizedVideo } from "@/components/ui/optimized-media";
 import { cn } from "@/lib/utils";
 import {
   Search,
@@ -121,7 +122,7 @@ export default function PhotoGallery() {
   const categoryLabels = copy.categoryLabels;
   const categorySubtitles = copy.categorySubtitles;
   const getPreviewSrc = (photo: (typeof allPhotos)[number]) => {
-    if (photo.mediaType === "video") return photo.image;
+    if (photo.mediaType === "video") return photo.thumbnail;
     return photo.category === "team" ? photo.image : photo.thumbnail;
   };
 
@@ -341,7 +342,12 @@ export default function PhotoGallery() {
                 <div className={cn("relative overflow-hidden bg-transparent", photo.category === "team" ? "aspect-[4/3]" : "aspect-[5/4]")}>
                   {photo.mediaType === "video" ? (
                     <>
-                      <video src={photo.image} className="h-full w-full object-cover" muted playsInline preload="metadata" />
+                      <OptimizedImage
+                        src={getPreviewSrc(photo)}
+                        alt={photo.title}
+                        className="h-full w-full object-cover"
+                        sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+                      />
                       <div className="absolute inset-0 flex items-center justify-center bg-black/15">
                         <div className="rounded-full border border-white/30 bg-black/40 p-3 text-white backdrop-blur-sm">
                           <PlayCircle className="h-6 w-6" />
@@ -349,9 +355,14 @@ export default function PhotoGallery() {
                       </div>
                     </>
                   ) : (
-                    <img
+                    <OptimizedImage
                       src={getPreviewSrc(photo)}
                       alt={photo.title}
+                      sizes={
+                        photo.category === "team"
+                          ? "(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+                          : "(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+                      }
                       className={cn(
                         "h-full w-full transition-transform duration-500 group-hover:scale-105",
                         photo.category === "team" ? "object-contain bg-muted" : "object-cover",
@@ -418,9 +429,22 @@ export default function PhotoGallery() {
 
               <div className="relative w-full overflow-hidden rounded-2xl bg-[#F1E4CF]">
                 {selectedImage.mediaType === "video" ? (
-                  <video src={selectedImage.image} controls autoPlay preload="metadata" className="max-h-[55vh] w-full object-contain bg-[#F1E4CF]" />
+                  <OptimizedVideo
+                    src={selectedImage.image}
+                    poster={selectedImage.thumbnail}
+                    controls
+                    autoPlay
+                    priority
+                    preload="metadata"
+                    className="max-h-[55vh] w-full object-contain bg-[#F1E4CF]"
+                  />
                 ) : (
-                  <img src={selectedImage.image} alt={selectedImage.title} className="max-h-[55vh] w-full object-contain bg-[#F1E4CF]" />
+                  <OptimizedImage
+                    src={selectedImage.image}
+                    alt={selectedImage.title}
+                    priority
+                    className="max-h-[55vh] w-full object-contain bg-[#F1E4CF]"
+                  />
                 )}
 
                 <button

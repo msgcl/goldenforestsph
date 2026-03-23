@@ -187,7 +187,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="bg-sidebar text-sidebar-foreground w-[var(--sidebar-width)] p-0 [&>button]:hidden"
+          className="bg-sidebar text-sidebar-foreground flex h-svh w-[var(--sidebar-width)] flex-col overflow-hidden p-0 [&>button]:hidden"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -199,7 +199,7 @@ function Sidebar({
             <SheetTitle>Sidebar</SheetTitle>
             <SheetDescription>Displays the mobile sidebar.</SheetDescription>
           </SheetHeader>
-          <div className="flex h-full w-full flex-col">{children}</div>
+          <div className="flex min-h-0 w-full flex-1 flex-col">{children}</div>
         </SheetContent>
       </Sheet>
     )
@@ -370,14 +370,59 @@ function SidebarSeparator({
 }
 
 function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
+  const { isMobile } = useSidebar()
+  const touchStartRef = React.useRef<{ x: number; y: number } | null>(null)
+  const suppressClickRef = React.useRef(false)
+
+  const handleTouchStart = React.useCallback((event: React.TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0]
+    if (!touch) return
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY }
+    suppressClickRef.current = false
+  }, [])
+
+  const handleTouchMove = React.useCallback((event: React.TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0]
+    const start = touchStartRef.current
+    if (!touch || !start) return
+
+    const deltaX = Math.abs(touch.clientX - start.x)
+    const deltaY = Math.abs(touch.clientY - start.y)
+
+    // Treat a finger movement as scrolling, not a tap, once it clearly moves.
+    if (deltaY > 8 || deltaX > 8) {
+      suppressClickRef.current = true
+    }
+  }, [])
+
+  const resetTouchState = React.useCallback(() => {
+    touchStartRef.current = null
+  }, [])
+
+  const handleClickCapture = React.useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    if (!isMobile || !suppressClickRef.current) return
+
+    const target = event.target as HTMLElement | null
+    if (target?.closest("[data-sidebar='menu-button']")) {
+      event.preventDefault()
+      event.stopPropagation()
+      suppressClickRef.current = false
+    }
+  }, [isMobile])
+
   return (
     <div
       data-slot="sidebar-content"
       data-sidebar="content"
       className={cn(
-        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+        "flex min-h-0 flex-1 touch-pan-y flex-col gap-2 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] group-data-[collapsible=icon]:overflow-hidden",
         className
       )}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={resetTouchState}
+      onTouchCancel={resetTouchState}
+      onClickCapture={handleClickCapture}
       {...props}
     />
   )

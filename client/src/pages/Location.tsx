@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Plane, Route, Globe2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { OptimizedImage } from "@/components/ui/optimized-media";
 
 type GuideLocation = {
   id: string;
@@ -188,9 +189,11 @@ export default function Location() {
         </div>
 
         <Card className="shadow-sm border-border/60 overflow-hidden">
-          <img
+          <OptimizedImage
             src={active.image}
             alt={active.name}
+            priority
+            sizes="(min-width: 1280px) 33vw, 100vw"
             className="w-full h-48 object-cover"
             onError={(e) => {
               if (e.currentTarget.src !== FALLBACK_LOCATION_IMAGE) {

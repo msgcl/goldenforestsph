@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { TreePine, Users, Sprout, Heart } from "lucide-react";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
+import { OptimizedImage } from "@/components/ui/optimized-media";
 
 export default function Impact() {
   const { data: siteCopy } = useSiteCopy();
@@ -21,9 +22,10 @@ export default function Impact() {
         <Card className="hover-elevate overflow-hidden border-border/60">
           <div className="h-48 bg-muted relative flex items-center justify-center">
             {/* abstract green forest */}
-            <img 
+            <OptimizedImage
               src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&fit=crop" 
               alt="Reforestation" 
+              sizes="(min-width: 768px) 50vw, 100vw"
               className="absolute inset-0 w-full h-full object-cover opacity-70"
             />
             <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
@@ -39,9 +41,10 @@ export default function Impact() {
 
         <Card className="hover-elevate overflow-hidden border-border/60">
           <div className="h-48 bg-muted relative flex items-center justify-center">
-             <img 
+             <OptimizedImage
               src="/gallery/employment.png" 
               alt="Community" 
+              sizes="(min-width: 768px) 50vw, 100vw"
               className="absolute inset-0 w-full h-full object-cover opacity-70"
             />
             <div className="absolute inset-0 bg-accent/20 mix-blend-multiply"></div>

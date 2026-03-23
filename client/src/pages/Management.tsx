@@ -7,6 +7,7 @@ import { Briefcase, GraduationCap } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
+import { OptimizedImage } from "@/components/ui/optimized-media";
 
 export default function Management() {
   const { data: members, isLoading } = useTeamMembers();
@@ -54,12 +55,13 @@ export default function Management() {
                   <Card className="overflow-hidden border-border/60 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/10 cursor-pointer">
                     <CardContent className="flex flex-col items-center p-5 text-center sm:p-6">
                       <div className="h-36 w-36 overflow-hidden rounded-full border-2 border-accent/35 bg-muted sm:h-40 sm:w-40">
-                      <img
+                      <OptimizedImage
                         src={
                           member.imageUrl ||
                           "https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=400&h=400&fit=crop"
                         }
                         alt={member.name}
+                        sizes="160px"
                         className="h-full w-full object-cover bg-muted transition-transform duration-500 hover:scale-105"
                       />
                       </div>
@@ -71,12 +73,13 @@ export default function Management() {
                 <DialogContent className="sm:max-w-xl">
                   <DialogHeader>
                     <div className="mx-auto mb-3 h-60 w-60 overflow-hidden rounded-lg border border-accent/35 bg-muted sm:h-64 sm:w-64">
-                      <img
+                      <OptimizedImage
                         src={
                           member.imageUrl ||
                           "https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=400&h=400&fit=crop"
                         }
                         alt={member.name}
+                        sizes="256px"
                         className="h-full w-full object-cover"
                       />
                     </div>

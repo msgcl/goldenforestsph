@@ -7,6 +7,7 @@ import { defaultInventoryValues } from "@/lib/publicInventory";
 import { useNurseryStats } from "@/hooks/use-nursery-stats";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
+import { OptimizedImage, OptimizedVideo } from "@/components/ui/optimized-media";
 
 const agarwoodLifecycle = [
   {
@@ -78,16 +79,18 @@ export default function Plantation() {
             <div key={item.id} className="rounded-2xl overflow-hidden border border-border/50 shadow-lg hover-elevate">
               <div className="aspect-video bg-muted relative">
                 {item.mediaType === "video" ? (
-                  <video
+                  <OptimizedVideo
                     src={item.mediaUrl}
+                    poster={item.thumbnailUrl || undefined}
                     className="w-full h-full object-cover"
                     controls
-                    preload="metadata"
+                    preload="none"
                   />
                 ) : (
-                  <img
+                  <OptimizedImage
                     src={item.thumbnailUrl || item.mediaUrl}
                     alt={item.title}
+                    sizes="(min-width: 768px) 33vw, 100vw"
                     className="w-full h-full object-cover"
                   />
                 )}

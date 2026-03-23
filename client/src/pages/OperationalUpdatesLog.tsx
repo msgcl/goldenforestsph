@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import { ArrowLeft, Search, Calendar, Tag, FileText } from "lucide-react";
 import { Link } from "wouter";
 import { useState, useMemo } from "react";
+import { OptimizedImage } from "@/components/ui/optimized-media";
 
 export default function OperationalUpdatesLog() {
   const { data: updates, isLoading } = useOperationalUpdates();
@@ -137,9 +138,10 @@ export default function OperationalUpdatesLog() {
                   </div>
                   {update.imageUrl && (
                     <div className="md:w-48 h-40 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
-                      <img 
+                      <OptimizedImage
                         src={update.imageUrl}
                         alt={update.title}
+                        sizes="192px"
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       />
                     </div>

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plane, Route, MapPin, Compass, Hotel, Palmtree, Waves } from "lucide-react";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
+import { OptimizedImage } from "@/components/ui/optimized-media";
 
 export default function Ecotourism() {
   const { data: siteCopy } = useSiteCopy();
@@ -97,7 +98,12 @@ export default function Ecotourism() {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
         {featuredDestinations.map((destination) => (
           <Card key={destination.name} className="border-border/60 overflow-hidden hover-elevate">
-            <img src={destination.image} alt={destination.name} className="w-full h-52 object-cover" />
+            <OptimizedImage
+              src={destination.image}
+              alt={destination.name}
+              sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+              className="w-full h-52 object-cover"
+            />
             <CardContent className="p-4">
               <h3 className="font-semibold text-foreground">{destination.name}</h3>
               <p className="text-sm text-muted-foreground mt-1">{destination.details}</p>
