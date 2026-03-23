@@ -1,50 +1,59 @@
 import { AnimatedPage } from "@/components/layout/AnimatedPage";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Smartphone, Mail, Globe, MapPin } from "lucide-react";
-import { FormEvent, useState } from "react";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
+import { Smartphone, Mail, Globe, MapPin, LoaderCircle } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
 
+const PIPEDRIVE_FORM_URL =
+  "https://webforms.pipedrive.com/f/ccFXKfVy5hM7bSUc7TncVRQZb2ZjziEa2mp80r9GPdeGh6WdNUurWsIIM6eEqUZGH9";
+const PIPEDRIVE_LOADER_URL = "https://webforms.pipedrive.com/f/loader";
+
 export default function Contact() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
   const { data: siteCopy } = useSiteCopy();
   const copy = siteCopy?.contact ?? defaultSiteCopy.contact;
+  const formContainerRef = useRef<HTMLDivElement | null>(null);
+  const [isFormLoading, setIsFormLoading] = useState(true);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      await apiRequest("POST", "/api/contact-messages", {
-        firstName,
-        lastName,
-        email,
-        message,
-      });
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setMessage("");
-      toast({ title: copy.successTitle, description: copy.successDescription });
-    } catch {
-      toast({
-        title: copy.errorTitle,
-        description: copy.errorDescription,
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  useEffect(() => {
+    const container = formContainerRef.current;
+    if (!container) return;
+
+    setIsFormLoading(true);
+    container.innerHTML = "";
+    container.setAttribute("data-pd-webforms", PIPEDRIVE_FORM_URL);
+    container.className = "pipedriveWebForms min-h-[420px]";
+
+    const script = document.createElement("script");
+    script.src = PIPEDRIVE_LOADER_URL;
+    script.async = true;
+    container.appendChild(script);
+
+    const interval = window.setInterval(() => {
+      const iframe = container.querySelector("iframe");
+      if (!iframe) return;
+
+      const markLoaded = () => setIsFormLoading(false);
+      iframe.addEventListener("load", markLoaded, { once: true });
+
+      if ((iframe as HTMLIFrameElement).contentWindow || iframe.getAttribute("src")) {
+        window.setTimeout(markLoaded, 250);
+      }
+
+      window.clearInterval(interval);
+    }, 200);
+
+    const timeout = window.setTimeout(() => {
+      setIsFormLoading(false);
+      window.clearInterval(interval);
+    }, 8000);
+
+    return () => {
+      window.clearInterval(interval);
+      window.clearTimeout(timeout);
+      container.innerHTML = "";
+    };
+  }, []);
 
   return (
     <AnimatedPage>
@@ -52,80 +61,48 @@ export default function Contact() {
         <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wider uppercase mb-4 border border-primary/20">
           {copy.badge}
         </span>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-3xl leading-relaxed">
+        <p className="text-lg md:text-xl text-muted-foreground max-w-4xl leading-relaxed">
           {copy.intro}
         </p>
       </div>
 
       <div className="max-w-6xl space-y-6">
-        <Card className="border-border/60 bg-[#003a34] shadow-md">
+        <Card className="border-[#D8C9B1] bg-[linear-gradient(180deg,#F6EFE2_0%,#EFE4CF_100%)] shadow-[0_24px_54px_rgba(88,65,32,0.12)]">
           <CardContent className="p-5 md:p-7">
-            <h2 className="mb-2 text-3xl font-outfit text-accent md:text-4xl">{copy.formTitle}</h2>
-            <p className="mb-6 max-w-2xl text-sm leading-relaxed text-[#F3E9D6]/80">
+            <h2 className="mb-2 text-3xl font-outfit text-[#6F4E2C] md:text-4xl">{copy.formTitle}</h2>
+            <p className="mb-6 max-w-2xl text-sm leading-relaxed text-[#6A5A44]">
               {copy.formDescription}
             </p>
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <label htmlFor="first-name" className="text-base text-accent">
-                    {copy.firstNameLabel}
-                  </label>
-                  <Input
-                    id="first-name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder={copy.firstNamePlaceholder}
-                    className="h-11 border-accent/20 bg-[#F3E9D6] text-[#1B1B1B] focus-visible:ring-accent"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="last-name" className="text-base text-accent">
-                    {copy.lastNameLabel}
-                  </label>
-                  <Input
-                    id="last-name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder={copy.lastNamePlaceholder}
-                    className="h-11 border-accent/20 bg-[#F3E9D6] text-[#1B1B1B] focus-visible:ring-accent"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-base text-accent">
-                  {copy.emailLabel}
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={copy.emailPlaceholder}
-                  className="h-11 border-accent/20 bg-[#F3E9D6] text-[#1B1B1B] focus-visible:ring-accent"
+            <div className="contact-pipedrive-frame">
+              <div className="contact-pipedrive-shell mx-auto w-full max-w-[820px]">
+                {isFormLoading ? (
+                  <div className="contact-pipedrive-loading">
+                    <div className="contact-pipedrive-loading-panel">
+                      <LoaderCircle className="h-6 w-6 animate-spin text-[#8A673E]" />
+                      <div>
+                        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#8A673E]">
+                          Loading Form
+                        </p>
+                        <p className="mt-2 max-w-md text-sm leading-relaxed text-[#6A5A44]">
+                          Preparing the secure Pipedrive form. This can take a few seconds while the CRM widget loads.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="contact-pipedrive-skeleton-grid" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </div>
+                ) : null}
+                <div
+                  ref={formContainerRef}
+                  className={`pipedriveWebForms min-h-[420px] transition-opacity duration-500 ${isFormLoading ? "opacity-0" : "opacity-100"}`}
+                  data-pd-webforms={PIPEDRIVE_FORM_URL}
                 />
               </div>
-
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-base text-accent">
-                  {copy.messageLabel}
-                </label>
-                <Textarea
-                  id="message"
-                  required
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder={copy.messagePlaceholder}
-                  className="min-h-[140px] border-accent/20 bg-[#F3E9D6] text-[#1B1B1B] focus-visible:ring-accent"
-                />
-              </div>
-
-              <Button type="submit" className="h-11 w-full text-lg font-semibold" disabled={isSubmitting}>
-                {isSubmitting ? copy.submittingLabel : copy.submitLabel}
-              </Button>
-            </form>
+            </div>
           </CardContent>
         </Card>
 
@@ -140,14 +117,14 @@ export default function Contact() {
           <div className="grid gap-4 md:grid-cols-3 md:auto-rows-fr">
             <a
               href="tel:+9710509745232"
-              className="block h-full rounded-xl border border-border/60 bg-card p-5 hover-elevate"
+              className="contact-detail-card block h-full rounded-xl p-5 hover-elevate"
             >
               <div className="flex items-start gap-3">
                 <Smartphone className="mt-0.5 h-5 w-5 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.mobileLabel}</p>
+                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.mobileLabel}</p>
                   {copy.phoneNumbers.map((phone, index) => (
-                    <p key={`${phone}-${index}`} className={index === 0 ? "mt-2 text-base font-semibold leading-relaxed text-foreground" : "text-base font-semibold leading-relaxed text-foreground"}>
+                    <p key={`${phone}-${index}`} className={index === 0 ? "mt-2 text-base font-semibold leading-relaxed text-[#2F2417]" : "text-base font-semibold leading-relaxed text-[#2F2417]"}>
                       {phone}
                     </p>
                   ))}
@@ -157,13 +134,13 @@ export default function Contact() {
 
             <a
               href={copy.emailHref}
-              className="block h-full rounded-xl border border-border/60 bg-card p-5 hover-elevate"
+              className="contact-detail-card block h-full rounded-xl p-5 hover-elevate"
             >
               <div className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.emailInfoLabel}</p>
-                  <p className="mt-2 text-base font-semibold leading-relaxed text-foreground break-words">{copy.emailValue}</p>
+                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.emailInfoLabel}</p>
+                  <p className="mt-2 text-base font-semibold leading-relaxed text-[#2F2417] break-words">{copy.emailValue}</p>
                 </div>
               </div>
             </a>
@@ -172,37 +149,37 @@ export default function Contact() {
               href={copy.websiteHref}
               target="_blank"
               rel="noreferrer"
-              className="block h-full rounded-xl border border-border/60 bg-card p-5 hover-elevate"
+              className="contact-detail-card block h-full rounded-xl p-5 hover-elevate"
             >
               <div className="flex items-start gap-3">
                 <Globe className="h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.websiteLabel}</p>
-                  <p className="mt-2 text-base font-semibold leading-relaxed text-foreground break-words">{copy.websiteValue}</p>
+                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.websiteLabel}</p>
+                  <p className="mt-2 text-base font-semibold leading-relaxed text-[#2F2417] break-words">{copy.websiteValue}</p>
                 </div>
               </div>
             </a>
           </div>
 
           <div className="grid gap-4 md:grid-cols-3 md:auto-rows-fr">
-            <div className="h-full rounded-xl border border-border/60 bg-card p-5">
+            <div className="contact-detail-card h-full rounded-xl p-5">
               <div className="flex h-full items-start gap-3">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.holdingCompanyLabel}</p>
-                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-foreground">
+                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.holdingCompanyLabel}</p>
+                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]">
                     {copy.holdingCompanyAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
                   </address>
                 </div>
               </div>
             </div>
 
-            <div className="h-full rounded-xl border border-border/60 bg-card p-5">
+            <div className="contact-detail-card h-full rounded-xl p-5">
               <div className="flex h-full items-start gap-3">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.salesOfficeTitle}</p>
-                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-foreground">
+                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.salesOfficeTitle}</p>
+                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]">
                     <p>{copy.salesOfficeCompany}</p>
                     {copy.salesOfficeAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
                   </address>
@@ -210,12 +187,12 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="h-full rounded-xl border border-border/60 bg-card p-5">
+            <div className="contact-detail-card h-full rounded-xl p-5">
               <div className="flex h-full items-start gap-3">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{copy.managementOfficeLabel}</p>
-                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-foreground">
+                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.managementOfficeLabel}</p>
+                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]">
                     {copy.managementOfficeAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
                   </address>
                 </div>

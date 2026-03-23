@@ -5,7 +5,6 @@ import { z } from "zod";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { isCloudinaryConfigured, uploadDataUrlToCloudinary } from "./cloudinary";
-import { isContactEmailEnabled, sendContactFormEmail } from "./mailer";
 import {
   readSiteInventorySettings,
   writeSiteInventorySettings,
@@ -154,35 +153,6 @@ export async function registerRoutes(
   app.get(api.siteCopy.get.path, async (_req, res) => {
     const siteCopy = await readSiteCopy();
     res.json(siteCopy);
-  });
-
-  app.post(api.contactMessages.create.path, async (req, res) => {
-    const parsed = contactMessageInputSchema.safeParse(req.body);
-    if (!parsed.success) {
-      return res.status(400).json({ message: "Invalid contact form payload" });
-    }
-
-    const created = await storage.createContactMessage(parsed.data);
-
-    if (!isContactEmailEnabled()) {
-      console.warn("Contact form email delivery skipped: SMTP is not configured.");
-      return res.status(201).json(created);
-    }
-
-    try {
-      await sendContactFormEmail({
-        ...parsed.data,
-        submittedAt: created.createdAt ?? new Date(),
-      });
-    } catch (error) {
-      console.error("Failed to deliver contact form email:", error);
-      return res.status(500).json({
-        message:
-          "Your message was saved, but email delivery failed. Please check the mail configuration.",
-      });
-    }
-
-    res.status(201).json(created);
   });
 
   app.get(api.admin.me.path, (req, res) => {

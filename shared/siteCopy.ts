@@ -309,10 +309,10 @@ const defaultSiteCopyUpdatedAt = "2026-03-22T00:00:00.000Z";
 export const defaultSiteCopy: SiteCopy = {
   contact: {
     badge: "Direct Contact",
-    intro: "Get in touch with Golden Forests for partnership, operations, and client support.",
+    intro: "Get in touch with Golden Forests for partnership, operations, and client\u00A0support.",
     formTitle: "Contact us",
     formDescription:
-      "Share your inquiry and our team will get back to you regarding partnerships, operations, and client support.",
+      "Complete the registration request form below and our team will review your details and respond through the appropriate Pipedrive workflow.",
     firstNameLabel: "First name",
     lastNameLabel: "Last name",
     emailLabel: "Email *",
