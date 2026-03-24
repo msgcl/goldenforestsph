@@ -95,7 +95,7 @@ const locations: GuideLocation[] = [
     lng: 123.745,
     summary: "Direct Clark route for access to Bohol's beaches and inland natural attractions.",
     route: "Clark -> Bohol-Panglao",
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/68/Chocolate_Hills_Bohol_Philippines.jpg",
+    image: "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352808/golden-forests/ecotourism-bohol.jpg",
     sourceUrl: "https://en.wikipedia.org/wiki/Bohol",
   },
   {
