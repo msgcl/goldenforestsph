@@ -10,7 +10,7 @@ import { defaultInventoryValues, saleInventory } from "@/lib/publicInventory";
 import logoImage from "@assets/logo.png";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
-import { OptimizedImage } from "@/components/ui/optimized-media";
+import { OptimizedImage, OptimizedVideo } from "@/components/ui/optimized-media";
 import { createPageTypography } from "@/lib/siteTypography";
 
 export default function Home() {
@@ -91,6 +91,36 @@ export default function Home() {
                 priority
                 sizes="(min-width: 1024px) 320px, 256px"
                 className="h-full w-full object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.32)]"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-10 overflow-hidden rounded-[2rem] border border-[#C8A070]/30 bg-[linear-gradient(135deg,#17392E_0%,#0F2E28_100%)] p-5 shadow-[0_18px_42px_rgba(9,39,34,0.18)] sm:p-6 lg:p-8">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:items-center">
+          <div className="max-w-xl">
+            <p className={font("featuredVideoEyebrow", "text-xs font-semibold uppercase tracking-[0.18em] text-[#C8A070]")}>
+              {copy.featuredVideoEyebrow}
+            </p>
+            <h2 className={font("featuredVideoTitle", "mt-3 font-outfit text-[1.9rem] font-semibold leading-tight text-[#F6E7D1] sm:text-[2.35rem]")}>
+              {copy.featuredVideoTitle}
+            </h2>
+            <p className={font("featuredVideoDescription", "mt-3 text-sm leading-relaxed text-[#E7D2B2] sm:text-base")}>
+              {copy.featuredVideoDescription}
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-[1.6rem] border border-white/10 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.22)]">
+            <div className="aspect-video">
+              <OptimizedVideo
+                src="https://res.cloudinary.com/dz49fckfu/video/upload/v1774345341/golden-forests/goldenforests-ai-home-video.mp4"
+                className="h-full w-full object-cover"
+                controls
+                autoPlay
+                playsInline
+                preload="auto"
+                priority
               />
             </div>
           </div>

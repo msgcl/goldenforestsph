@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plane, Route, MapPin, Compass, Hotel, Palmtree, Waves } from "lucide-react";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
-import { OptimizedImage } from "@/components/ui/optimized-media";
+import { OptimizedImage, OptimizedVideo } from "@/components/ui/optimized-media";
 import { createPageTypography } from "@/lib/siteTypography";
 
 export default function Ecotourism() {
@@ -35,6 +35,36 @@ export default function Ecotourism() {
           ))}
         </CardContent>
       </Card>
+
+      <section className="mb-8 overflow-hidden rounded-[2rem] border border-[#C8A070]/25 bg-[linear-gradient(135deg,#17392E_0%,#0F2E28_100%)] p-5 shadow-[0_16px_36px_rgba(9,39,34,0.18)] sm:p-6 lg:p-8">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
+          <div className="max-w-xl">
+            <p className={font("featuredVideoEyebrow", "text-xs font-semibold uppercase tracking-[0.18em] text-[#C8A070]")}>
+              {copy.featuredVideoEyebrow}
+            </p>
+            <h2 className={font("featuredVideoTitle", "mt-3 text-[1.9rem] font-semibold leading-tight text-[#F6E7D1] sm:text-[2.3rem]")}>
+              {copy.featuredVideoTitle}
+            </h2>
+            <p className={font("featuredVideoDescription", "mt-3 text-sm leading-relaxed text-[#E7D2B2] sm:text-base")}>
+              {copy.featuredVideoDescription}
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-black shadow-[0_14px_32px_rgba(0,0,0,0.24)]">
+            <div className="aspect-video">
+              <OptimizedVideo
+                src="https://res.cloudinary.com/dz49fckfu/video/upload/v1774345557/golden-forests/plantation-visit-cinematic-journey.mp4"
+                className="h-full w-full object-cover"
+                controls
+                autoPlay
+                playsInline
+                preload="auto"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <Card className="border-border/60">

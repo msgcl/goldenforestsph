@@ -157,6 +157,9 @@ export const agarwoodLifeCyclePageCopySchema = z.object({
 export const ecotourismPageCopySchema = z.object({
   header: pageHeaderSchema,
   introParagraphs: nonEmptyStringArray,
+  featuredVideoEyebrow: nonEmptyString,
+  featuredVideoTitle: nonEmptyString,
+  featuredVideoDescription: nonEmptyString,
   guideTitle: nonEmptyString,
   guideItems: nonEmptyStringArray,
   flightsTitle: nonEmptyString,
@@ -178,6 +181,9 @@ export const homePageCopySchema = z.object({
   heroDescription: nonEmptyString,
   primaryCtaLabel: nonEmptyString,
   secondaryCtaLabel: nonEmptyString,
+  featuredVideoEyebrow: nonEmptyString,
+  featuredVideoTitle: nonEmptyString,
+  featuredVideoDescription: nonEmptyString,
   statsLabels: nonEmptyStringArray,
   statsValues: nonEmptyStringArray,
   statsDescriptions: nonEmptyStringArray,
@@ -643,6 +649,10 @@ export const defaultSiteCopy: SiteCopy = {
       "Through our exclusive ecotourism program, clients are welcomed to visit their plantation sites and see their assets performing on the ground. Each visit includes a two-night stay at a premium hotel and transportation, supported by dedicated staff to ensure a smooth, well-coordinated experience across the Philippines.",
       "The program is designed to pair financial oversight with personal travel value. Clients can combine field visibility in Zambales province with convenient onward routes to Cebu, Coron, Boracay, Bohol, El Nido, and Surigao through Clark.",
     ],
+    featuredVideoEyebrow: "Plantation Visit Video",
+    featuredVideoTitle: "Experience the Visit Before You Arrive",
+    featuredVideoDescription:
+      "A preview of the plantation visit experience, connecting plantation oversight in Zambales with the wider travel programme, premium hospitality, and onward access through Clark to key island destinations.",
     guideTitle: "Travel Guide Overview",
     guideItems: [
       "Beaches in San Antonio, Zambales",
@@ -716,6 +726,10 @@ export const defaultSiteCopy: SiteCopy = {
       "Crassna Agroforestry Development Inc. (CADI) manages Aquilaria crassna and Sweet Elena Carabao mango plantations in Zambales province for Golden Forests clients, combining professional operations, operations ownership and product sales.",
     primaryCtaLabel: "Review Plantation Timeline",
     secondaryCtaLabel: "Open Nursery Dashboard",
+    featuredVideoEyebrow: "Featured Video",
+    featuredVideoTitle: "Inside Golden Forests Operations",
+    featuredVideoDescription:
+      "Watch a closer look at nursery activity, plantation development, and the operational environment behind the Golden Forests programme.",
     statsLabels: [
       "Agarwood Return Profile",
       "Mango Return Profile",
