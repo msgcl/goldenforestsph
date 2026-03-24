@@ -2,7 +2,7 @@ import { AnimatedPage } from "@/components/layout/AnimatedPage";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
-import { Sprout, Droplets, Bug, Microscope, ThermometerSun, TrendingUp } from "lucide-react";
+import { Sprout, Droplets, Bug, Microscope, ThermometerSun } from "lucide-react";
 import { useNurseryStats } from "@/hooks/use-nursery-stats";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "wouter";
@@ -274,16 +274,6 @@ export default function Nursery() {
                       </div>
                       <p className={font("growthDescriptions", "text-sm text-muted-foreground")}>{copy.growthDescriptions[1] ?? ""}</p>
                     </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="shadow-sm border-border/60">
-                  <CardContent className="p-4 flex items-center justify-between">
-                    <div>
-                      <p className={font("mortalityLabel", "text-xs text-muted-foreground mb-1")}>{copy.mortalityLabel}</p>
-                      <p className="text-xl font-semibold text-foreground">{stats.mortalityRate}</p>
-                    </div>
-                    <TrendingUp className="w-5 h-5 text-muted-foreground" />
                   </CardContent>
                 </Card>
 
