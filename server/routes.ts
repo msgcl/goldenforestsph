@@ -449,8 +449,11 @@ export async function registerRoutes(
     const extensionMatch = originalName.match(/\.[^.]+$/);
     const extension = extensionMatch?.[0] ?? (mimeType.startsWith("video/") ? ".mp4" : ".png");
     const fileName = `${Date.now()}-${randomUUID()}${extension}`;
-    const uploaded = await uploadDataUrlToCloudinary(parsed.data.dataUrl, fileName, mimeType);
+    if (!isCloudinaryConfigured()) {
+      return res.status(500).json({ message: "Cloudinary is not configured for uploads" });
+    }
 
+    const uploaded = await uploadDataUrlToCloudinary(parsed.data.dataUrl, fileName, mimeType);
     res.status(201).json({ url: uploaded.secure_url });
   });
 

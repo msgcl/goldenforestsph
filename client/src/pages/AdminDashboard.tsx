@@ -328,7 +328,9 @@ export default function AdminDashboard() {
       const file = selectedUpload ?? mediaFileInputRef.current?.files?.[0] ?? null;
       let mediaUrl = String(mediaForm.mediaUrl ?? "").trim();
       if (file) {
-        const dataUrl = await fileToDataUrl(file);
+        const dataUrl = file.type.startsWith("image/")
+          ? await fileToOptimizedImageDataUrl(file)
+          : await fileToDataUrl(file);
         const uploadRes = await apiRequest("POST", "/api/admin/uploads", {
           fileName: file.name,
           dataUrl,
@@ -344,8 +346,7 @@ export default function AdminDashboard() {
       const parsedSortOrder = Number(mediaForm.sortOrder);
       const sortOrder = Number.isFinite(parsedSortOrder) ? parsedSortOrder : 0;
       const mediaType = inferMediaType(mediaForm.mediaType, file, mediaUrl);
-      const thumbnailUrl =
-        String(mediaForm.thumbnailUrl ?? "").trim() || (mediaType === "image" ? mediaUrl : null);
+      const thumbnailUrl = mediaUrl || null;
       const date = mediaForm.date ? new Date(mediaForm.date) : new Date();
 
       if (!title || !description || !category || !location) {
@@ -803,7 +804,7 @@ export default function AdminDashboard() {
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setSelectedUpload(e.target.files?.[0] ?? null)}
                       />
                       <p className="text-xs text-muted-foreground">
-                        Uploaded images automatically become the media URL and thumbnail.
+                        The exact uploaded media is used as both the media URL and thumbnail source.
                       </p>
                     </div>
                     <div className="space-y-1">

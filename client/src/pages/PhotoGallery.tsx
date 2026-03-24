@@ -82,7 +82,7 @@ export default function PhotoGallery() {
       mediaItems.map((item) => ({
         ...item,
         image: item.mediaUrl,
-        thumbnail: item.thumbnailUrl || item.mediaUrl,
+        thumbnail: item.mediaUrl,
       })),
     [mediaItems],
   );
@@ -125,8 +125,7 @@ export default function PhotoGallery() {
   const categoryLabels = copy.categoryLabels;
   const categorySubtitles = copy.categorySubtitles;
   const getPreviewSrc = (photo: (typeof allPhotos)[number]) => {
-    if (photo.mediaType === "video") return photo.thumbnail;
-    return photo.category === "team" ? photo.image : photo.thumbnail;
+    return photo.image;
   };
 
   const handlePrevImage = () => {
@@ -340,16 +339,17 @@ export default function PhotoGallery() {
                 key={photo.id}
                 type="button"
                 onClick={() => setSelectedImage(photo)}
-                className="group overflow-hidden rounded-[1.5rem] border border-accent/20 bg-[#F1E4CF] text-left text-[#17392E] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C8A070]/50 hover:shadow-lg"
+                className="group flex w-full flex-col appearance-none overflow-hidden rounded-[1.5rem] border-0 bg-[#F1E4CF] p-0 text-left align-top text-[#17392E] shadow-[0_10px_28px_rgba(23,57,46,0.10)] ring-1 ring-[#D9C4A6]/70 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_rgba(23,57,46,0.16)] hover:ring-[#C8A070]/65"
               >
-                <div className={cn("relative overflow-hidden bg-transparent", photo.category === "team" ? "aspect-[4/3]" : "aspect-[5/4]")}>
+                <div className="relative block w-full aspect-[4/3] overflow-hidden bg-[#E9D7BC] leading-none">
                   {photo.mediaType === "video" ? (
                     <>
-                      <OptimizedImage
-                        src={getPreviewSrc(photo)}
-                        alt={photo.title}
+                      <OptimizedVideo
+                        src={photo.image}
+                        muted
+                        playsInline
+                        preload="metadata"
                         className="h-full w-full object-cover"
-                        sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
                       />
                       <div className="absolute inset-0 flex items-center justify-center bg-black/15">
                         <div className="rounded-full border border-white/30 bg-black/40 p-3 text-white backdrop-blur-sm">
@@ -362,14 +362,9 @@ export default function PhotoGallery() {
                       src={getPreviewSrc(photo)}
                       alt={photo.title}
                       sizes={
-                        photo.category === "team"
-                          ? "(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
-                          : "(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+                        "(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
                       }
-                      className={cn(
-                        "h-full w-full transition-transform duration-500 group-hover:scale-105",
-                        photo.category === "team" ? "object-contain bg-muted" : "object-cover",
-                      )}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   )}
 
@@ -380,7 +375,7 @@ export default function PhotoGallery() {
                   </div>
                 </div>
 
-                <div className="p-5">
+                <div className="border-t border-[#DEC7A7] px-5 py-5">
                   <div className="mb-3 flex items-start justify-between gap-3">
                     <h3 className="line-clamp-2 text-lg font-semibold text-[#17392E]">{photo.title}</h3>
                     <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-[#17392E]/55 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -434,7 +429,6 @@ export default function PhotoGallery() {
                 {selectedImage.mediaType === "video" ? (
                   <OptimizedVideo
                     src={selectedImage.image}
-                    poster={selectedImage.thumbnail}
                     controls
                     autoPlay
                     priority
