@@ -1,4 +1,5 @@
 import { Switch, Route, useLocation } from "wouter";
+import { useEffect, useRef, useState } from "react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -29,6 +30,8 @@ import AdminLogin from "@/pages/AdminLogin";
 import AdminDashboard from "@/pages/AdminDashboard";
 import logoImage from "@assets/logo.png";
 import { OptimizedImage } from "@/components/ui/optimized-media";
+import { cn } from "@/lib/utils";
+import { isHomeLandingDismissed } from "@/lib/homeLandingState";
 
 function Router() {
   return (
@@ -58,10 +61,32 @@ function Router() {
 function App() {
   const [location] = useLocation();
   const isAdminRoute = location.startsWith("/admin");
+  const isHomeRoute = location === "/";
+  const [homeNavigationVisible, setHomeNavigationVisible] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return isHomeLandingDismissed();
+  });
+  const scrollContainerRef = useRef<HTMLElement | null>(null);
   const sidebarStyle = {
     "--sidebar-width": "18rem",
     "--sidebar-width-icon": "4rem",
   } as React.CSSProperties;
+
+  useEffect(() => {
+    if (!isHomeRoute) {
+      setHomeNavigationVisible(true);
+      return;
+    }
+
+    const syncHomeNavigation = () => {
+      setHomeNavigationVisible(isHomeLandingDismissed());
+    };
+
+    syncHomeNavigation();
+    window.addEventListener("home-landing-dismissed", syncHomeNavigation);
+
+    return () => window.removeEventListener("home-landing-dismissed", syncHomeNavigation);
+  }, [isHomeRoute, location]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -72,36 +97,45 @@ function App() {
             <Router />
           </main>
         ) : (
-          <SidebarProvider style={sidebarStyle}>
+          <SidebarProvider defaultOpen={false} style={sidebarStyle}>
             <div className="relative flex h-dvh min-h-dvh w-full overflow-x-hidden bg-background">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(200,160,112,0.08),transparent_38%)]" />
-              <AppSidebar />
+              {!isHomeRoute || homeNavigationVisible ? <AppSidebar /> : null}
               <div className="relative flex min-w-0 flex-1 flex-col overflow-hidden">
-                <header className="sticky top-0 z-50 border-b border-accent/20 bg-background/92 px-4 py-3 backdrop-blur-xl sm:px-6">
-                  <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <SidebarTrigger
-                        data-testid="button-sidebar-toggle"
-                        className="h-10 w-10 rounded-full border border-accent/25 bg-card text-[#17392E] shadow-sm dark:text-foreground"
-                      />
+                {!isHomeRoute || homeNavigationVisible ? (
+                  <header className="sticky top-0 z-50 border-b border-accent/20 bg-background/92 px-4 py-3 backdrop-blur-xl sm:px-6">
+                    <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <SidebarTrigger
+                          data-testid="button-sidebar-toggle"
+                          className="h-10 w-10 rounded-full border border-accent/25 bg-card text-[#17392E] shadow-sm dark:text-foreground"
+                        />
+                        <div className="flex items-center gap-2">
+                          <div className="flex h-10 w-10 items-center justify-center">
+                            <OptimizedImage src={logoImage} alt="Golden Forests logo" priority sizes="26px" className="h-6.5 w-6.5 object-contain" />
+                          </div>
+                          <div>
+                            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-accent">Plantation Management Portal</p>
+                            <p className="text-sm font-medium text-[#17392E] dark:text-foreground">Crassna Agroforestry Development Inc.</p>
+                          </div>
+                        </div>
+                      </div>
                       <div className="flex items-center gap-2">
-                        <div className="flex h-10 w-10 items-center justify-center">
-                          <OptimizedImage src={logoImage} alt="Golden Forests logo" priority sizes="26px" className="h-6.5 w-6.5 object-contain" />
-                        </div>
-                        <div>
-                          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-accent">Plantation Management Portal</p>
-                          <p className="text-sm font-medium text-[#17392E] dark:text-foreground">Crassna Agroforestry Development Inc.</p>
+                        <div className="hidden items-center rounded-full border border-accent/35 bg-accent/12 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-accent sm:flex">
+                          Powered by Golden Forests
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className="hidden items-center rounded-full border border-accent/35 bg-accent/12 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-accent sm:flex">
-                        Powered by Golden Forests
-                      </div>
-                    </div>
-                  </div>
-                </header>
-                <main id="app-scroll-container" className="relative z-10 flex-1 overflow-y-auto overflow-x-hidden scroll-smooth">
+                  </header>
+                ) : null}
+                <main
+                  ref={scrollContainerRef}
+                  id="app-scroll-container"
+                  className={cn(
+                    "relative z-10 flex-1 overflow-y-auto overflow-x-hidden scroll-smooth",
+                    isHomeRoute && !homeNavigationVisible ? "bg-transparent" : "",
+                  )}
+                >
                   <ScrollToTop />
                   <Router />
                   <AppFooter />

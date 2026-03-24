@@ -382,6 +382,7 @@ export const defaultSiteCopy: SiteCopy = {
     websiteHref: "https://www.goldenforests.ai/",
     holdingCompanyLabel: "Golden Forests ADGM Holding Company",
     holdingCompanyAddress: [
+      "Golden Forests ADGM Holding SPV LTD",
       "ADGM, Office 3702, Floor 37, Addax Port Office Tower, Tamouh, Abu Dhabi, Al Reem Island, United Arab Emirates",
     ],
     salesOfficeTitle: "Sales & Marketing",
@@ -390,6 +391,7 @@ export const defaultSiteCopy: SiteCopy = {
       "IDZA Business Park, DDP 75773-001, A1-3641379065, Dubai Digital Park, Dubai Silicon Oasis, Dubai, UAE",
     ],
     managementOfficeAddress: [
+      "Crassna Agroforestry Development Inc. (CADI)",
       "Level 24, Philippines Stock Exchange Tower, One Bonafacio Street, 5th Ave Cor. 28th Street, BGC, Taguig City, Philippines",
     ],
   },
@@ -707,15 +709,15 @@ export const defaultSiteCopy: SiteCopy = {
       "Cloud 9 surf routes and Sohoton access",
     ],
     featuredDestinationImages: [
-      "https://upload.wikimedia.org/wikipedia/commons/c/cf/Anawangin_Cove_at_Sunrise.jpg",
-      "/gallery/sundowners.jpg",
-      "https://upload.wikimedia.org/wikipedia/en/9/92/Clark_International_Airport_%28Mabalacat%2C_Pampanga%3B_04-22-2024%29.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/9/90/Osme%C3%B1a_Peak%2C_Cebu%2C_Philippines.jpg",
-      "/gallery/coron.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/c/cd/Boracay_White_Beach.png",
-      "https://upload.wikimedia.org/wikipedia/commons/6/68/Chocolate_Hills_Bohol_Philippines.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/c/c7/El_Nido_Bay_December_2018.jpg",
-      "/gallery/cloud9.webp",
+      "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352600/golden-forests/ecotourism-san-antonio-beaches.jpg",
+      "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352600/golden-forests/ecotourism-sundowners-resort.jpg",
+      "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352676/golden-forests/ecotourism-clark-airport.jpg",
+      "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352804/golden-forests/ecotourism-cebu.jpg",
+      "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352601/golden-forests/ecotourism-coron.jpg",
+      "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352805/golden-forests/ecotourism-boracay.png",
+      "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352808/golden-forests/ecotourism-bohol.jpg",
+      "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352980/golden-forests/ecotourism-el-nido.jpg",
+      "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352602/golden-forests/ecotourism-cloud9-siargao.webp",
     ],
   },
   home: {
@@ -956,6 +958,47 @@ export const defaultSiteCopy: SiteCopy = {
 export function normalizeSiteCopy(parsed: unknown): SiteCopy {
   const data = (parsed ?? {}) as Partial<SiteCopy> & Record<string, any>;
 
+  const normalizedContact = { ...defaultSiteCopy.contact, ...(data.contact ?? {}) };
+
+  if (!normalizedContact.holdingCompanyAddress.some((line) => line.includes("Golden Forests ADGM Holding SPV LTD"))) {
+    normalizedContact.holdingCompanyAddress = [
+      "Golden Forests ADGM Holding SPV LTD",
+      ...normalizedContact.holdingCompanyAddress,
+    ];
+  }
+
+  if (
+    normalizedContact.salesOfficeCompany !==
+    "Golden Forests Agroforestry Intelligence Investment in Agricultural Enterprises & Management FZCO"
+  ) {
+    normalizedContact.salesOfficeCompany =
+      "Golden Forests Agroforestry Intelligence Investment in Agricultural Enterprises & Management FZCO";
+  }
+
+  if (!normalizedContact.managementOfficeAddress.some((line) => line.includes("Crassna Agroforestry Development Inc. (CADI)"))) {
+    normalizedContact.managementOfficeAddress = [
+      "Crassna Agroforestry Development Inc. (CADI)",
+      ...normalizedContact.managementOfficeAddress,
+    ];
+  }
+
+  const normalizedEcotourism = { ...defaultSiteCopy.ecotourism, ...(data.ecotourism ?? {}) };
+  const ecotourismImageMap = new Map<string, string>([
+    ["https://upload.wikimedia.org/wikipedia/commons/c/cf/Anawangin_Cove_at_Sunrise.jpg", defaultSiteCopy.ecotourism.featuredDestinationImages[0]],
+    ["/gallery/sundowners.jpg", defaultSiteCopy.ecotourism.featuredDestinationImages[1]],
+    ["https://upload.wikimedia.org/wikipedia/en/9/92/Clark_International_Airport_%28Mabalacat%2C_Pampanga%3B_04-22-2024%29.jpg", defaultSiteCopy.ecotourism.featuredDestinationImages[2]],
+    ["https://upload.wikimedia.org/wikipedia/commons/9/90/Osme%C3%B1a_Peak%2C_Cebu%2C_Philippines.jpg", defaultSiteCopy.ecotourism.featuredDestinationImages[3]],
+    ["/gallery/coron.jpg", defaultSiteCopy.ecotourism.featuredDestinationImages[4]],
+    ["https://upload.wikimedia.org/wikipedia/commons/c/cd/Boracay_White_Beach.png", defaultSiteCopy.ecotourism.featuredDestinationImages[5]],
+    ["https://upload.wikimedia.org/wikipedia/commons/6/68/Chocolate_Hills_Bohol_Philippines.jpg", defaultSiteCopy.ecotourism.featuredDestinationImages[6]],
+    ["https://upload.wikimedia.org/wikipedia/commons/c/c7/El_Nido_Bay_December_2018.jpg", defaultSiteCopy.ecotourism.featuredDestinationImages[7]],
+    ["/gallery/cloud9.webp", defaultSiteCopy.ecotourism.featuredDestinationImages[8]],
+  ]);
+
+  normalizedEcotourism.featuredDestinationImages = (normalizedEcotourism.featuredDestinationImages ?? defaultSiteCopy.ecotourism.featuredDestinationImages).map(
+    (image, index) => ecotourismImageMap.get(image) ?? image ?? defaultSiteCopy.ecotourism.featuredDestinationImages[index],
+  );
+
   return siteCopySchema.parse({
     ...defaultSiteCopy,
     ...data,
@@ -963,7 +1006,7 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
       ...defaultSiteCopy.typography,
       ...(data.typography ?? {}),
     },
-    contact: { ...defaultSiteCopy.contact, ...(data.contact ?? {}) },
+    contact: normalizedContact,
     about: {
       ...defaultSiteCopy.about,
       ...(data.about ?? {}),
@@ -1007,7 +1050,7 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
     },
     ecotourism: {
       ...defaultSiteCopy.ecotourism,
-      ...(data.ecotourism ?? {}),
+      ...normalizedEcotourism,
       header: { ...defaultSiteCopy.ecotourism.header, ...(data.ecotourism?.header ?? {}) },
     },
     home: { ...defaultSiteCopy.home, ...(data.home ?? {}) },

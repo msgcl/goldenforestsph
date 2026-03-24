@@ -28,7 +28,7 @@ export default function Impact() {
           <div className="h-48 bg-muted relative flex items-center justify-center">
             {/* abstract green forest */}
             <OptimizedImage
-              src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&fit=crop" 
+              src="https://res.cloudinary.com/dz49fckfu/image/upload/v1774352599/golden-forests/impact-reforestation.jpg"
               alt="Reforestation" 
               sizes="(min-width: 768px) 50vw, 100vw"
               className="absolute inset-0 w-full h-full object-cover opacity-70"
@@ -47,7 +47,7 @@ export default function Impact() {
         <Card className="hover-elevate overflow-hidden border-border/60">
           <div className="h-48 bg-muted relative flex items-center justify-center">
              <OptimizedImage
-              src="/gallery/employment.png" 
+              src="https://res.cloudinary.com/dz49fckfu/image/upload/v1774352603/golden-forests/impact-local-employment.png"
               alt="Community" 
               sizes="(min-width: 768px) 50vw, 100vw"
               className="absolute inset-0 w-full h-full object-cover opacity-70"

@@ -170,8 +170,12 @@ export default function Contact() {
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
                   <p className={font("holdingCompanyLabel", "text-xs uppercase tracking-wider text-[#7A6240]")}>{copy.holdingCompanyLabel}</p>
-                  <address className={font("holdingCompanyAddress", "mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]")}>
-                    {copy.holdingCompanyAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
+                  <address className={font("holdingCompanyAddress", "mt-2 not-italic text-base font-semibold leading-relaxed text-[#2F2417]")}>
+                    {copy.holdingCompanyAddress.map((line, index) => (
+                      <p key={`${line}-${index}`} className={index === 0 ? "" : "mt-3"}>
+                        {line}
+                      </p>
+                    ))}
                   </address>
                 </div>
               </div>
@@ -182,9 +186,16 @@ export default function Contact() {
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
                   <p className={font("salesOfficeTitle", "text-xs uppercase tracking-wider text-[#7A6240]")}>{copy.salesOfficeTitle}</p>
-                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]">
-                    <p className={font("salesOfficeCompany")}>{copy.salesOfficeCompany}</p>
-                    {copy.salesOfficeAddress.map((line, index) => <p key={`${line}-${index}`} className={font("salesOfficeAddress")}>{line}</p>)}
+                  <address className="mt-2 not-italic text-base font-semibold leading-relaxed text-[#2F2417]">
+                    <p className={font("salesOfficeCompany", "mb-4")}>{copy.salesOfficeCompany}</p>
+                    {copy.salesOfficeAddress.map((line, index) => (
+                      <p
+                        key={`${line}-${index}`}
+                        className={font("salesOfficeAddress", index === 0 ? "" : "mt-3")}
+                      >
+                        {line}
+                      </p>
+                    ))}
                   </address>
                 </div>
               </div>
@@ -195,8 +206,12 @@ export default function Contact() {
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
                   <p className={font("managementOfficeLabel", "text-xs uppercase tracking-wider text-[#7A6240]")}>{copy.managementOfficeLabel}</p>
-                  <address className={font("managementOfficeAddress", "mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]")}>
-                    {copy.managementOfficeAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
+                  <address className={font("managementOfficeAddress", "mt-2 not-italic text-base font-semibold leading-relaxed text-[#2F2417]")}>
+                    {copy.managementOfficeAddress.map((line, index) => (
+                      <p key={`${line}-${index}`} className={index === 0 ? "" : "mt-3"}>
+                        {line}
+                      </p>
+                    ))}
                   </address>
                 </div>
               </div>

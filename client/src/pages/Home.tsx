@@ -1,10 +1,10 @@
 import { AnimatedPage } from "@/components/layout/AnimatedPage";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, ShieldCheck, Cpu, Eye, LineChart, Landmark, MapPin, PlaneTakeoff, Sprout } from "lucide-react";
+import { ArrowDown, ArrowRight, ShieldCheck, Cpu, Eye, LineChart, Landmark, MapPin, PlaneTakeoff, Sprout } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useGalleryMedia } from "@/hooks/use-gallery-media";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNurseryStats } from "@/hooks/use-nursery-stats";
 import { defaultInventoryValues, saleInventory } from "@/lib/publicInventory";
 import logoImage from "@assets/logo.png";
@@ -12,8 +12,10 @@ import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
 import { OptimizedImage, OptimizedVideo } from "@/components/ui/optimized-media";
 import { createPageTypography } from "@/lib/siteTypography";
+import { dismissHomeLanding, isHomeLandingDismissed } from "@/lib/homeLandingState";
 
 export default function Home() {
+  const landingImageUrl = "https://res.cloudinary.com/dz49fckfu/image/upload/v1774350108/golden-forests/goldenforests-landing-image.jpg";
   const { data: latestStats } = useNurseryStats();
   const { data: mediaItems = [] } = useGalleryMedia();
   const { data: siteCopy } = useSiteCopy();
@@ -21,18 +23,128 @@ export default function Home() {
   const copy = resolvedSiteCopy.home;
   const font = createPageTypography(resolvedSiteCopy, "home");
   const [heroImageHidden, setHeroImageHidden] = useState(false);
+  const [showLandingIntro, setShowLandingIntro] = useState(false);
+  const [landingIntroVisible, setLandingIntroVisible] = useState(false);
+  const [isDismissingLanding, setIsDismissingLanding] = useState(false);
   const governanceIcons = [ShieldCheck, Cpu, Eye];
+  const landingSectionRef = useRef<HTMLElement | null>(null);
 
   const nurseryPreview = mediaItems.find((item) => item.category === "nursery")?.mediaUrl;
   const plantationPreview = mediaItems.find((item) => item.category === "plantation")?.mediaUrl;
-  const operationsPreview = "/gallery/operations-technology-dashboard.png";
+  const operationsPreview = "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352675/golden-forests/home-operations-dashboard.png";
   const inventoryDateLabel = new Date(latestStats?.inventoryDate ?? defaultInventoryValues.inventoryDate).toLocaleDateString(
     "en-US",
     { month: "short", day: "numeric", year: "numeric" }
   );
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setShowLandingIntro(!isHomeLandingDismissed());
+  }, []);
+
+  useEffect(() => {
+    if (!showLandingIntro) {
+      setLandingIntroVisible(false);
+      return;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      setLandingIntroVisible(true);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [showLandingIntro]);
+
+  const dismissLanding = (nextScrollTop = 0) => {
+    if (isDismissingLanding) return;
+
+    const scrollContainer = document.getElementById("app-scroll-container");
+    if (!scrollContainer) return;
+
+    setIsDismissingLanding(true);
+
+    dismissHomeLanding();
+    setShowLandingIntro(false);
+    setIsDismissingLanding(false);
+    window.dispatchEvent(new Event("home-landing-dismissed"));
+
+    window.requestAnimationFrame(() => {
+      scrollContainer.scrollTo({
+        top: nextScrollTop,
+        behavior: "auto",
+      });
+    });
+  };
+
+  useEffect(() => {
+    if (!showLandingIntro || isDismissingLanding) return;
+
+    const scrollContainer = document.getElementById("app-scroll-container");
+    if (!scrollContainer) return;
+
+    const handleScroll = () => {
+      const introHeight = landingSectionRef.current?.offsetHeight ?? window.innerHeight;
+      if (scrollContainer.scrollTop >= introHeight * 0.72) {
+        dismissLanding(Math.max(scrollContainer.scrollTop - introHeight, 0));
+      }
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, [showLandingIntro, isDismissingLanding]);
+
+  const handleEnterSite = () => {
+    const scrollContainer = document.getElementById("app-scroll-container");
+    if (!scrollContainer) return;
+
+    if (!showLandingIntro) {
+      scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    dismissLanding(0);
+  };
+
   return (
-    <AnimatedPage>
+    <>
+      {showLandingIntro ? (
+          <section
+            ref={landingSectionRef}
+            className="relative isolate min-h-dvh overflow-hidden bg-[#08231f] text-white"
+          >
+            <div className={`absolute inset-0 transition-opacity duration-700 ease-out ${landingIntroVisible ? "opacity-100" : "opacity-0"}`}>
+              <OptimizedImage
+                src={landingImageUrl}
+                alt="Golden Forests aerial plantation landscape"
+                priority
+                sizes="100vw"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className={`absolute inset-0 bg-[linear-gradient(180deg,rgba(4,16,13,0.08)_0%,rgba(4,16,13,0.12)_58%,rgba(4,16,13,0.82)_100%)] transition-opacity duration-700 ease-out ${landingIntroVisible ? "opacity-100" : "opacity-0"}`} />
+            <div className={`absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(200,160,112,0.16),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(126,170,148,0.12),transparent_32%)] transition-opacity duration-700 ease-out ${landingIntroVisible ? "opacity-100" : "opacity-0"}`} />
+
+            <div className="relative z-10 flex min-h-dvh flex-col justify-end px-5 pb-7 sm:px-8 sm:pb-8 lg:px-12 lg:pb-10">
+              <div className={`mx-auto w-full max-w-6xl transition-opacity duration-700 ease-out ${landingIntroVisible ? "opacity-100" : "opacity-0"}`}>
+                <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+                  <Button
+                    type="button"
+                    onClick={handleEnterSite}
+                    className="rounded-full bg-[#E6CAA1] px-7 text-sm font-semibold text-[#17392E] hover:bg-[#edd6b6]"
+                  >
+                    Enter Website
+                  </Button>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-black/18 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/84 backdrop-blur-md">
+                    <ArrowDown className="h-3.5 w-3.5" />
+                    Scroll to continue
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+    <AnimatedPage className={showLandingIntro ? "pt-10 md:pt-12" : "pt-6 md:pt-8"}>
       <section className="relative overflow-hidden rounded-3xl border border-accent/30 bg-[#17392E] text-primary-foreground shadow-xl shadow-black/10">
         {!heroImageHidden ? (
           <OptimizedImage
@@ -329,5 +441,6 @@ export default function Home() {
         </div>
       </section>
     </AnimatedPage>
+    </>
   );
 }
