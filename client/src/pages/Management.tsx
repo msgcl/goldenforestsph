@@ -8,11 +8,14 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
 import { OptimizedImage } from "@/components/ui/optimized-media";
+import { createPageTypography } from "@/lib/siteTypography";
 
 export default function Management() {
   const { data: members, isLoading } = useTeamMembers();
   const { data: siteCopy } = useSiteCopy();
-  const copy = siteCopy?.management ?? defaultSiteCopy.management;
+  const resolvedSiteCopy = siteCopy ?? defaultSiteCopy;
+  const copy = resolvedSiteCopy.management;
+  const font = createPageTypography(resolvedSiteCopy, "management");
   type TeamMember = NonNullable<typeof members>[number];
   const toFormalSummary = (text: string | undefined) => {
     const cleaned = (text || "").replace(/\s+/g, " ").trim();
@@ -34,7 +37,7 @@ export default function Management() {
 
     return (
       <div className="mb-16">
-        <h2 className="text-2xl font-bold font-outfit mb-6 pb-2 border-b border-border/50">{title}</h2>
+        <h2 className={font("categoryTitles", "text-2xl font-bold mb-6 pb-2 border-b border-border/50")}>{title}</h2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {isLoading ? (
             Array(3).fill(0).map((_, i) => (
@@ -89,13 +92,13 @@ export default function Management() {
                   <div className="space-y-4 pt-2">
                     <div className="flex gap-2 items-start">
                       <Briefcase className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                      <p className={font("fallbackDetailText", "text-sm text-muted-foreground leading-relaxed")}>
                         {toFormalSummary(member.experience)}
                       </p>
                     </div>
                     <div className="flex gap-2 items-start">
                       <GraduationCap className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                      <p className={font("fallbackDetailText", "text-sm text-muted-foreground leading-relaxed")}>
                         {toFormalSummary(member.expertise)}
                       </p>
                     </div>
@@ -115,9 +118,11 @@ export default function Management() {
         badge={copy.header.badge}
         title={copy.header.title} 
         description={copy.header.description}
+        pageKey="management"
+        siteCopy={resolvedSiteCopy}
       />
 
-      <p className="mb-8 text-sm text-muted-foreground/80">
+      <p className={font("helperText", "mb-8 text-sm text-muted-foreground/80")}>
         {copy.helperText}
       </p>
 

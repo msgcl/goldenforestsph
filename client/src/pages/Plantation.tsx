@@ -8,6 +8,7 @@ import { useNurseryStats } from "@/hooks/use-nursery-stats";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
 import { OptimizedImage, OptimizedVideo } from "@/components/ui/optimized-media";
+import { createPageTypography } from "@/lib/siteTypography";
 
 const agarwoodLifecycle = [
   {
@@ -56,10 +57,12 @@ const mangoLifecycle = [
 ];
 
 export default function Plantation() {
-  const { data: stats } = useNurseryStats();
+  useNurseryStats();
   const { data: mediaItems = [] } = useGalleryMedia();
   const { data: siteCopy } = useSiteCopy();
-  const copy = siteCopy?.plantation ?? defaultSiteCopy.plantation;
+  const resolvedSiteCopy = siteCopy ?? defaultSiteCopy;
+  const copy = resolvedSiteCopy.plantation;
+  const font = createPageTypography(resolvedSiteCopy, "plantation");
   const plantationGalleryItems = mediaItems.filter((item) => item.category === "plantation");
 
   return (
@@ -68,12 +71,14 @@ export default function Plantation() {
         badge={copy.header.badge}
         title={copy.header.title} 
         description={copy.header.description}
+        pageKey="plantation"
+        siteCopy={resolvedSiteCopy}
       />
 
       {/* Land Preparation Photo Gallery */}
       <div className="mb-10 py-4">
-        <h2 className="mb-3 text-[1.9rem] font-bold font-outfit sm:text-3xl">{copy.galleryTitle}</h2>
-        <p className="mb-8 text-base text-muted-foreground sm:text-lg">{copy.galleryDescription}</p>
+        <h2 className={font("galleryTitle", "mb-3 text-[1.9rem] font-bold sm:text-3xl")}>{copy.galleryTitle}</h2>
+        <p className={font("galleryDescription", "mb-8 text-base text-muted-foreground sm:text-lg")}>{copy.galleryDescription}</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {plantationGalleryItems.map((item) => (
             <div key={item.id} className="rounded-2xl overflow-hidden border border-border/50 shadow-lg hover-elevate">
@@ -108,16 +113,16 @@ export default function Plantation() {
       {/* July Out-Planting Timeline */}
       <div className="relative mb-16 overflow-hidden rounded-3xl border border-primary/20 bg-primary/5 p-5 sm:p-8 md:p-12">
         <div className="relative z-10">
-          <h2 className="mb-4 text-[1.9rem] font-bold font-outfit sm:text-3xl">{copy.milestoneTitle}</h2>
-          <p className="mb-6 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <h2 className={font("milestoneTitle", "mb-4 text-[1.9rem] font-bold sm:text-3xl")}>{copy.milestoneTitle}</h2>
+          <p className={font("milestoneDescription", "mb-6 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg")}>
             {copy.milestoneDescription}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
             {copy.milestoneLabels.map((label, index) => (
               <div key={label} className="bg-background rounded-xl p-4 border border-border/50">
-                <p className="text-sm font-bold text-primary mb-1">{label}</p>
-                <p className="text-2xl font-outfit font-bold">{copy.milestoneValues[index] ?? ""}</p>
-                <p className="text-xs text-muted-foreground mt-1">{copy.milestoneNotes[index] ?? ""}</p>
+                <p className={font("milestoneLabels", "text-sm font-bold text-primary mb-1")}>{label}</p>
+                <p className={font("milestoneValues", "text-2xl font-bold")}>{copy.milestoneValues[index] ?? ""}</p>
+                <p className={font("milestoneNotes", "text-xs text-muted-foreground mt-1")}>{copy.milestoneNotes[index] ?? ""}</p>
               </div>
             ))}
           </div>
@@ -127,7 +132,7 @@ export default function Plantation() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
         <div>
-          <h3 className="text-3xl font-bold font-outfit mb-6 flex items-center gap-3">
+          <h3 className={font("landPreparationTitle", "text-3xl font-bold mb-6 flex items-center gap-3")}>
             <Layers className="text-primary w-8 h-8" /> {copy.landPreparationTitle}
           </h3>
           <div className="space-y-6">
@@ -138,8 +143,8 @@ export default function Plantation() {
                     <Tractor className="w-5 h-5 text-foreground" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-lg mb-2">{copy.soilProtocolTitle}</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <h4 className={font("soilProtocolTitle", "font-bold text-lg mb-2")}>{copy.soilProtocolTitle}</h4>
+                    <p className={font("soilProtocolDescription", "text-sm text-muted-foreground leading-relaxed")}>
                       {copy.soilProtocolDescription}
                     </p>
                   </div>
@@ -154,8 +159,8 @@ export default function Plantation() {
                     <LeafyGreen className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-lg text-white mb-2">{copy.cassavaTitle}</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <h4 className={font("cassavaTitle", "font-bold text-lg text-white mb-2")}>{copy.cassavaTitle}</h4>
+                    <p className={font("cassavaDescription", "text-sm text-muted-foreground leading-relaxed")}>
                       {copy.cassavaDescription}
                     </p>
                   </div>
@@ -166,7 +171,7 @@ export default function Plantation() {
         </div>
 
         <div>
-          <h3 className="text-3xl font-bold font-outfit mb-6 flex items-center gap-3">
+          <h3 className={font("lifecycleTitle", "text-3xl font-bold mb-6 flex items-center gap-3")}>
             <ScanLine className="text-primary w-8 h-8" /> {copy.lifecycleTitle}
           </h3>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
@@ -177,16 +182,16 @@ export default function Plantation() {
                     <LeafyGreen className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-xl font-outfit text-foreground">{copy.agarwoodLabel}</h4>
-                    <p className="text-sm text-muted-foreground">{copy.agarwoodSubtitle}</p>
+                    <h4 className={font("agarwoodLabel", "font-bold text-xl text-foreground")}>{copy.agarwoodLabel}</h4>
+                    <p className={font("agarwoodSubtitle", "text-sm text-muted-foreground")}>{copy.agarwoodSubtitle}</p>
                   </div>
                 </div>
                 <div className="relative border-l-2 border-border ml-4 space-y-8 pb-1">
                   {copy.agarwoodLifecycleTitles.map((title, index) => (
                     <div key={title} className="relative pl-8">
                       <div className={`absolute w-4 h-4 rounded-full bg-background -left-[9px] top-1 border-2 ${index === copy.agarwoodLifecycleTitles.length - 1 ? "border-accent" : "border-primary"}`}></div>
-                      <h5 className="font-bold text-lg font-outfit text-foreground">{title}</h5>
-                      <p className="text-sm text-muted-foreground mt-2">{copy.agarwoodLifecycleDescriptions[index] ?? ""}</p>
+                      <h5 className={font("agarwoodLifecycleTitles", "font-bold text-lg text-foreground")}>{title}</h5>
+                      <p className={font("agarwoodLifecycleDescriptions", "text-sm text-muted-foreground mt-2")}>{copy.agarwoodLifecycleDescriptions[index] ?? ""}</p>
                     </div>
                   ))}
                 </div>
@@ -200,16 +205,16 @@ export default function Plantation() {
                     <Calendar className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-xl font-outfit text-foreground">{copy.mangoLabel}</h4>
-                    <p className="text-sm text-muted-foreground">{copy.mangoSubtitle}</p>
+                    <h4 className={font("mangoLabel", "font-bold text-xl text-foreground")}>{copy.mangoLabel}</h4>
+                    <p className={font("mangoSubtitle", "text-sm text-muted-foreground")}>{copy.mangoSubtitle}</p>
                   </div>
                 </div>
                 <div className="relative border-l-2 border-border ml-4 space-y-8 pb-1">
                   {copy.mangoLifecycleTitles.map((title, index) => (
                     <div key={title} className="relative pl-8">
                       <div className={`absolute w-4 h-4 rounded-full bg-background -left-[9px] top-1 border-2 ${index === copy.mangoLifecycleTitles.length - 1 ? "border-accent" : "border-primary/60"}`}></div>
-                      <h5 className="font-bold text-lg font-outfit text-foreground">{title}</h5>
-                      <p className="text-sm text-muted-foreground mt-2">{copy.mangoLifecycleDescriptions[index] ?? ""}</p>
+                      <h5 className={font("mangoLifecycleTitles", "font-bold text-lg text-foreground")}>{title}</h5>
+                      <p className={font("mangoLifecycleDescriptions", "text-sm text-muted-foreground mt-2")}>{copy.mangoLifecycleDescriptions[index] ?? ""}</p>
                     </div>
                   ))}
                 </div>

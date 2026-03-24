@@ -9,6 +9,9 @@ const pageHeaderSchema = z.object({
   description: nonEmptyString,
 });
 
+export const brandFontOptionSchema = z.enum(["open-sans", "playfair-display"]);
+const pageTypographySchema = z.record(brandFontOptionSchema);
+
 const siteCopySectionMetaSchema = z.object({
   updatedAt: nonEmptyString,
 });
@@ -285,6 +288,22 @@ export const photoGalleryPageCopySchema = z.object({
 });
 
 export const siteCopySchema = z.object({
+  typography: z.object({
+    contact: pageTypographySchema,
+    about: pageTypographySchema,
+    compliance: pageTypographySchema,
+    technology: pageTypographySchema,
+    impact: pageTypographySchema,
+    clientServices: pageTypographySchema,
+    mangoProgram: pageTypographySchema,
+    agarwoodLifeCycle: pageTypographySchema,
+    ecotourism: pageTypographySchema,
+    home: pageTypographySchema,
+    nursery: pageTypographySchema,
+    plantation: pageTypographySchema,
+    management: pageTypographySchema,
+    photoGallery: pageTypographySchema,
+  }),
   contact: contactPageCopySchema,
   about: aboutPageCopySchema,
   compliance: compliancePageCopySchema,
@@ -307,6 +326,22 @@ export type SiteCopy = z.infer<typeof siteCopySchema>;
 const defaultSiteCopyUpdatedAt = "2026-03-22T00:00:00.000Z";
 
 export const defaultSiteCopy: SiteCopy = {
+  typography: {
+    contact: {},
+    about: {},
+    compliance: {},
+    technology: {},
+    impact: {},
+    clientServices: {},
+    mangoProgram: {},
+    agarwoodLifeCycle: {},
+    ecotourism: {},
+    home: {},
+    nursery: {},
+    plantation: {},
+    management: {},
+    photoGallery: {},
+  },
   contact: {
     badge: "Direct Contact",
     intro: "Get in touch with Golden Forests for partnership, operations, and client\u00A0support.",
@@ -910,6 +945,10 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
   return siteCopySchema.parse({
     ...defaultSiteCopy,
     ...data,
+    typography: {
+      ...defaultSiteCopy.typography,
+      ...(data.typography ?? {}),
+    },
     contact: { ...defaultSiteCopy.contact, ...(data.contact ?? {}) },
     about: {
       ...defaultSiteCopy.about,

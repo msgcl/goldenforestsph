@@ -4,6 +4,7 @@ import { Smartphone, Mail, Globe, MapPin, LoaderCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
+import { createPageTypography } from "@/lib/siteTypography";
 
 const PIPEDRIVE_FORM_URL =
   "https://webforms.pipedrive.com/f/ccFXKfVy5hM7bSUc7TncVRQZb2ZjziEa2mp80r9GPdeGh6WdNUurWsIIM6eEqUZGH9";
@@ -11,7 +12,9 @@ const PIPEDRIVE_LOADER_URL = "https://webforms.pipedrive.com/f/loader";
 
 export default function Contact() {
   const { data: siteCopy } = useSiteCopy();
-  const copy = siteCopy?.contact ?? defaultSiteCopy.contact;
+  const resolvedSiteCopy = siteCopy ?? defaultSiteCopy;
+  const copy = resolvedSiteCopy.contact;
+  const font = createPageTypography(resolvedSiteCopy, "contact");
   const formContainerRef = useRef<HTMLDivElement | null>(null);
   const [isFormLoading, setIsFormLoading] = useState(true);
 
@@ -58,10 +61,10 @@ export default function Contact() {
   return (
     <AnimatedPage>
       <div className="mb-10 max-w-4xl">
-        <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wider uppercase mb-4 border border-primary/20">
+        <span className={font("badge", "inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wider uppercase mb-4 border border-primary/20")}>
           {copy.badge}
         </span>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-4xl leading-relaxed">
+        <p className={font("intro", "text-lg md:text-xl text-muted-foreground max-w-4xl leading-relaxed")}>
           {copy.intro}
         </p>
       </div>
@@ -69,8 +72,8 @@ export default function Contact() {
       <div className="max-w-6xl space-y-6">
         <Card className="border-[#D8C9B1] bg-[linear-gradient(180deg,#F6EFE2_0%,#EFE4CF_100%)] shadow-[0_24px_54px_rgba(88,65,32,0.12)]">
           <CardContent className="p-5 md:p-7">
-            <h2 className="mb-2 text-3xl font-outfit text-[#6F4E2C] md:text-4xl">{copy.formTitle}</h2>
-            <p className="mb-6 max-w-2xl text-sm leading-relaxed text-[#6A5A44]">
+            <h2 className={font("formTitle", "mb-2 text-3xl text-[#6F4E2C] md:text-4xl")}>{copy.formTitle}</h2>
+            <p className={font("formDescription", "mb-6 max-w-2xl text-sm leading-relaxed text-[#6A5A44]")}>
               {copy.formDescription}
             </p>
             <div className="contact-pipedrive-frame">
@@ -108,8 +111,8 @@ export default function Contact() {
 
         <div className="space-y-5">
           <div className="max-w-2xl">
-            <h3 className="text-2xl font-outfit font-semibold text-foreground">{copy.detailsTitle}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <h3 className={font("detailsTitle", "text-2xl font-semibold text-foreground")}>{copy.detailsTitle}</h3>
+            <p className={font("detailsDescription", "mt-2 text-sm leading-relaxed text-muted-foreground")}>
               {copy.detailsDescription}
             </p>
           </div>
@@ -122,9 +125,9 @@ export default function Contact() {
               <div className="flex items-start gap-3">
                 <Smartphone className="mt-0.5 h-5 w-5 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.mobileLabel}</p>
+                  <p className={font("mobileLabel", "text-xs uppercase tracking-wider text-[#7A6240]")}>{copy.mobileLabel}</p>
                   {copy.phoneNumbers.map((phone, index) => (
-                    <p key={`${phone}-${index}`} className={index === 0 ? "mt-2 text-base font-semibold leading-relaxed text-[#2F2417]" : "text-base font-semibold leading-relaxed text-[#2F2417]"}>
+                    <p key={`${phone}-${index}`} className={font("phoneNumbers", index === 0 ? "mt-2 text-base font-semibold leading-relaxed text-[#2F2417]" : "text-base font-semibold leading-relaxed text-[#2F2417]")}>
                       {phone}
                     </p>
                   ))}
@@ -139,8 +142,8 @@ export default function Contact() {
               <div className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.emailInfoLabel}</p>
-                  <p className="mt-2 text-base font-semibold leading-relaxed text-[#2F2417] break-words">{copy.emailValue}</p>
+                  <p className={font("emailInfoLabel", "text-xs uppercase tracking-wider text-[#7A6240]")}>{copy.emailInfoLabel}</p>
+                  <p className={font("emailValue", "mt-2 text-base font-semibold leading-relaxed text-[#2F2417] break-words")}>{copy.emailValue}</p>
                 </div>
               </div>
             </a>
@@ -154,8 +157,8 @@ export default function Contact() {
               <div className="flex items-start gap-3">
                 <Globe className="h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.websiteLabel}</p>
-                  <p className="mt-2 text-base font-semibold leading-relaxed text-[#2F2417] break-words">{copy.websiteValue}</p>
+                  <p className={font("websiteLabel", "text-xs uppercase tracking-wider text-[#7A6240]")}>{copy.websiteLabel}</p>
+                  <p className={font("websiteValue", "mt-2 text-base font-semibold leading-relaxed text-[#2F2417] break-words")}>{copy.websiteValue}</p>
                 </div>
               </div>
             </a>
@@ -166,8 +169,8 @@ export default function Contact() {
               <div className="flex h-full items-start gap-3">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.holdingCompanyLabel}</p>
-                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]">
+                  <p className={font("holdingCompanyLabel", "text-xs uppercase tracking-wider text-[#7A6240]")}>{copy.holdingCompanyLabel}</p>
+                  <address className={font("holdingCompanyAddress", "mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]")}>
                     {copy.holdingCompanyAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
                   </address>
                 </div>
@@ -178,10 +181,10 @@ export default function Contact() {
               <div className="flex h-full items-start gap-3">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.salesOfficeTitle}</p>
+                  <p className={font("salesOfficeTitle", "text-xs uppercase tracking-wider text-[#7A6240]")}>{copy.salesOfficeTitle}</p>
                   <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]">
-                    <p>{copy.salesOfficeCompany}</p>
-                    {copy.salesOfficeAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
+                    <p className={font("salesOfficeCompany")}>{copy.salesOfficeCompany}</p>
+                    {copy.salesOfficeAddress.map((line, index) => <p key={`${line}-${index}`} className={font("salesOfficeAddress")}>{line}</p>)}
                   </address>
                 </div>
               </div>
@@ -191,8 +194,8 @@ export default function Contact() {
               <div className="flex h-full items-start gap-3">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-[#7A6240]">{copy.managementOfficeLabel}</p>
-                  <address className="mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]">
+                  <p className={font("managementOfficeLabel", "text-xs uppercase tracking-wider text-[#7A6240]")}>{copy.managementOfficeLabel}</p>
+                  <address className={font("managementOfficeAddress", "mt-2 space-y-1 not-italic text-base font-semibold leading-relaxed text-[#2F2417]")}>
                     {copy.managementOfficeAddress.map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
                   </address>
                 </div>

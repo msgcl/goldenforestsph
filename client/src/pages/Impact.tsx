@@ -5,10 +5,13 @@ import { TreePine, Users, Sprout, Heart } from "lucide-react";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
 import { OptimizedImage } from "@/components/ui/optimized-media";
+import { createPageTypography } from "@/lib/siteTypography";
 
 export default function Impact() {
   const { data: siteCopy } = useSiteCopy();
-  const copy = siteCopy?.impact ?? defaultSiteCopy.impact;
+  const resolvedSiteCopy = siteCopy ?? defaultSiteCopy;
+  const copy = resolvedSiteCopy.impact;
+  const font = createPageTypography(resolvedSiteCopy, "impact");
 
   return (
     <AnimatedPage>
@@ -16,6 +19,8 @@ export default function Impact() {
         badge={copy.header.badge}
         title={copy.header.title} 
         description={copy.header.description}
+        pageKey="impact"
+        siteCopy={resolvedSiteCopy}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -32,8 +37,8 @@ export default function Impact() {
             <TreePine className="relative z-10 w-16 h-16 text-foreground drop-shadow-lg" />
           </div>
           <CardContent className="p-8">
-            <h3 className="text-2xl font-bold font-outfit mb-3">{copy.cardTitles[0] ?? ""}</h3>
-            <p className="text-muted-foreground leading-relaxed text-sm">
+            <h3 className={font("cardTitles", "text-2xl font-bold font-outfit mb-3")}>{copy.cardTitles[0] ?? ""}</h3>
+            <p className={font("cardDescriptions", "text-muted-foreground leading-relaxed text-sm")}>
               {copy.cardDescriptions[0] ?? ""}
             </p>
           </CardContent>
@@ -51,8 +56,8 @@ export default function Impact() {
             <Users className="relative z-10 w-16 h-16 text-foreground drop-shadow-lg" />
           </div>
           <CardContent className="p-8">
-            <h3 className="text-2xl font-bold font-outfit mb-3">{copy.cardTitles[1] ?? ""}</h3>
-            <p className="text-muted-foreground leading-relaxed text-sm">
+            <h3 className={font("cardTitles", "text-2xl font-bold font-outfit mb-3")}>{copy.cardTitles[1] ?? ""}</h3>
+            <p className={font("cardDescriptions", "text-muted-foreground leading-relaxed text-sm")}>
               {copy.cardDescriptions[1] ?? ""}
             </p>
           </CardContent>
@@ -64,8 +69,8 @@ export default function Impact() {
           <Heart className="w-10 h-10 text-accent" />
         </div>
         <div>
-          <h3 className="text-2xl font-bold font-outfit mb-2 text-foreground">{copy.standardsTitle}</h3>
-          <p className="text-muted-foreground leading-relaxed">
+          <h3 className={font("standardsTitle", "text-2xl font-bold font-outfit mb-2 text-foreground")}>{copy.standardsTitle}</h3>
+          <p className={font("standardsDescription", "text-muted-foreground leading-relaxed")}>
             {copy.standardsDescription}
           </p>
         </div>

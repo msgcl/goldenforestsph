@@ -52,9 +52,9 @@ const navigationGroups = [
   {
     label: "Programs",
     items: [
-      { title: "Agarwood Program", url: "/agarwood-life-cycle", icon: LeafyGreen },
-      { title: "Mango Program", url: "/mango-program", icon: Apple },
-      { title: "Ecotourism", url: "/ecotourism", icon: Palmtree },
+      { title: "Agarwood Programme", url: "/agarwood-life-cycle", icon: LeafyGreen },
+      { title: "Mango Programme", url: "/mango-program", icon: Apple },
+      { title: "Plantation Visit", url: "/ecotourism", icon: Palmtree },
       { title: "Community Impact", url: "/impact", icon: HeartHandshake },
     ],
   },

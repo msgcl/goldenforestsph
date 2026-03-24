@@ -1,4 +1,3 @@
-import "dotenv/config";
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
@@ -8,12 +7,13 @@ import { createServer } from "http";
 import path from "path";
 import fs from "fs";
 import { pool } from "./db";
+import { env } from "./env";
 
 const app = express();
 const httpServer = createServer(app);
 const PgSession = connectPgSimple(session);
 
-if (process.env.NODE_ENV === "production") {
+if (env.isProduction) {
   // Render and similar hosts terminate HTTPS at a proxy, so secure
   // session cookies need Express to trust that proxy.
   app.set("trust proxy", 1);
@@ -47,13 +47,13 @@ app.use(
       pool,
       createTableIfMissing: true,
     }),
-    secret: process.env.SESSION_SECRET || "cadi-admin-session-secret",
+    secret: env.sessionSecret,
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure: env.isProduction,
       maxAge: 1000 * 60 * 60 * 12,
     },
   }),
@@ -117,7 +117,7 @@ app.use((req, res, next) => {
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
-  if (process.env.NODE_ENV === "production") {
+  if (env.isProduction) {
     serveStatic(app);
   } else {
     const { setupVite } = await import("./vite");

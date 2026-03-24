@@ -1,13 +1,14 @@
 import { v2 as cloudinary } from "cloudinary";
+import { env } from "./env";
 
 let configured = false;
 
 function ensureConfigured() {
   if (configured) return true;
 
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-  const apiKey = process.env.CLOUDINARY_API_KEY;
-  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  const cloudName = env.cloudinaryCloudName;
+  const apiKey = env.cloudinaryApiKey;
+  const apiSecret = env.cloudinaryApiSecret;
 
   if (!cloudName || !apiKey || !apiSecret) {
     return false;

@@ -11,6 +11,7 @@ import {
 } from "./siteInventory";
 import { readSiteCopy, writeSiteCopy } from "./siteCopy";
 import { normalizeSiteCopy, siteCopySchema } from "@shared/siteCopy";
+import { env } from "./env";
 
 type RealtimeEventPayload = {
   queryKeys: string[];
@@ -25,8 +26,8 @@ declare module "express-session" {
 }
 
 const adminCredentials = {
-  username: process.env.ADMIN_USERNAME || "admin",
-  password: process.env.ADMIN_PASSWORD || "admin123",
+  username: env.adminUsername,
+  password: env.adminPassword,
 };
 
 const contactMessageInputSchema = z.object({

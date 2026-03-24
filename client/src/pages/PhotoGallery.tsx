@@ -26,6 +26,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useGalleryMedia } from "@/hooks/use-gallery-media";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
+import { createPageTypography } from "@/lib/siteTypography";
 
 type GalleryCategory = "nursery" | "plantation" | "facilities" | "team";
 
@@ -67,7 +68,9 @@ const categoryMeta: Record<
 export default function PhotoGallery() {
   const { data: mediaItems = [] } = useGalleryMedia();
   const { data: siteCopy } = useSiteCopy();
-  const copy = siteCopy?.photoGallery ?? defaultSiteCopy.photoGallery;
+  const resolvedSiteCopy = siteCopy ?? defaultSiteCopy;
+  const copy = resolvedSiteCopy.photoGallery;
+  const font = createPageTypography(resolvedSiteCopy, "photoGallery");
   const [selectedImage, setSelectedImage] = useState<(typeof mediaItems)[number] | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<GalleryCategory>("nursery");
@@ -166,39 +169,39 @@ export default function PhotoGallery() {
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#C8A070] to-transparent opacity-70" />
         <div className="relative z-10">
           <Link href="/">
-              <Button variant="ghost" size="sm" className="mb-6 rounded-full border border-[#C8A070]/25 bg-white/5 px-4 text-[#C8A070] hover:bg-white/10 hover:text-[#C8A070] sm:mb-8">
+              <Button variant="ghost" size="sm" className={font("backButtonLabel", "mb-6 rounded-full border border-[#C8A070]/25 bg-white/5 px-4 text-[#C8A070] hover:bg-white/10 hover:text-[#C8A070] sm:mb-8")}>
               ← {copy.backButtonLabel}
             </Button>
           </Link>
 
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.18fr)_minmax(360px,0.82fr)] lg:items-center">
             <div className="max-w-4xl">
-              <span className="inline-flex rounded-full border border-[#C8A070]/55 bg-[#E8D3B3]/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#C8A070]">
+              <span className={font("heroBadge", "inline-flex rounded-full border border-[#C8A070]/55 bg-[#E8D3B3]/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#C8A070]")}>
                 {copy.heroBadge}
               </span>
-              <h1 className="mt-4 max-w-4xl font-outfit text-[2.3rem] font-semibold leading-[1.02] text-[#C8A070] sm:text-5xl lg:text-[3.8rem]">
+              <h1 className={font("heroTitle", "mt-4 max-w-4xl text-[2.3rem] font-semibold leading-[1.02] text-[#C8A070] sm:text-5xl lg:text-[3.8rem]")}>
                 {copy.heroTitle}
               </h1>
-              <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#E7D2B2] sm:mt-5 sm:text-lg">
+              <p className={font("heroDescription", "mt-4 max-w-3xl text-sm leading-relaxed text-[#E7D2B2] sm:mt-5 sm:text-lg")}>
                 {copy.heroDescription}
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2">
               <div className="rounded-2xl border border-[#C8A070]/32 bg-[#E8D3B3]/14 p-4 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
-                <p className="text-xs uppercase tracking-[0.16em] text-[#C8A070]">{copy.statLabels[0] ?? ""}</p>
+                <p className={font("statLabels", "text-xs uppercase tracking-[0.16em] text-[#C8A070]")}>{copy.statLabels[0] ?? ""}</p>
                 <p className="mt-2 font-outfit text-3xl font-semibold leading-none text-[#F5E7D1] sm:text-4xl">{allPhotos.length}</p>
               </div>
               <div className="rounded-2xl border border-[#C8A070]/32 bg-[#E8D3B3]/14 p-4 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
-                <p className="text-xs uppercase tracking-[0.16em] text-[#C8A070]">{copy.statLabels[1] ?? ""}</p>
+                <p className={font("statLabels", "text-xs uppercase tracking-[0.16em] text-[#C8A070]")}>{copy.statLabels[1] ?? ""}</p>
                 <p className="mt-2 font-outfit text-3xl font-semibold leading-none text-[#F5E7D1] sm:text-4xl">{Object.keys(categoryMeta).length}</p>
               </div>
               <div className="rounded-2xl border border-[#C8A070]/32 bg-[#E8D3B3]/14 p-4 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
-                <p className="text-xs uppercase tracking-[0.16em] text-[#C8A070]">{copy.statLabels[2] ?? ""}</p>
+                <p className={font("statLabels", "text-xs uppercase tracking-[0.16em] text-[#C8A070]")}>{copy.statLabels[2] ?? ""}</p>
                 <p className="mt-2 font-outfit text-3xl font-semibold leading-none text-[#F5E7D1] sm:text-4xl">{totalVideos}</p>
               </div>
               <div className="rounded-2xl border border-[#C8A070]/5 bg-[linear-gradient(135deg,rgba(200,160,112,0.28),rgba(200,160,112,0.14))] p-4 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
-                <p className="text-xs uppercase tracking-[0.16em] text-[#F0D7B7]">{copy.statLabels[3] ?? ""}</p>
+                <p className={font("statLabels", "text-xs uppercase tracking-[0.16em] text-[#F0D7B7]")}>{copy.statLabels[3] ?? ""}</p>
                 <p className="mt-2 font-outfit text-[1.55rem] font-semibold leading-none text-[#FBFCF7] sm:text-[1.85rem]">{activeMeta.label}</p>
               </div>
             </div>
@@ -218,21 +221,21 @@ export default function PhotoGallery() {
                       <activeMeta.icon className="h-5 w-5 text-[#C8A070]" />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C8A070]">{copy.currentCollectionLabel}</p>
-                      <h2 className="font-outfit mt-1 text-3xl font-semibold text-[#FBFCF7] sm:text-[2.2rem]">{categoryLabels[["nursery","plantation","facilities","team"].indexOf(activeCategory)] ?? activeMeta.label}</h2>
+                      <p className={font("currentCollectionLabel", "text-xs font-semibold uppercase tracking-[0.18em] text-[#C8A070]")}>{copy.currentCollectionLabel}</p>
+                      <h2 className={font("currentCollectionValueLabel", "mt-1 text-3xl font-semibold text-[#FBFCF7] sm:text-[2.2rem]")}>{categoryLabels[["nursery","plantation","facilities","team"].indexOf(activeCategory)] ?? activeMeta.label}</h2>
                     </div>
                   </div>
 
-                  <p className="mt-5 max-w-md text-sm leading-relaxed text-[#DCE8DE]">{categorySubtitles[["nursery","plantation","facilities","team"].indexOf(activeCategory)] ?? activeMeta.subtitle}</p>
+                  <p className={font("categorySubtitles", "mt-5 max-w-md text-sm leading-relaxed text-[#DCE8DE]")}>{categorySubtitles[["nursery","plantation","facilities","team"].indexOf(activeCategory)] ?? activeMeta.subtitle}</p>
 
                   <div className="mt-6 grid grid-cols-2 gap-3">
                     <div className="rounded-[1.2rem] border border-white/10 bg-white/8 p-4 backdrop-blur-sm">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#C8A070]">{copy.categoryCountLabel}</p>
+                      <p className={font("categoryCountLabel", "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#C8A070]")}>{copy.categoryCountLabel}</p>
                       <p className="font-outfit mt-2 text-3xl font-semibold text-[#FBFCF7]">{categoryCounts[activeCategory]}</p>
                     </div>
                     <div className="rounded-[1.2rem] border border-white/10 bg-white/8 p-4 backdrop-blur-sm">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#C8A070]">{copy.showingLabel}</p>
-                      <p className="mt-2 text-sm font-semibold text-[#FBFCF7]">{searchQuery.trim() ? copy.filteredResultsLabel : copy.currentCollectionValueLabel}</p>
+                      <p className={font("showingLabel", "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#C8A070]")}>{copy.showingLabel}</p>
+                      <p className={font(searchQuery.trim() ? "filteredResultsLabel" : "currentCollectionValueLabel", "mt-2 text-sm font-semibold text-[#FBFCF7]")}>{searchQuery.trim() ? copy.filteredResultsLabel : copy.currentCollectionValueLabel}</p>
                     </div>
                   </div>
 
@@ -253,11 +256,11 @@ export default function PhotoGallery() {
               <div className="bg-[linear-gradient(180deg,#F7EBD7_0%,#EFE0C8_100%)] p-6 sm:p-7">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7B5B32]">{copy.browseCollectionsTitle}</p>
-                    <p className="mt-1 text-sm text-[#4A3F2E]">{copy.browseCollectionsDescription}</p>
+                    <p className={font("browseCollectionsTitle", "text-xs font-semibold uppercase tracking-[0.18em] text-[#7B5B32]")}>{copy.browseCollectionsTitle}</p>
+                    <p className={font("browseCollectionsDescription", "mt-1 text-sm text-[#4A3F2E]")}>{copy.browseCollectionsDescription}</p>
                   </div>
                   <Badge variant="secondary" className="rounded-full border border-[#D7C09A] bg-[#FBF4E8] px-3 py-1 text-[#17392E]">
-                    {Object.keys(categoryMeta).length} {copy.collectionsLabelSuffix}
+                    <span className={font("collectionsLabelSuffix")}>{Object.keys(categoryMeta).length} {copy.collectionsLabelSuffix}</span>
                   </Badge>
                 </div>
 
@@ -285,10 +288,10 @@ export default function PhotoGallery() {
                           <meta.icon className={cn("h-4 w-4", activeCategory === key ? "text-[#C8A070]" : "text-[#17392E]")} />
                         </div>
                         <div>
-                          <p className={cn("font-outfit text-xl font-semibold", activeCategory === key ? "text-[#FBFCF7]" : "text-[#17392E]")}>
+                          <p className={font("categoryLabels", cn("text-xl font-semibold", activeCategory === key ? "text-[#FBFCF7]" : "text-[#17392E]"))}>
                             {categoryLabels[["nursery","plantation","facilities","team"].indexOf(key)] ?? meta.label}
                           </p>
-                          <p className={cn("mt-1 text-xs leading-relaxed", activeCategory === key ? "text-[#E2EADF]" : "text-[#4A3F2E]")}>
+                          <p className={font("categorySubtitles", cn("mt-1 text-xs leading-relaxed", activeCategory === key ? "text-[#E2EADF]" : "text-[#4A3F2E]"))}>
                             {categorySubtitles[["nursery","plantation","facilities","team"].indexOf(key)] ?? meta.subtitle}
                           </p>
                         </div>
@@ -314,17 +317,17 @@ export default function PhotoGallery() {
       <section className="mt-8">
         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="font-outfit text-2xl font-semibold text-foreground">
+            <h2 className={font(searchQuery.trim() ? "searchResultsTitle" : "fullGallerySuffix", "text-2xl font-semibold text-foreground")}>
               {searchQuery.trim() ? copy.searchResultsTitle : `${activeMeta.label} ${copy.fullGallerySuffix}`}
             </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className={font(searchQuery.trim() ? "searchSummaryPrefix" : (displayPhotos.length !== 1 ? "collectionSummaryPlural" : "collectionSummarySingular"), "mt-1 text-sm text-muted-foreground")}>
               {searchQuery.trim()
                 ? `${copy.searchSummaryPrefix} ${displayPhotos.length} item${displayPhotos.length !== 1 ? "s" : ""} ${copy.searchSummaryMatchSuffix} "${searchQuery}".`
                 : `${displayPhotos.length} ${displayPhotos.length !== 1 ? copy.collectionSummaryPlural : copy.collectionSummarySingular}`}
             </p>
           </div>
           {!searchQuery.trim() ? (
-            <div className="text-sm text-muted-foreground">
+            <div className={font("viewHint", "text-sm text-muted-foreground")}>
               {copy.viewHint}
             </div>
           ) : null}
@@ -403,8 +406,8 @@ export default function PhotoGallery() {
               <div className="rounded-full bg-[#17392E]/8 p-4">
                 <ImageIcon className="h-8 w-8 text-[#17392E]/55" />
               </div>
-              <h3 className="mt-5 text-lg font-semibold text-[#17392E]">{copy.noResultsTitle}</h3>
-              <p className="mt-2 max-w-md text-sm leading-relaxed text-[#1B1B1B]/70">
+              <h3 className={font("noResultsTitle", "mt-5 text-lg font-semibold text-[#17392E]")}>{copy.noResultsTitle}</h3>
+              <p className={font("noResultsDescription", "mt-2 max-w-md text-sm leading-relaxed text-[#1B1B1B]/70")}>
                 {copy.noResultsDescription}
               </p>
             </CardContent>
