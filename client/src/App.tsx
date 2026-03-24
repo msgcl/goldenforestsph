@@ -84,8 +84,12 @@ function App() {
 
     syncHomeNavigation();
     window.addEventListener("home-landing-dismissed", syncHomeNavigation);
+    window.addEventListener("resize", syncHomeNavigation);
 
-    return () => window.removeEventListener("home-landing-dismissed", syncHomeNavigation);
+    return () => {
+      window.removeEventListener("home-landing-dismissed", syncHomeNavigation);
+      window.removeEventListener("resize", syncHomeNavigation);
+    };
   }, [isHomeRoute, location]);
 
   return (
