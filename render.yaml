@@ -25,4 +25,4 @@ services:
 
 databases:
   - name: cadi-db
-    plan: starter
+    plan: basic-1gb
