@@ -128,43 +128,95 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mt-12 grid gap-5 lg:grid-cols-[1.15fr,0.85fr]">
-        <Card className="border-border/80 bg-card/80 shadow-sm backdrop-blur">
-          <CardHeader>
-            <CardTitle className="text-2xl sm:text-3xl">Operational Governance</CardTitle>
-            <CardDescription className="max-w-3xl text-sm leading-relaxed text-muted-foreground">Professional structures for compliance, field execution, and client visibility across mango and agarwood operations.</CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-3">
-            {copy.governanceTitles.map((title, index) => {
-              const Icon = governanceIcons[index] ?? ShieldCheck;
-              return (
-                <div key={title} className="rounded-2xl border border-border/60 bg-background/90 p-4 shadow-sm">
-                  <div className="inline-flex rounded-xl bg-primary/10 p-3 text-primary"><Icon className="h-5 w-5" /></div>
-                  <h3 className={font("governanceTitles", "mt-4 text-lg font-semibold text-foreground")}>{title}</h3>
-                  <p className={font("governanceDescriptions", "mt-2 text-sm leading-relaxed text-muted-foreground")}>{copy.governanceDescriptions[index] ?? ""}</p>
-                </div>
-              );
-            })}
-          </CardContent>
-        </Card>
+            <section className="mt-12 overflow-hidden rounded-[2rem] border border-[#C8A070]/28 bg-[radial-gradient(circle_at_top_right,rgba(200,160,112,0.18),transparent_26%),linear-gradient(135deg,#F6E9D1_0%,#F8EFD9_48%,#F2E2C5_100%)] p-5 shadow-[0_18px_42px_rgba(9,39,34,0.14)] sm:p-6 lg:p-7">
+        <div className="mb-5">
+          <h2 className={font("liveMetricsTitle", "text-2xl font-semibold text-[#17392E] sm:text-3xl")}>{copy.liveMetricsTitle}</h2>
+        </div>
 
-        <Card className="border-border/80 bg-[#17392E] text-primary-foreground shadow-sm">
-          <CardHeader>
-            <CardDescription className="text-xs font-semibold uppercase tracking-[0.14em] text-[#C8A070]">{copy.saleHeaderPrefix} • {inventoryDateLabel}</CardDescription>
-            <CardTitle className="text-2xl text-[#FBFCF7]">{copy.liveMetricsTitle}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {saleInventory.map((item, index) => (
-              <div key={item.field} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-xs uppercase tracking-[0.14em] text-[#C8A070]">{copy.saleCardLabels[index] ?? item.label}</p>
-                <p className="mt-2 text-3xl font-semibold text-[#FBFCF7]">{Number(latestStats?.[item.field] ?? defaultInventoryValues[item.field]).toLocaleString()}</p>
+        <div className="grid gap-4 xl:grid-cols-[minmax(0,1.65fr)_minmax(280px,0.95fr)]">
+          <div className="space-y-4">
+            <section className="rounded-[1.45rem] border border-[#E7C896] bg-[linear-gradient(180deg,rgba(232,190,120,0.4),rgba(226,174,97,0.5))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.38)]">
+              <p className={font("currentStockLabel", "text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8C5A16]")}>
+                {copy.currentStockLabel}
+              </p>
+              <div className="mt-4 grid gap-3 md:grid-cols-2">
+                <article className="rounded-[1.2rem] border border-white/45 bg-[rgba(252,239,216,0.72)] p-4 shadow-[0_10px_24px_rgba(168,118,44,0.1)]">
+                  <p className={font("stockLabels", "text-sm leading-snug text-[#8B6B3F]")}>{copy.stockLabels[0] ?? ""}</p>
+                  <p className="mt-3 font-outfit text-4xl font-semibold leading-none text-[#7C5124] sm:text-5xl">
+                    {(latestStats?.agarwoodSeedlings ?? defaultInventoryValues.agarwoodSeedlings).toLocaleString()}
+                  </p>
+                </article>
+                <article className="rounded-[1.2rem] border border-white/45 bg-[rgba(252,239,216,0.72)] p-4 shadow-[0_10px_24px_rgba(168,118,44,0.1)]">
+                  <p className={font("stockLabels", "text-sm leading-snug text-[#8B6B3F]")}>{copy.stockLabels[1] ?? ""}</p>
+                  <p className="mt-3 font-outfit text-4xl font-semibold leading-none text-[#7C5124] sm:text-5xl">
+                    {(latestStats?.mangoSeedlings ?? defaultInventoryValues.mangoSeedlings).toLocaleString()}
+                  </p>
+                </article>
               </div>
-            ))}
-          </CardContent>
-        </Card>
-      </section>
+            </section>
 
-      <section className="mt-12 rounded-[2rem] border border-border/70 bg-card/80 p-6 shadow-sm backdrop-blur sm:p-8">
+            <section className="rounded-[1.45rem] border border-[#E7C896] bg-[linear-gradient(180deg,rgba(232,190,120,0.4),rgba(226,174,97,0.5))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.38)]">
+              <p className={font("saleHeaderPrefix", "text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8C5A16]")}>
+                {copy.saleHeaderPrefix} {inventoryDateLabel}
+              </p>
+              <div className="mt-4 grid gap-3 md:grid-cols-3">
+                {saleInventory.map((item, index) => (
+                  <article
+                    key={item.field}
+                    className="rounded-[1.2rem] border border-white/45 bg-[rgba(252,239,216,0.72)] p-4 shadow-[0_10px_24px_rgba(168,118,44,0.1)]"
+                  >
+                    <p className="font-outfit text-4xl font-semibold leading-none text-[#7C5124] sm:text-[2.5rem]">
+                      {Number(latestStats?.[item.field] ?? defaultInventoryValues[item.field]).toLocaleString()}
+                    </p>
+                    <p className={font("saleCardLabels", "mt-3 text-sm leading-snug text-[#8B6B3F]")}>
+                      {copy.saleCardLabels[index] ?? item.label}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          <aside className="space-y-4">
+            {[
+              {
+                label: copy.summaryCardLabels[0] ?? "Field Deployment",
+                value: copy.deploymentMilestoneValue,
+                description: copy.summaryCardDescriptions[0] ?? "",
+              },
+              {
+                label: copy.summaryCardLabels[1] ?? "Panay Planting",
+                value: (latestStats?.panayPlanted ?? defaultInventoryValues.panayPlanted).toLocaleString(),
+                description: copy.summaryCardDescriptions[1] ?? "",
+              },
+              {
+                label: copy.summaryCardLabels[2] ?? "Inventory Date",
+                value: inventoryDateLabel,
+                description: copy.summaryCardDescriptions[2] ?? "",
+              },
+            ].map((item) => (
+              <article
+                key={item.label}
+                className="rounded-[1.45rem] border border-[#E3C38F] bg-[rgba(250,237,213,0.84)] p-5 shadow-[0_12px_28px_rgba(168,118,44,0.08)]"
+              >
+                <p className="text-sm text-[#9A723A]">{item.label}</p>
+                <p className="mt-2 font-outfit text-3xl font-semibold text-[#7C5124] sm:text-[2.35rem]">{item.value}</p>
+                <p className={font("summaryCardDescriptions", "mt-2 text-sm leading-relaxed text-[#8B6B3F]")}>{item.description}</p>
+              </article>
+            ))}
+
+            <div className="flex justify-end pt-1">
+              <Button asChild size="lg" className="rounded-xl bg-[#17392E] px-7 text-[#FBFCF7] hover:bg-[#0F2E28]">
+                <Link href="/nursery" className="inline-flex items-center gap-2">
+                  {copy.nurseryCtaLabel}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </aside>
+        </div>
+      </section>
+<section className="mt-12 rounded-[2rem] border border-border/70 bg-card/80 p-6 shadow-sm backdrop-blur sm:p-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">{copy.visitsTitle}</p>
@@ -183,3 +235,4 @@ export default function Home() {
     </AnimatedPage>
   );
 }
+
