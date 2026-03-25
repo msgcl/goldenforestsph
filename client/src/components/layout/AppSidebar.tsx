@@ -66,12 +66,19 @@ const navigationGroups = [
       { title: "Photo Gallery", url: "/photo-gallery", icon: ImageIcon },
     ],
   },
+  {
+    label: "Sales & Marketing",
+    items: [
+      { title: "Visit Portal", url: "https://www.goldenforests.ai/", icon: Handshake, external: true },
+    ],
+  },
 ];
 
 export function AppSidebar() {
   const [location] = useLocation();
   const { isMobile, setOpenMobile } = useSidebar();
-  const isItemActive = (url: string) => (url === "/" ? location === "/" : location.startsWith(url));
+  const isItemActive = (url: string, external?: boolean) =>
+    external ? false : url === "/" ? location === "/" : location.startsWith(url);
 
   return (
     <Sidebar variant="inset" className="bg-transparent">
@@ -109,21 +116,36 @@ export function AppSidebar() {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
-                      isActive={isItemActive(item.url)}
+                      isActive={isItemActive(item.url, "external" in item ? item.external : false)}
                       className="my-0 rounded-xl transition-all data-[active=true]:bg-white/10 data-[active=true]:shadow-sm"
                     >
-                      <Link
-                        href={item.url}
-                        className="flex items-center gap-2.5 rounded-xl px-3 py-2.5"
-                        onClick={() => {
-                          if (isMobile) {
-                            setOpenMobile(false);
-                          }
-                        }}
-                      >
-                        <item.icon className="h-3.5 w-3.5 text-[#C8A070]" />
-                        <span className="text-[13px] font-medium text-[#FBFCF7]/92">{item.title}</span>
-                      </Link>
+                      {"external" in item && item.external ? (
+                        <a
+                          href={item.url}
+                          className="flex items-center gap-2.5 rounded-xl px-3 py-2.5"
+                          onClick={() => {
+                            if (isMobile) {
+                              setOpenMobile(false);
+                            }
+                          }}
+                        >
+                          <item.icon className="h-3.5 w-3.5 text-[#C8A070]" />
+                          <span className="text-[13px] font-medium text-[#FBFCF7]/92">{item.title}</span>
+                        </a>
+                      ) : (
+                        <Link
+                          href={item.url}
+                          className="flex items-center gap-2.5 rounded-xl px-3 py-2.5"
+                          onClick={() => {
+                            if (isMobile) {
+                              setOpenMobile(false);
+                            }
+                          }}
+                        >
+                          <item.icon className="h-3.5 w-3.5 text-[#C8A070]" />
+                          <span className="text-[13px] font-medium text-[#FBFCF7]/92">{item.title}</span>
+                        </Link>
+                      )}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
