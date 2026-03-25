@@ -7,6 +7,8 @@ import {
   Bell,
   Camera,
   CalendarDays,
+  ChevronDown,
+  ChevronUp,
   FileText,
   ImagePlus,
   LayoutDashboard,
@@ -416,6 +418,41 @@ export default function AdminDashboard() {
     },
   });
 
+  const reorderMediaMutation = useMutation({
+    mutationFn: async ({
+      category,
+      reorderedItems,
+    }: {
+      category: string;
+      reorderedItems: Array<{
+        id: number;
+        title: string;
+        sortOrder: number;
+      }>;
+    }) => {
+      await Promise.all(
+        reorderedItems.map((item) =>
+          apiRequest("PATCH", `/api/admin/gallery-media/${item.id}`, {
+            sortOrder: item.sortOrder,
+          }),
+        ),
+      );
+
+      return category;
+    },
+    onSuccess: async (category) => {
+      await queryClient.invalidateQueries({ queryKey: ["/api/gallery-media"] });
+      toast({
+        title: "Gallery order updated",
+        description: `${category} media order has been updated.`,
+      });
+    },
+    onError: (error: unknown) => {
+      const message = error instanceof Error ? error.message : "Failed to reorder gallery media";
+      toast({ title: "Reorder failed", description: message, variant: "destructive" });
+    },
+  });
+
   const doDelete = async (url: string, key: string) => {
     await apiRequest("DELETE", url);
     await queryClient.invalidateQueries({ queryKey: [key] });
@@ -448,12 +485,51 @@ export default function AdminDashboard() {
   };
 
   const groupedMedia = useMemo(() => {
-    return mediaItems.reduce((acc: Record<string, typeof mediaItems>, item) => {
+    const grouped = mediaItems.reduce((acc: Record<string, typeof mediaItems>, item) => {
       if (!acc[item.category]) acc[item.category] = [];
       acc[item.category].push(item);
       return acc;
     }, {});
+
+    Object.values(grouped).forEach((items) => {
+      items.sort((a, b) => {
+        if (a.sortOrder !== b.sortOrder) return a.sortOrder - b.sortOrder;
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      });
+    });
+
+    return grouped;
   }, [mediaItems]);
+
+  const moveMediaItem = (category: string, itemId: number, direction: "up" | "down") => {
+    const items = groupedMedia[category] ?? [];
+    const currentIndex = items.findIndex((item) => item.id === itemId);
+    if (currentIndex < 0) return;
+
+    const targetIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
+    if (targetIndex < 0 || targetIndex >= items.length) return;
+
+    const reordered = [...items];
+    const [movedItem] = reordered.splice(currentIndex, 1);
+    reordered.splice(targetIndex, 0, movedItem);
+
+    const updates = reordered
+      .map((item, index) => ({
+        id: item.id,
+        title: item.title,
+        sortOrder: index + 1,
+        currentSortOrder: item.sortOrder,
+      }))
+      .filter((item, index) => item.currentSortOrder !== index + 1)
+      .map(({ currentSortOrder: _currentSortOrder, ...item }) => item);
+
+    if (updates.length === 0) return;
+
+    reorderMediaMutation.mutate({
+      category,
+      reorderedItems: updates,
+    });
+  };
 
   const statCards = [
     { label: "Team Profiles", value: teamMembers.length, icon: Users },
@@ -830,8 +906,11 @@ export default function AdminDashboard() {
                             <div>
                               <p className="font-semibold text-sm">{item.title}</p>
                               <p className="text-xs text-muted-foreground">{item.mediaType} | {toDateInputValue(item.date)}</p>
+                              <p className="text-xs text-muted-foreground">Display order: {item.sortOrder}</p>
                             </div>
-                            <div className="flex gap-1">
+                            <div className="flex flex-wrap justify-end gap-1">
+                              <Button type="button" size="icon" variant="outline" className="h-8 w-8" onClick={() => moveMediaItem(category, item.id, "up")} disabled={reorderMediaMutation.isPending || items[0]?.id === item.id} aria-label={`Move ${item.title} up`}><ChevronUp className="h-4 w-4" /></Button>
+                              <Button type="button" size="icon" variant="outline" className="h-8 w-8" onClick={() => moveMediaItem(category, item.id, "down")} disabled={reorderMediaMutation.isPending || items[items.length - 1]?.id === item.id} aria-label={`Move ${item.title} down`}><ChevronDown className="h-4 w-4" /></Button>
                               <Button type="button" size="sm" variant="outline" onClick={() => { setMediaForm({ id: item.id, title: item.title, description: item.description, category: item.category, location: item.location, date: toDateInputValue(item.date), mediaUrl: item.mediaUrl, thumbnailUrl: item.thumbnailUrl ?? "", mediaType: item.mediaType, sortOrder: item.sortOrder }); setSelectedUpload(null); if (mediaFileInputRef.current) mediaFileInputRef.current.value = ""; }}>Edit</Button>
                               <Button type="button" size="sm" variant="destructive" onClick={() => doDelete(`/api/admin/gallery-media/${item.id}`, "/api/gallery-media")}>Delete</Button>
                             </div>
@@ -906,3 +985,8 @@ export default function AdminDashboard() {
     </div>
   );
 }
+
+
+
+
+

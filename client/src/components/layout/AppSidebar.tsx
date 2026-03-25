@@ -54,7 +54,7 @@ const navigationGroups = [
     items: [
       { title: "Agarwood Programme", url: "/agarwood-life-cycle", icon: LeafyGreen },
       { title: "Mango Programme", url: "/mango-program", icon: Apple },
-      { title: "Plantation Visit", url: "/ecotourism", icon: Palmtree },
+      { title: "Plantation Visit", url: "/plantation-visit", icon: Palmtree },
       { title: "Community Impact", url: "/impact", icon: HeartHandshake },
     ],
   },
@@ -85,13 +85,13 @@ export function AppSidebar() {
               sizes="56px"
               className="h-14 w-auto max-w-full object-contain drop-shadow-sm"
             />
-            <span className="mt-1.5 font-outfit text-[15px] leading-none font-semibold tracking-[0.12em] text-[#C8A070]">
+            <span className="mt-1.5 font-outfit text-[15px] leading-tight font-semibold tracking-[0.12em] text-[#C8A070] [text-wrap:balance]">
               GOLDEN FORESTS
             </span>
-            <span className="mt-1 text-[10px] leading-none text-[#FBFCF7]/85">
+            <span className="mt-1 text-[10px] leading-tight text-[#FBFCF7]/85 [text-wrap:balance]">
               Crassna Agroforestry Development Inc.
             </span>
-            <span className="mt-1 text-[8.5px] leading-none text-[#FBFCF7]/62 uppercase tracking-[0.12em]">
+            <span className="mt-1 text-[8.5px] leading-tight text-[#FBFCF7]/62 uppercase tracking-[0.12em] [text-wrap:balance]">
               Plantation Management
             </span>
           </Link>

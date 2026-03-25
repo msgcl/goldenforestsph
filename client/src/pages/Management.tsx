@@ -75,7 +75,7 @@ export default function Management() {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-xl">
                   <DialogHeader>
-                    <div className="mx-auto mb-3 h-60 w-60 overflow-hidden rounded-lg border border-accent/35 bg-muted sm:h-64 sm:w-64">
+                    <div className="mx-auto mb-3 h-52 w-52 overflow-hidden rounded-lg border border-accent/35 bg-muted sm:h-56 sm:w-56">
                       <OptimizedImage
                         src={
                           member.imageUrl ||
@@ -86,8 +86,8 @@ export default function Management() {
                         className="h-full w-full object-cover"
                       />
                     </div>
-                    <DialogTitle className="font-outfit text-2xl">{member.name}</DialogTitle>
-                    <DialogDescription className="text-primary font-medium">{member.title}</DialogDescription>
+                    <DialogTitle className="font-outfit text-2xl leading-tight [text-wrap:balance]">{member.name}</DialogTitle>
+                    <DialogDescription className="text-primary font-medium leading-snug [text-wrap:balance]">{member.title}</DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4 pt-2">
                     <div className="flex gap-2 items-start">
@@ -133,3 +133,4 @@ export default function Management() {
     </AnimatedPage>
   );
 }
+

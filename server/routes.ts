@@ -700,7 +700,7 @@ async function seedDatabase() {
         mediaUrl: "/nursery/agarwood/agarwood-01.jpg",
         thumbnailUrl: "/nursery/agarwood/agarwood-01.jpg",
         mediaType: "image" as const,
-        sortOrder: 1,
+        sortOrder: 2,
       },
       {
         title: "Agarwood Seedlings - Nursery Block 2",
@@ -711,18 +711,18 @@ async function seedDatabase() {
         mediaUrl: "/nursery/agarwood/agarwood-02.jpg",
         thumbnailUrl: "/nursery/agarwood/agarwood-02.jpg",
         mediaType: "image" as const,
-        sortOrder: 2,
+        sortOrder: 4,
       },
       {
-        title: "Mango Seedlings Being Grafted",
-        description: "Video of mango seedlings being grafted in the nursery.",
+        title: "Sweet Elena Mango Carabao Grafting",
+        description: "Video of Sweet Elena Mango Carabao seedlings being grafted in the nursery.",
         category: "nursery",
         location: "Kabankalan City, Western Visayas",
         date: new Date("2026-02-27"),
         mediaUrl: "/nursery/mango/mango-grafting.mp4",
         thumbnailUrl: "/nursery/mango/mango-02.jpg",
         mediaType: "video" as const,
-        sortOrder: 3,
+        sortOrder: 2,
       },
       {
         title: "Land Preparation - Phase 1",
@@ -735,7 +735,7 @@ async function seedDatabase() {
         thumbnailUrl:
           "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=200&h=200&fit=crop",
         mediaType: "image" as const,
-        sortOrder: 1,
+        sortOrder: 2,
       },
       {
         title: "Operations Center",
@@ -748,7 +748,7 @@ async function seedDatabase() {
         thumbnailUrl:
           "https://images.unsplash.com/photo-1552664730-d307ca884978?w=200&h=200&fit=crop",
         mediaType: "image" as const,
-        sortOrder: 1,
+        sortOrder: 2,
       },
       {
         title: "Team Site Inspection",
@@ -761,7 +761,7 @@ async function seedDatabase() {
         thumbnailUrl:
           "https://images.unsplash.com/photo-1552664730-d307ca884978?w=200&h=200&fit=crop",
         mediaType: "image" as const,
-        sortOrder: 1,
+        sortOrder: 2,
       },
     ];
 
@@ -772,3 +772,4 @@ async function seedDatabase() {
   }
 
 }
+
