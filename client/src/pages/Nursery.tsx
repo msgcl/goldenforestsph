@@ -23,8 +23,12 @@ export default function Nursery() {
   const font = createPageTypography(resolvedSiteCopy, "nursery");
   const galleryRef = useRef<HTMLDivElement | null>(null);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
-  const nurseryGalleryImages = mediaItems
+  const nurseryGalleryImages = [...mediaItems]
     .filter((item) => item.category === "nursery")
+    .sort((a, b) => {
+      if (a.sortOrder !== b.sortOrder) return a.sortOrder - b.sortOrder;
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    })
     .map((item) => ({
       src: item.mediaUrl,
       thumbnail: item.thumbnailUrl || item.mediaUrl,

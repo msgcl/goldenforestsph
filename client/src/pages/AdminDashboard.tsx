@@ -501,6 +501,8 @@ export default function AdminDashboard() {
     return grouped;
   }, [mediaItems]);
 
+  const nurseryCarouselItems = groupedMedia["nursery"] ?? [];
+
   const moveMediaItem = (category: string, itemId: number, direction: "up" | "down") => {
     const items = groupedMedia[category] ?? [];
     const currentIndex = items.findIndex((item) => item.id === itemId);
@@ -894,33 +896,111 @@ export default function AdminDashboard() {
                   </form>
                 </CardContent>
               </Card>
-              <Card className="border-border/70 shadow-sm">
-                <CardHeader><CardTitle>Asset Library</CardTitle></CardHeader>
-                <CardContent className="space-y-4 max-h-[760px] overflow-auto">
-                  {Object.entries(groupedMedia).map(([category, items]) => (
-                    <div key={category} className="space-y-2">
-                      <p className="text-xs uppercase tracking-wider text-muted-foreground">{category}</p>
-                      {items.map((item) => (
-                        <div key={item.id} className="rounded-lg border border-border/70 p-3">
+              <div className="space-y-4">
+                <Card className="border-border/70 shadow-sm">
+                  <CardHeader>
+                    <CardTitle>Live Seedling Gallery Order</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Reorder these nursery items to control the moving live seedling carousel on the Nursery Operations page.
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {nurseryCarouselItems.length === 0 ? (
+                      <div className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-sm text-muted-foreground">
+                        No nursery gallery media yet. Add a nursery image or video on the left, then reorder it here.
+                      </div>
+                    ) : (
+                      nurseryCarouselItems.map((item) => (
+                        <div key={`nursery-carousel-${item.id}`} className="rounded-lg border border-border/70 p-3">
                           <div className="flex items-start justify-between gap-3">
-                            <div>
+                            <div className="min-w-0">
                               <p className="font-semibold text-sm">{item.title}</p>
-                              <p className="text-xs text-muted-foreground">{item.mediaType} | {toDateInputValue(item.date)}</p>
-                              <p className="text-xs text-muted-foreground">Display order: {item.sortOrder}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {item.mediaType} | {toDateInputValue(item.date)}
+                              </p>
+                              <p className="text-xs text-muted-foreground">Carousel position: {item.sortOrder}</p>
                             </div>
-                            <div className="flex flex-wrap justify-end gap-1">
-                              <Button type="button" size="icon" variant="outline" className="h-8 w-8" onClick={() => moveMediaItem(category, item.id, "up")} disabled={reorderMediaMutation.isPending || items[0]?.id === item.id} aria-label={`Move ${item.title} up`}><ChevronUp className="h-4 w-4" /></Button>
-                              <Button type="button" size="icon" variant="outline" className="h-8 w-8" onClick={() => moveMediaItem(category, item.id, "down")} disabled={reorderMediaMutation.isPending || items[items.length - 1]?.id === item.id} aria-label={`Move ${item.title} down`}><ChevronDown className="h-4 w-4" /></Button>
-                              <Button type="button" size="sm" variant="outline" onClick={() => { setMediaForm({ id: item.id, title: item.title, description: item.description, category: item.category, location: item.location, date: toDateInputValue(item.date), mediaUrl: item.mediaUrl, thumbnailUrl: item.thumbnailUrl ?? "", mediaType: item.mediaType, sortOrder: item.sortOrder }); setSelectedUpload(null); if (mediaFileInputRef.current) mediaFileInputRef.current.value = ""; }}>Edit</Button>
-                              <Button type="button" size="sm" variant="destructive" onClick={() => doDelete(`/api/admin/gallery-media/${item.id}`, "/api/gallery-media")}>Delete</Button>
+                            <div className="flex shrink-0 flex-wrap justify-end gap-1">
+                              <Button
+                                type="button"
+                                size="icon"
+                                variant="outline"
+                                className="h-8 w-8"
+                                onClick={() => moveMediaItem("nursery", item.id, "up")}
+                                disabled={reorderMediaMutation.isPending || nurseryCarouselItems[0]?.id === item.id}
+                                aria-label={`Move ${item.title} up in live seedling gallery`}
+                              >
+                                <ChevronUp className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                type="button"
+                                size="icon"
+                                variant="outline"
+                                className="h-8 w-8"
+                                onClick={() => moveMediaItem("nursery", item.id, "down")}
+                                disabled={reorderMediaMutation.isPending || nurseryCarouselItems[nurseryCarouselItems.length - 1]?.id === item.id}
+                                aria-label={`Move ${item.title} down in live seedling gallery`}
+                              >
+                                <ChevronDown className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                type="button"
+                                size="sm"
+                                variant="outline"
+                                onClick={() => {
+                                  setMediaForm({
+                                    id: item.id,
+                                    title: item.title,
+                                    description: item.description,
+                                    category: item.category,
+                                    location: item.location,
+                                    date: toDateInputValue(item.date),
+                                    mediaUrl: item.mediaUrl,
+                                    thumbnailUrl: item.thumbnailUrl ?? "",
+                                    mediaType: item.mediaType,
+                                    sortOrder: item.sortOrder,
+                                  });
+                                  setSelectedUpload(null);
+                                  if (mediaFileInputRef.current) mediaFileInputRef.current.value = "";
+                                }}
+                              >
+                                Edit
+                              </Button>
                             </div>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
+                      ))
+                    )}
+                  </CardContent>
+                </Card>
+                <Card className="border-border/70 shadow-sm">
+                  <CardHeader><CardTitle>Asset Library</CardTitle></CardHeader>
+                  <CardContent className="space-y-4 max-h-[760px] overflow-auto">
+                    {Object.entries(groupedMedia).map(([category, items]) => (
+                      <div key={category} className="space-y-2">
+                        <p className="text-xs uppercase tracking-wider text-muted-foreground">{category}</p>
+                        {items.map((item) => (
+                          <div key={item.id} className="rounded-lg border border-border/70 p-3">
+                            <div className="flex items-start justify-between gap-3">
+                              <div>
+                                <p className="font-semibold text-sm">{item.title}</p>
+                                <p className="text-xs text-muted-foreground">{item.mediaType} | {toDateInputValue(item.date)}</p>
+                                <p className="text-xs text-muted-foreground">Display order: {item.sortOrder}</p>
+                              </div>
+                              <div className="flex flex-wrap justify-end gap-1">
+                                <Button type="button" size="icon" variant="outline" className="h-8 w-8" onClick={() => moveMediaItem(category, item.id, "up")} disabled={reorderMediaMutation.isPending || items[0]?.id === item.id} aria-label={`Move ${item.title} up`}><ChevronUp className="h-4 w-4" /></Button>
+                                <Button type="button" size="icon" variant="outline" className="h-8 w-8" onClick={() => moveMediaItem(category, item.id, "down")} disabled={reorderMediaMutation.isPending || items[items.length - 1]?.id === item.id} aria-label={`Move ${item.title} down`}><ChevronDown className="h-4 w-4" /></Button>
+                                <Button type="button" size="sm" variant="outline" onClick={() => { setMediaForm({ id: item.id, title: item.title, description: item.description, category: item.category, location: item.location, date: toDateInputValue(item.date), mediaUrl: item.mediaUrl, thumbnailUrl: item.thumbnailUrl ?? "", mediaType: item.mediaType, sortOrder: item.sortOrder }); setSelectedUpload(null); if (mediaFileInputRef.current) mediaFileInputRef.current.value = ""; }}>Edit</Button>
+                                <Button type="button" size="sm" variant="destructive" onClick={() => doDelete(`/api/admin/gallery-media/${item.id}`, "/api/gallery-media")}>Delete</Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
             </motion.div>
           </TabsContent>
 
