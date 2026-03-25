@@ -57,9 +57,8 @@ export default function Home() {
             </div>
             <div className="flex items-start gap-3 sm:block">
               <h1 className={font("heroTitlePrefix", "max-w-[11ch] flex-1 text-[clamp(2.15rem,4.8vw,4.85rem)] font-medium leading-[1.03] text-[#C8A070] [text-shadow:0_2px_10px_rgba(9,39,34,0.35)] sm:max-w-[10ch] md:max-w-[9ch] lg:max-w-[9.5ch] xl:max-w-[10ch]")}>
-                <span className="block">Professionally</span>
-                <span className="block whitespace-nowrap">Managed Agroforestry</span>
-                <span className="block whitespace-nowrap">Investments</span>
+                <span className="block whitespace-nowrap">Professionally Managed</span>
+                <span className="block whitespace-nowrap">Agroforestry Investments</span>
               </h1>
               <div className="flex h-[5.5rem] w-[5.5rem] shrink-0 items-center justify-center rounded-[1.5rem] bg-white/8 p-3 shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm sm:hidden">
                 <OptimizedImage src={logoImage} alt="Golden Forests logo" priority sizes="88px" className="h-full w-full object-contain" />
