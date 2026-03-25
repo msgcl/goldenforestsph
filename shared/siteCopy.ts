@@ -1002,6 +1002,19 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
     (image, index) => ecotourismImageMap.get(image) ?? image ?? defaultSiteCopy.ecotourism.featuredDestinationImages[index],
   );
 
+  const oslobName = "Oslob, Cebu";
+  const oslobDetail = "Whale shark watching + snorkelling";
+  const oslobImage = "https://res.cloudinary.com/dz49fckfu/image/upload/v1774413175/golden-forests/ecotourism-oslob-cebu-whale-shark-snorkelling.jpg";
+  if (!normalizedEcotourism.featuredDestinationNames.includes(oslobName)) {
+    const insertAt = Math.min(Math.max(normalizedEcotourism.featuredDestinationNames.indexOf("Cebu") + 1, 0), normalizedEcotourism.featuredDestinationNames.length);
+    normalizedEcotourism.featuredDestinationNames = [...normalizedEcotourism.featuredDestinationNames];
+    normalizedEcotourism.featuredDestinationDetails = [...normalizedEcotourism.featuredDestinationDetails];
+    normalizedEcotourism.featuredDestinationImages = [...normalizedEcotourism.featuredDestinationImages];
+    normalizedEcotourism.featuredDestinationNames.splice(insertAt, 0, oslobName);
+    normalizedEcotourism.featuredDestinationDetails.splice(insertAt, 0, oslobDetail);
+    normalizedEcotourism.featuredDestinationImages.splice(insertAt, 0, oslobImage);
+  }
+
   return siteCopySchema.parse({
     ...defaultSiteCopy,
     ...data,
