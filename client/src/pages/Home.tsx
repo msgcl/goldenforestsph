@@ -48,15 +48,15 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#0F2E28]/96 via-[#17392E]/94 to-[#2B6A55]/88" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(200,160,112,0.22),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(9,39,34,0.08))]" />
 
-        <div className="relative z-10 grid items-start gap-6 p-5 sm:p-10 md:grid-cols-[minmax(0,1fr)_clamp(220px,26vw,340px)] md:gap-8 lg:p-12">
-          <div className="min-w-0 md:max-w-[min(100%,44rem)] lg:max-w-[46rem] xl:max-w-[48rem]">
+        <div className="relative z-10 grid items-start gap-6 p-5 sm:p-10 md:grid-cols-[minmax(0,1fr)_clamp(170px,18vw,240px)] md:gap-5 lg:gap-7 lg:p-12">
+          <div className="min-w-0 md:max-w-[min(100%,38rem)] lg:max-w-[40rem] xl:max-w-[42rem]">
             <div className="mb-5 text-center sm:text-left">
               <span className={font("heroBadge", "inline-flex rounded-full border border-[#C8A070]/45 bg-white/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#C8A070]")}>
                 {copy.heroBadge}
               </span>
             </div>
             <div className="flex items-start gap-3 sm:block">
-              <h1 className={font("heroTitlePrefix", "max-w-[14ch] flex-1 text-[clamp(2.15rem,5.4vw,5.6rem)] font-medium leading-[1.04] text-[#C8A070] [text-shadow:0_2px_10px_rgba(9,39,34,0.35)] sm:max-w-[12ch] md:max-w-[11ch] lg:max-w-[12ch]")}>
+              <h1 className={font("heroTitlePrefix", "max-w-[11ch] flex-1 text-[clamp(2.15rem,4.8vw,4.85rem)] font-medium leading-[1.03] text-[#C8A070] [text-shadow:0_2px_10px_rgba(9,39,34,0.35)] sm:max-w-[10ch] md:max-w-[9ch] lg:max-w-[9.5ch] xl:max-w-[10ch]")}>
                 {copy.heroTitlePrefix}{" "}
                 <span className={font("heroTitleHighlight", "whitespace-nowrap")}>{copy.heroTitleHighlight}</span>
               </h1>
@@ -64,7 +64,7 @@ export default function Home() {
                 <OptimizedImage src={logoImage} alt="Golden Forests logo" priority sizes="88px" className="h-full w-full object-contain" />
               </div>
             </div>
-            <p className={font("heroDescription", "mt-4 max-w-3xl text-[0.98rem] leading-relaxed text-[#C8A070] sm:mt-5 sm:text-lg")}>
+            <p className={font("heroDescription", "mt-4 max-w-[38rem] text-[0.98rem] leading-relaxed text-[#C8A070] sm:mt-5 sm:text-lg")}>
               {copy.heroDescription}
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
@@ -78,8 +78,8 @@ export default function Home() {
           </div>
 
           <div className="hidden md:flex md:justify-end">
-            <div className="sticky top-6 flex aspect-square w-full max-w-[340px] items-center justify-center self-start rounded-[2rem] bg-white/8 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.2)] backdrop-blur-sm lg:p-5">
-              <OptimizedImage src={logoImage} alt="Golden Forests logo" priority sizes="(min-width: 1024px) 340px, 26vw" className="h-full w-full object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.32)]" />
+            <div className="sticky top-6 flex aspect-square w-full max-w-[240px] items-center justify-center self-start rounded-[1.75rem] bg-white/8 p-3 shadow-[0_20px_60px_rgba(0,0,0,0.2)] backdrop-blur-sm lg:p-3.5">
+              <OptimizedImage src={logoImage} alt="Golden Forests logo" priority sizes="(min-width: 1024px) 240px, 18vw" className="h-full w-full object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.32)]" />
             </div>
           </div>
         </div>
