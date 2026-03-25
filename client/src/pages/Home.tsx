@@ -237,20 +237,28 @@ export default function Home() {
         })}
       </section>
 
-      <section className="mt-8 rounded-[2rem] border border-border/70 bg-card/80 p-6 shadow-sm backdrop-blur sm:p-8">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <section className="mt-8 rounded-[1.6rem] border border-[#2A5646] bg-[linear-gradient(180deg,#12392F_0%,#0F3128_100%)] p-5 shadow-[0_16px_36px_rgba(0,0,0,0.14)] sm:p-6">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(260px,0.85fr)] lg:items-start">
           <div>
-            <p className={font("visitsTitle", "text-xs font-semibold uppercase tracking-[0.18em] text-accent")}>{copy.visitsTitle}</p>
-            <p className={font("visitsDescription", "mt-2 max-w-4xl text-base leading-relaxed text-primary/85")}>{copy.visitsDescription}</p>
+            <h3 className={font("visitsTitle", "inline-flex items-center gap-2 text-[2rem] font-semibold leading-tight text-[#FBFCF7]")}>
+              <Sprout className="h-5 w-5 text-[#C8A070]" />
+              {copy.visitsTitle}
+            </h3>
+            <p className={font("visitsDescription", "mt-3 max-w-3xl text-base leading-relaxed text-[#E4D3B6]")}>
+              {copy.visitsDescription}
+            </p>
           </div>
-          <Button asChild variant="ghost" className="justify-start text-primary sm:justify-center">
-            <Link href="/plantation-visit" className="inline-flex items-center gap-2">Visit overview <ArrowRight className="h-4 w-4" /></Link>
-          </Button>
-        </div>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {copy.visitsBullets.map((bullet) => (
-            <div key={bullet} className="rounded-2xl border border-border/60 bg-background/70 p-4 text-sm text-primary/80">{bullet}</div>
-          ))}
+          <div className="grid gap-2 self-center">
+            {copy.visitsBullets.map((bullet, index) => {
+              const BulletIcon = [MapPin, PlaneTakeoff, Sprout][index] ?? Sprout;
+              return (
+                <div key={bullet} className="inline-flex items-center gap-2 text-sm font-medium text-[#FBFCF7]">
+                  <BulletIcon className="h-4 w-4 shrink-0 text-[#C8A070]" />
+                  <span>{bullet}</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
     </AnimatedPage>
