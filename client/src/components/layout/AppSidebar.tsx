@@ -122,6 +122,8 @@ export function AppSidebar() {
                       {"external" in item && item.external ? (
                         <a
                           href={item.url}
+                          target="_blank"
+                          rel="noreferrer"
                           className="flex items-center gap-2.5 rounded-xl px-3 py-2.5"
                           onClick={() => {
                             if (isMobile) {
