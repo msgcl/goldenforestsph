@@ -264,6 +264,18 @@ export default function Nursery() {
                   </CardContent>
                 </Card>
 
+                <Card className="hover-elevate shadow-sm border-border/60 bg-gradient-to-br from-primary/5 to-transparent">
+                  <CardContent className="p-4">
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground">Agarwood Buffer Stock</p>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-3xl font-bold text-primary">8,000</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Reserved agarwood seedlings available as replacement and deployment buffer stock.</p>
+                    </div>
+                  </CardContent>
+                </Card>
+
                 <Card className="hover-elevate shadow-sm border-border/60 bg-gradient-to-br from-accent/5 to-transparent">
                   <CardContent className="p-4">
                     <div className="space-y-1">
@@ -273,6 +285,18 @@ export default function Nursery() {
                         <span className="text-sm text-muted-foreground">cm</span>
                       </div>
                       <p className={font("growthDescriptions", "text-sm text-muted-foreground")}>{copy.growthDescriptions[1] ?? ""}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover-elevate shadow-sm border-border/60 bg-gradient-to-br from-accent/5 to-transparent">
+                  <CardContent className="p-4">
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground">Mango Buffer Stock</p>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-3xl font-bold text-accent">3,000</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Reserved mango seedlings available as replacement and deployment buffer stock.</p>
                     </div>
                   </CardContent>
                 </Card>
