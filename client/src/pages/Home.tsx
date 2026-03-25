@@ -99,36 +99,7 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="mt-12 rounded-[2rem] border border-border/70 bg-card/80 p-6 shadow-sm backdrop-blur sm:p-8">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className={font("snapshotTitle", "text-xs font-semibold uppercase tracking-[0.14em] text-accent")}>{copy.snapshotTitle}</p>
-            <p className={font("snapshotDescription", "mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground")}>{copy.snapshotDescription}</p>
-          </div>
-          <Button asChild variant="ghost" className="justify-start text-primary sm:justify-center">
-            <Link href="/photo-gallery" className="inline-flex items-center gap-2">{copy.galleryCtaLabel} <ArrowRight className="h-4 w-4" /></Link>
-          </Button>
-        </div>
-
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {[
-            { image: nurseryPreview, title: copy.snapshotCardTitles[0], description: copy.snapshotCardDescriptions[0], icon: Sprout },
-            { image: plantationPreview, title: copy.snapshotCardTitles[1], description: copy.snapshotCardDescriptions[1], icon: MapPin },
-            { image: operationsPreview, title: copy.snapshotCardTitles[2], description: copy.snapshotCardDescriptions[2], icon: PlaneTakeoff },
-          ].map((card) => (
-            <Card key={card.title} className="overflow-hidden border-border/80 bg-background shadow-sm">
-              <div className="aspect-[4/3] bg-muted">{card.image ? <OptimizedImage src={card.image} alt={card.title} sizes="(min-width: 768px) 33vw, 100vw" className="h-full w-full object-cover" /> : null}</div>
-              <CardHeader>
-                <CardDescription className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-accent"><card.icon className="h-4 w-4" /> Snapshot</CardDescription>
-                <CardTitle className={font("snapshotCardTitles", "text-lg")}>{card.title}</CardTitle>
-                <CardDescription className={font("snapshotCardDescriptions", "text-sm leading-relaxed text-muted-foreground")}>{card.description}</CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-            <section className="mt-12 overflow-hidden rounded-[2rem] border border-[#C8A070]/28 bg-[radial-gradient(circle_at_top_right,rgba(200,160,112,0.18),transparent_26%),linear-gradient(135deg,#F6E9D1_0%,#F8EFD9_48%,#F2E2C5_100%)] p-5 shadow-[0_18px_42px_rgba(9,39,34,0.14)] sm:p-6 lg:p-7">
+      <section className="mt-12 overflow-hidden rounded-[2rem] border border-[#C8A070]/28 bg-[radial-gradient(circle_at_top_right,rgba(200,160,112,0.18),transparent_26%),linear-gradient(135deg,#F6E9D1_0%,#F8EFD9_48%,#F2E2C5_100%)] p-5 shadow-[0_18px_42px_rgba(9,39,34,0.14)] sm:p-6 lg:p-7">
         <div className="mb-5">
           <h2 className={font("liveMetricsTitle", "text-2xl font-semibold text-[#17392E] sm:text-3xl")}>{copy.liveMetricsTitle}</h2>
         </div>
@@ -216,11 +187,64 @@ export default function Home() {
           </aside>
         </div>
       </section>
-<section className="mt-12 rounded-[2rem] border border-border/70 bg-card/80 p-6 shadow-sm backdrop-blur sm:p-8">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+
+      <section className="mt-12">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">{copy.visitsTitle}</p>
-            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">{copy.visitsDescription}</p>
+            <h2 className={font("snapshotTitle", "text-3xl font-semibold tracking-tight text-primary sm:text-4xl")}>{copy.snapshotTitle}</h2>
+            <p className={font("snapshotDescription", "mt-2 max-w-3xl text-base leading-relaxed text-muted-foreground")}>{copy.snapshotDescription}</p>
+          </div>
+          <Button asChild variant="outline" className="justify-start rounded-xl border-border/80 bg-transparent text-primary hover:bg-card sm:justify-center">
+            <Link href="/photo-gallery" className="inline-flex items-center gap-2">{copy.galleryCtaLabel} <ArrowRight className="h-4 w-4" /></Link>
+          </Button>
+        </div>
+
+        <div className="mt-6 grid gap-4 lg:grid-cols-3">
+          {[
+            { image: nurseryPreview, title: copy.snapshotCardTitles[0], description: copy.snapshotCardDescriptions[0], icon: Sprout },
+            { image: plantationPreview, title: copy.snapshotCardTitles[1], description: copy.snapshotCardDescriptions[1], icon: MapPin },
+            { image: operationsPreview, title: copy.snapshotCardTitles[2], description: copy.snapshotCardDescriptions[2], icon: PlaneTakeoff },
+          ].map((card) => (
+            <Card key={card.title} className="overflow-hidden rounded-[1.6rem] border border-border/70 bg-card/85 shadow-sm">
+              <div className="aspect-[16/10] bg-muted">
+                {card.image ? <OptimizedImage src={card.image} alt={card.title} sizes="(min-width: 1024px) 33vw, 100vw" className="h-full w-full object-cover" /> : null}
+              </div>
+              <CardHeader className="gap-2">
+                <CardDescription className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <card.icon className="h-4 w-4" />
+                  Snapshot
+                </CardDescription>
+                <CardTitle className={font("snapshotCardTitles", "text-[1.7rem] leading-tight text-primary")}>{card.title}</CardTitle>
+                <CardDescription className={font("snapshotCardDescriptions", "text-base leading-relaxed text-muted-foreground")}>{card.description}</CardDescription>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-8 grid gap-4 lg:grid-cols-3">
+        {copy.governanceTitles.map((title, index) => {
+          const Icon = governanceIcons[index] ?? ShieldCheck;
+          return (
+            <article
+              key={title}
+              className="rounded-[1.7rem] border border-[#E7D6B8] bg-[linear-gradient(180deg,#F7EEDC_0%,#F2E4C8_100%)] p-5 shadow-[0_14px_30px_rgba(9,39,34,0.08)]"
+            >
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/40 text-[#C8A070]">
+                <Icon className="h-5 w-5" />
+              </div>
+              <h3 className={font("governanceTitles", "mt-4 text-[1.65rem] font-semibold leading-tight text-[#17392E]")}>{title}</h3>
+              <p className={font("governanceDescriptions", "mt-3 text-base leading-relaxed text-[#4F5E56]")}>{copy.governanceDescriptions[index] ?? ""}</p>
+            </article>
+          );
+        })}
+      </section>
+
+      <section className="mt-8 rounded-[2rem] border border-border/70 bg-card/80 p-6 shadow-sm backdrop-blur sm:p-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className={font("visitsTitle", "text-xs font-semibold uppercase tracking-[0.18em] text-accent")}>{copy.visitsTitle}</p>
+            <p className={font("visitsDescription", "mt-2 max-w-4xl text-base leading-relaxed text-primary/85")}>{copy.visitsDescription}</p>
           </div>
           <Button asChild variant="ghost" className="justify-start text-primary sm:justify-center">
             <Link href="/plantation-visit" className="inline-flex items-center gap-2">Visit overview <ArrowRight className="h-4 w-4" /></Link>
@@ -228,11 +252,10 @@ export default function Home() {
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {copy.visitsBullets.map((bullet) => (
-            <div key={bullet} className="rounded-2xl border border-border/70 bg-background/80 p-4 text-sm text-muted-foreground">{bullet}</div>
+            <div key={bullet} className="rounded-2xl border border-border/60 bg-background/70 p-4 text-sm text-primary/80">{bullet}</div>
           ))}
         </div>
       </section>
     </AnimatedPage>
   );
 }
-
