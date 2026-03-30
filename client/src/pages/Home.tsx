@@ -198,23 +198,25 @@ export default function Home() {
 
         <div className="mt-6 grid gap-4 lg:grid-cols-3">
           {[
-            { image: nurseryPreview, title: copy.snapshotCardTitles[0], description: copy.snapshotCardDescriptions[0], icon: Sprout },
-            { image: plantationPreview, title: copy.snapshotCardTitles[1], description: copy.snapshotCardDescriptions[1], icon: MapPin },
-            { image: operationsPreview, title: copy.snapshotCardTitles[2], description: copy.snapshotCardDescriptions[2], icon: PlaneTakeoff },
+            { image: nurseryPreview, title: copy.snapshotCardTitles[0], description: copy.snapshotCardDescriptions[0], icon: Sprout, href: "/nursery" },
+            { image: plantationPreview, title: copy.snapshotCardTitles[1], description: copy.snapshotCardDescriptions[1], icon: MapPin, href: "/plantation" },
+            { image: operationsPreview, title: copy.snapshotCardTitles[2], description: copy.snapshotCardDescriptions[2], icon: PlaneTakeoff, href: "/ai-technology" },
           ].map((card) => (
-            <Card key={card.title} className="overflow-hidden rounded-[1.6rem] border border-border/70 bg-card/85 shadow-sm">
-              <div className="aspect-[16/10] bg-muted">
-                {card.image ? <OptimizedImage src={card.image} alt={card.title} sizes="(min-width: 1024px) 33vw, 100vw" className="h-full w-full object-cover" /> : null}
-              </div>
-              <CardHeader className="gap-2">
-                <CardDescription className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-                  <card.icon className="h-4 w-4" />
-                  Snapshot
-                </CardDescription>
-                <CardTitle className={font("snapshotCardTitles", "text-[1.7rem] leading-tight text-primary")}>{card.title}</CardTitle>
-                <CardDescription className={font("snapshotCardDescriptions", "text-base leading-relaxed text-muted-foreground")}>{card.description}</CardDescription>
-              </CardHeader>
-            </Card>
+            <Link key={card.title} href={card.href} className="block h-full">
+              <Card className="h-full overflow-hidden rounded-[1.6rem] border border-border/70 bg-card/85 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-lg">
+                <div className="aspect-[16/10] bg-muted">
+                  {card.image ? <OptimizedImage src={card.image} alt={card.title} sizes="(min-width: 1024px) 33vw, 100vw" className="h-full w-full object-cover" /> : null}
+                </div>
+                <CardHeader className="gap-2">
+                  <CardDescription className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                    <card.icon className="h-4 w-4" />
+                    Snapshot
+                  </CardDescription>
+                  <CardTitle className={font("snapshotCardTitles", "text-[1.7rem] leading-tight text-primary")}>{card.title}</CardTitle>
+                  <CardDescription className={font("snapshotCardDescriptions", "text-base leading-relaxed text-muted-foreground")}>{card.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
           ))}
         </div>
       </section>

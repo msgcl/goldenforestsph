@@ -73,9 +73,9 @@ export default function Management() {
                     </CardContent>
                   </Card>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-xl">
+                <DialogContent className="sm:max-w-[min(calc(100vw-3rem),48rem)]">
                   <DialogHeader>
-                    <div className="mx-auto mb-3 h-52 w-52 overflow-hidden rounded-lg border border-accent/35 bg-muted sm:h-56 sm:w-56">
+                    <div className="mx-auto mb-3 h-40 w-40 overflow-hidden rounded-lg border border-accent/35 bg-muted sm:h-48 sm:w-48 md:h-52 md:w-52">
                       <OptimizedImage
                         src={
                           member.imageUrl ||
@@ -89,7 +89,7 @@ export default function Management() {
                     <DialogTitle className="font-outfit text-2xl leading-tight [text-wrap:balance]">{member.name}</DialogTitle>
                     <DialogDescription className="text-primary font-medium leading-snug [text-wrap:balance]">{member.title}</DialogDescription>
                   </DialogHeader>
-                  <div className="space-y-4 pt-2">
+                  <div className="space-y-4 overflow-x-hidden pt-2">
                     <div className="flex gap-2 items-start">
                       <Briefcase className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                       <p className={font("fallbackDetailText", "text-sm text-muted-foreground leading-relaxed")}>

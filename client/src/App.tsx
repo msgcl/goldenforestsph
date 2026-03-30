@@ -77,19 +77,19 @@ function App() {
               <AppSidebar />
               <div className="relative flex min-w-0 flex-1 flex-col overflow-hidden">
                 <header className="sticky top-0 z-50 border-b border-accent/20 bg-background/92 px-4 py-3 backdrop-blur-xl sm:px-6">
-                  <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3">
+                  <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3 sm:gap-4">
                     <div className="flex min-w-0 items-center gap-3">
                       <SidebarTrigger
                         data-testid="button-sidebar-toggle"
                         className="h-10 w-10 rounded-full border border-accent/25 bg-card text-[#17392E] shadow-sm dark:text-foreground"
                       />
-                      <div className="flex min-w-0 items-center gap-2">
+                      <div className="flex min-w-0 items-center gap-2 sm:gap-3">
                         <div className="flex h-10 w-10 items-center justify-center">
                           <OptimizedImage src={logoImage} alt="Golden Forests logo" priority sizes="26px" className="h-6.5 w-6.5 object-contain" />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-accent [text-wrap:balance]">Plantation Management Portal</p>
-                          <p className="text-sm font-medium text-[#17392E] dark:text-foreground [text-wrap:balance]">Crassna Agroforestry Development Inc.</p>
+                          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-accent [text-wrap:balance] sm:text-[0.68rem]">Plantation Management Portal</p>
+                          <p className="text-xs font-medium text-[#17392E] dark:text-foreground [text-wrap:balance] sm:text-sm">Crassna Agroforestry Development Inc.</p>
                         </div>
                       </div>
                     </div>
