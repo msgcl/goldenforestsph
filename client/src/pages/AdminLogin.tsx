@@ -25,8 +25,12 @@ export default function AdminLogin() {
     e.preventDefault();
     setError("");
     setIsLoading(true);
+    const normalizedUsername = username.trim();
     try {
-      await apiRequest("POST", "/api/admin/login", { username, password });
+      await apiRequest("POST", "/api/admin/login", {
+        username: normalizedUsername,
+        password,
+      });
       navigate("/admin");
     } catch (err) {
       setError("Invalid credentials");

@@ -174,6 +174,10 @@ export async function registerRoutes(
       username !== adminCredentials.username ||
       password !== adminCredentials.password
     ) {
+      console.warn("Admin login failed", {
+        submittedUsername: username,
+        expectedUsername: adminCredentials.username,
+      });
       return res.status(401).json({ message: "Invalid username or password" });
     }
 
