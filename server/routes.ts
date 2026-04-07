@@ -182,7 +182,14 @@ export async function registerRoutes(
     }
 
     req.session.adminUsername = username;
-    res.json({ username });
+    req.session.save((error) => {
+      if (error) {
+        console.error("Failed to save admin session", error);
+        return res.status(500).json({ message: "Failed to create admin session" });
+      }
+
+      res.json({ username });
+    });
   });
 
   app.post(api.admin.logout.path, requireAdmin, (req, res) => {

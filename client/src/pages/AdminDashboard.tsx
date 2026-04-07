@@ -124,6 +124,7 @@ export default function AdminDashboard() {
   const { data: siteCopy = defaultSiteCopy } = useSiteCopy();
   const { data: contactMessages = [] } = useQuery({
     queryKey: ["/api/admin/contact-messages"],
+    enabled: authChecked,
     queryFn: async () => {
       const res = await fetch("/api/admin/contact-messages", {
         credentials: "include",
