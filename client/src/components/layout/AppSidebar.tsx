@@ -67,7 +67,7 @@ const navigationGroups = [
     ],
   },
   {
-    label: "Sales & Marketing",
+    label: "Corporate Investment Portal",
     items: [
       { title: "Visit Portal", url: "https://www.goldenforests.ai/", icon: Handshake, external: true },
     ],
