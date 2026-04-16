@@ -18,7 +18,6 @@ import { Link, useLocation } from "wouter";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -156,12 +155,6 @@ export function AppSidebar() {
           </SidebarGroup>
         ))}
       </SidebarContent>
-      <SidebarFooter className="border-t border-white/8 p-3">
-        <div className="rounded-[1.2rem] border border-[#C8A070]/22 bg-[#C8A070]/12 p-3">
-          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#C8A070]">Status</p>
-          <p className="mt-1 text-xs font-medium text-[#FBFCF7]/92">Regulatory and operational reporting active</p>
-        </div>
-      </SidebarFooter>
     </Sidebar>
   );
 }
