@@ -23,6 +23,7 @@ import Contact from "@/pages/Contact";
 import AgarwoodLifeCycle from "@/pages/AgarwoodLifeCycle";
 import MangoProgram from "@/pages/MangoProgram";
 import PlantationVisit from "@/pages/PlantationVisit";
+import Disclaimer from "@/pages/Disclaimer";
 import AdminLogin from "@/pages/AdminLogin";
 import AdminDashboard from "@/pages/AdminDashboard";
 import logoImage from "@assets/logo.png";
@@ -49,6 +50,7 @@ function Router() {
       <Route path="/ecotourism" component={PlantationVisit} />
       <Route path="/contact" component={Contact} />
       <Route path="/photo-gallery" component={PhotoGallery} />
+      <Route path="/disclaimer" component={Disclaimer} />
       <Route component={NotFound} />
     </Switch>
   );
