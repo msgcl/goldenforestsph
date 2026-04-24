@@ -957,6 +957,64 @@ export const defaultSiteCopy: SiteCopy = {
   },
 };
 
+function removeIrrReferences(siteCopy: SiteCopy): SiteCopy {
+  return {
+    ...siteCopy,
+    home: {
+      ...siteCopy.home,
+      statsLabels: [
+        "Agarwood Lifecycle",
+        "Mango Fruiting Window",
+        "Out-Planting Milestone",
+        "Diversification Pathway",
+      ],
+      statsValues: ["10 Years", "From Year 5", "July 2026", "100,000 Trees"],
+      statsDescriptions: [
+        "Managed resin cycle with harvest in years 9-10",
+        "25-year orchard model with recurring annual harvests",
+        siteCopy.home.statsDescriptions[2] ?? defaultSiteCopy.home.statsDescriptions[2],
+        siteCopy.home.statsDescriptions[3] ?? defaultSiteCopy.home.statsDescriptions[3],
+      ],
+    },
+    mangoProgram: {
+      ...siteCopy.mangoProgram,
+      header: {
+        ...siteCopy.mangoProgram.header,
+        description:
+          "Executive summary of the Sweet Elena Carabao mango program, including market demand, plantation parameters, and long-term operating assumptions.",
+      },
+      snapshotTitle: "Program Snapshot",
+      snapshotLabels: [
+        "Lifecycle Duration",
+        "Commercial Fruiting",
+        "Yield Assumption",
+        "Mature Yield Assumption",
+        "Base Tree Sales Price",
+        "Management Commission",
+        "Surplus Planting Buffer",
+      ],
+      snapshotValues: [
+        "25 years",
+        "From year 5",
+        "~30 kg per tree (year 5)",
+        "~100 kg per tree (year 10+)",
+        "USD 592.50 per tree",
+        "20% of harvest revenue",
+        "20% additional trees",
+      ],
+    },
+    agarwoodLifeCycle: {
+      ...siteCopy.agarwoodLifeCycle,
+      commercialPoints: [
+        "Base tree sales assumptions use USD 292.50 per tree with market-linked export realization.",
+        "Projected yield benchmarks are ~1.5 kg per tree in year 9 and ~2.0 kg in year 10.",
+        "Harvest realization is modeled 50% in year 9 and 50% in year 10.",
+        "Net proceeds are distributed after 10% management commission under sales and management contracts.",
+      ],
+    },
+  };
+}
+
 export function normalizeSiteCopy(parsed: unknown): SiteCopy {
   const data = (parsed ?? {}) as Partial<SiteCopy> & Record<string, any>;
 
@@ -1014,7 +1072,7 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
     normalizedEcotourism.featuredDestinationImages.splice(insertAt, 0, oslobImage);
   }
 
-  return siteCopySchema.parse({
+  const normalized = siteCopySchema.parse({
     ...defaultSiteCopy,
     ...data,
     typography: {
@@ -1094,4 +1152,6 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
       },
     },
   });
+
+  return removeIrrReferences(normalized);
 }
