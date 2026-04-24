@@ -545,7 +545,7 @@ export const defaultSiteCopy: SiteCopy = {
       badge: "Mango Initiative",
       title: "Sweet Elena Carabao Mango Program",
       description:
-        "Executive summary of the Sweet Elena Carabao mango investment model, including market demand, plantation parameters, and long-term return assumptions.",
+        "Executive summary of the Sweet Elena Carabao mango program, including market demand, plantation parameters, and long-term operating assumptions.",
     },
     overviewTitle: "Program Overview",
     overviewPoints: [
@@ -573,15 +573,15 @@ export const defaultSiteCopy: SiteCopy = {
       "One endemic native tree planted for each commercial tree sold.",
       "Net proceeds are distributed after 20% management commission as defined in contract.",
     ],
-    snapshotTitle: "Projected Yield & Return Snapshot",
+    snapshotTitle: "Program Snapshot",
     snapshotLabels: [
       "Lifecycle Duration",
       "Commercial Fruiting",
       "Yield Assumption",
       "Mature Yield Assumption",
       "Base Tree Sales Price",
-      "Projected Annual Returns",
-      "Projected Annual Returns",
+      "Management Commission",
+      "Surplus Planting Buffer",
     ],
     snapshotValues: [
       "25 years",
@@ -589,8 +589,8 @@ export const defaultSiteCopy: SiteCopy = {
       "~30 kg per tree (year 5)",
       "~100 kg per tree (year 10+)",
       "USD 592.50 per tree",
-      "~14% (years 1–15)",
-      ">23% (years 16–25)",
+      "20% of harvest revenue",
+      "20% additional trees",
     ],
     snapshotFootnote:
       "Net client proceeds are distributed under contract after the 20% mango harvest commission, using conservative pricing and yield assumptions.",
@@ -612,7 +612,6 @@ export const defaultSiteCopy: SiteCopy = {
     ],
     commercialTitle: "Commercial & Financial Model",
     commercialPoints: [
-      "Projected annualized return is approximately 18.5% over a 10-year lifecycle.",
       "Base tree sales assumptions use USD 292.50 per tree with market-linked export realization.",
       "Projected yield benchmarks are ~1.5 kg per tree in year 9 and ~2.0 kg in year 10.",
       "Harvest realization is modeled 50% in year 9 and 50% in year 10.",
@@ -736,15 +735,15 @@ export const defaultSiteCopy: SiteCopy = {
     featuredVideoDescription:
       "Watch a closer look at nursery activity, plantation development, and the operational environment behind the Golden Forests programme.",
     statsLabels: [
-      "Agarwood Return Profile",
-      "Mango Return Profile",
+      "Agarwood Lifecycle",
+      "Mango Fruiting Window",
       "Out-Planting Milestone",
       "Diversification Pathway",
     ],
-    statsValues: ["~18.5% p.a.", "~14% to 23%", "July 2026", "100,000 Trees"],
+    statsValues: ["10 Years", "From Year 5", "July 2026", "100,000 Trees"],
     statsDescriptions: [
-      "10-year cycle with harvest in years 9-10",
-      "25-year lifecycle with annual harvests from year 5",
+      "Managed resin cycle with harvest in years 9-10",
+      "25-year orchard model with recurring annual harvests",
       "Zambales field deployment for both crop lines",
       "50,000 investment trees + 50,000 local exotic trees managed",
     ],

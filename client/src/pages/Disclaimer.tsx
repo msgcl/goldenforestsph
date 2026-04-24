@@ -9,7 +9,7 @@ const disclaimerSections = [
   {
     title: "Projected Returns",
     body:
-      "Return profiles referenced on this website, including the agarwood IRR of approximately 18.5% and the mango IRR of approximately 14%, are projections based on modelling assumptions and historical agricultural data where available. They are not a guarantee, promise or representation of future performance. Actual returns may differ materially from projections. The value of biological assets and income derived from them may go down as well as up.",
+      "Any commercial, operational, or yield information referenced on this website is based on modelling assumptions, planned plantation operations, and historical agricultural data where available. It is not a guarantee, promise, or representation of future performance. Actual outcomes may differ materially from any projections. The value of biological assets and income derived from them may go down as well as up.",
   },
   {
     title: "Operational Data",
