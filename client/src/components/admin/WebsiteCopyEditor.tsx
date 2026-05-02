@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from "react";
+import type { KeyboardEvent } from "react";
 import {
   Compass,
   Eye,
@@ -95,6 +96,21 @@ function getValueAtPath(source: unknown, path: string[]) {
     if (!current || typeof current !== "object") return undefined;
     return (current as Record<string, unknown>)[key];
   }, source);
+}
+
+function serializeFieldValue(value: string | string[]) {
+  return Array.isArray(value) ? value.join("\n\n") : value;
+}
+
+function parseArrayFieldValue(value: string) {
+  return value
+    .split(/\r?\n\s*\r?\n/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function insertTextAtCursor(value: string, selectionStart: number, selectionEnd: number, insertedText: string) {
+  return `${value.slice(0, selectionStart)}${insertedText}${value.slice(selectionEnd)}`;
 }
 
 function updateValueAtPath<T>(source: T, path: string[], nextValue: unknown): T {
@@ -219,15 +235,33 @@ export function WebsiteCopyEditor({
     const pathParts = path.split(".");
     const currentValue = getValueAtPath(value[selectedPage], pathParts);
     const resolvedValue = Array.isArray(currentValue)
-      ? nextValue
-          .split(/\r?\n/)
-          .map((item) => item.trim())
-          .filter(Boolean)
+      ? parseArrayFieldValue(nextValue)
       : nextValue;
 
     onChange({
       ...value,
       [selectedPage]: updateValueAtPath(value[selectedPage], pathParts, resolvedValue),
+    });
+  };
+
+  const handleTextareaKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>, path: string) => {
+    if (event.key !== "Enter" || !event.shiftKey) return;
+
+    event.preventDefault();
+
+    const textarea = event.currentTarget;
+    const nextValue = insertTextAtCursor(
+      textarea.value,
+      textarea.selectionStart,
+      textarea.selectionEnd,
+      "\n\n",
+    );
+
+    updateFieldValue(path, nextValue);
+
+    requestAnimationFrame(() => {
+      const nextCursorPosition = textarea.selectionStart + 2;
+      textarea.setSelectionRange(nextCursorPosition, nextCursorPosition);
     });
   };
 
@@ -362,7 +396,7 @@ export function WebsiteCopyEditor({
               <div className="grid gap-4">
                 {fields.map((field) => {
                   const currentFont = selectedPageTypography[field.path];
-                  const fieldText = Array.isArray(field.value) ? field.value.join("\n") : field.value;
+                  const fieldText = serializeFieldValue(field.value);
 
                   return (
                     <div key={field.path} className="rounded-[1.4rem] border border-white/10 bg-[linear-gradient(180deg,#123831_0%,#102f2a_100%)] p-4 shadow-sm">
@@ -377,6 +411,7 @@ export function WebsiteCopyEditor({
                                 className={cn(editorInputClassName, "min-h-[120px]")}
                                 value={fieldText}
                                 onChange={(event) => updateFieldValue(field.path, event.target.value)}
+                                onKeyDown={(event) => handleTextareaKeyDown(event, field.path)}
                               />
                             ) : (
                               <Input
@@ -386,6 +421,15 @@ export function WebsiteCopyEditor({
                               />
                             )}
                           </div>
+                          {field.isArray ? (
+                            <p className="mt-2 text-xs leading-relaxed text-white/55">
+                              Press `Shift+Enter` to create a new paragraph or list item. Single line breaks stay within the same paragraph.
+                            </p>
+                          ) : field.multiline ? (
+                            <p className="mt-2 text-xs leading-relaxed text-white/55">
+                              Press `Shift+Enter` to insert a paragraph break. Line breaks are preserved when this text is rendered.
+                            </p>
+                          ) : null}
                         </div>
 
                         <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
@@ -436,13 +480,25 @@ export function WebsiteCopyEditor({
 
                 <div className="space-y-3">
                   {fields.map((field) => {
-                    const previewValue = Array.isArray(field.value) ? field.value.join(" • ") : field.value;
                     return (
                       <div key={field.path} className="rounded-[1.1rem] border border-[#17392E]/10 bg-white/70 p-4">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8d6d3d]">{field.label}</p>
-                        <p className={previewFont(field.path, "mt-2 text-sm leading-relaxed text-[#17392E]")}>
-                          {previewValue}
-                        </p>
+                        {Array.isArray(field.value) ? (
+                          <div className="mt-2 space-y-3">
+                            {field.value.map((item, index) => (
+                              <p
+                                key={`${field.path}-${index}`}
+                                className={previewFont(field.path, "whitespace-pre-line text-sm leading-relaxed text-[#17392E]")}
+                              >
+                                {item}
+                              </p>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className={previewFont(field.path, "mt-2 whitespace-pre-line text-sm leading-relaxed text-[#17392E]")}>
+                            {field.value}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
