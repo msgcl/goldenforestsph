@@ -65,12 +65,6 @@ const navigationGroups = [
       { title: "Photo Gallery", url: "/photo-gallery", icon: ImageIcon },
     ],
   },
-  {
-    label: "Corporate Investment Portal",
-    items: [
-      { title: "Visit Portal", url: "https://www.goldenforests.ai/", icon: Handshake, external: true },
-    ],
-  },
 ];
 
 export function AppSidebar() {
