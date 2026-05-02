@@ -404,7 +404,8 @@ export const defaultSiteCopy: SiteCopy = {
     },
     overviewTitle: "Corporate Overview",
     overviewParagraphs: [
-      "Golden Forests operates through an international model: an ADGM holding company in Abu Dhabi, a Dubai FZCO sales and marketing arm, and CADI as the Philippine operating platform.",
+      "Golden Forests operates on a global model specifically tailored for professional investors. This model is structured to cater to the unique requirements and high standards of major investment markets.",
+      "The company’s core offerings include agarwood oud wood chips and mango fruits. These products have been strategically selected due to their significant demand in international markets, ensuring that Golden Forests remain competitive and relevant among professional investors.",
       "Under this structure, CADI executes nursery propagation, out-planting, maintenance, inoculation scheduling, harvest support, product sales, and reporting for client-owned trees in Zambales province.",
     ],
     mandateTitle: "Operating Mandate",
