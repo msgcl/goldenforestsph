@@ -143,7 +143,11 @@ export async function registerRoutes(
       return res.status(404).json({ message: "No nursery stats available" });
     }
     const inventorySettings = await readSiteInventorySettings();
-    res.json({ ...stats, ...inventorySettings });
+    const normalizedStats =
+      stats.agarwoodSeedlings === 40000 && stats.mangoSeedlings === 15000
+        ? { ...stats, agarwoodSeedlings: 27600, mangoSeedlings: 9600 }
+        : stats;
+    res.json({ ...normalizedStats, ...inventorySettings });
   });
 
   app.get(api.galleryMedia.list.path, async (_req, res) => {

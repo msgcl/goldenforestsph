@@ -20,12 +20,20 @@ export async function readSiteInventorySettings(): Promise<SiteInventorySettings
   const latest = await storage.getLatestSiteInventorySettings();
   if (!latest) return defaultSiteInventorySettings;
 
-  // Transparently migrate the pre-July 2026 launch inventory retained in existing databases.
-  if (
-    latest.saleAgarwoodSeedlings === 34000 &&
-    latest.saleMangoSeedlings === 14000 &&
-    latest.saleCarabaoMango === 750
-  ) {
+  // Transparently migrate known pre-July 2026 inventory snapshots retained in
+  // local and production databases. Future values entered through the admin
+  // dashboard remain untouched.
+  const isLegacyInventory = [
+    [34000, 14000, 750],
+    [32000, 12000, 640],
+  ].some(
+    ([agarwood, mango, carabao]) =>
+      latest.saleAgarwoodSeedlings === agarwood &&
+      latest.saleMangoSeedlings === mango &&
+      latest.saleCarabaoMango === carabao,
+  );
+
+  if (isLegacyInventory) {
     return defaultSiteInventorySettings;
   }
 
