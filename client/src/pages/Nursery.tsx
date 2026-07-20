@@ -8,7 +8,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import { useGalleryMedia } from "@/hooks/use-gallery-media";
-import { defaultInventoryValues, saleInventory } from "@/lib/publicInventory";
+import {
+  AGARWOOD_BUFFER_STOCK,
+  MANGO_BUFFER_STOCK,
+  defaultInventoryValues,
+  saleInventory,
+} from "@/lib/publicInventory";
 import { useSiteCopy } from "@/hooks/use-site-copy";
 import { defaultSiteCopy } from "@shared/siteCopy";
 import { OptimizedImage, OptimizedVideo } from "@/components/ui/optimized-media";
@@ -136,7 +141,7 @@ export default function Nursery() {
             </p>
           </div>
 
-          <div className="grid gap-4 p-4 sm:p-6 md:grid-cols-3">
+          <div className="grid gap-4 p-4 sm:p-6 md:grid-cols-2">
             {saleInventory.map((item, index) => (
               <article
                 key={item.field}
@@ -273,7 +278,7 @@ export default function Nursery() {
                     <div className="space-y-1">
                       <p className="text-xs font-medium text-muted-foreground">Agarwood Buffer Stock</p>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold text-primary">8,000</span>
+                        <span className="text-3xl font-bold text-primary">{AGARWOOD_BUFFER_STOCK.toLocaleString()}</span>
                       </div>
                       <p className="text-sm text-muted-foreground">Reserved agarwood seedlings available as replacement and deployment buffer stock.</p>
                     </div>
@@ -298,7 +303,7 @@ export default function Nursery() {
                     <div className="space-y-1">
                       <p className="text-xs font-medium text-muted-foreground">Mango Buffer Stock</p>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold text-accent">3,000</span>
+                        <span className="text-3xl font-bold text-accent">{MANGO_BUFFER_STOCK.toLocaleString()}</span>
                       </div>
                       <p className="text-sm text-muted-foreground">Reserved mango seedlings available as replacement and deployment buffer stock.</p>
                     </div>

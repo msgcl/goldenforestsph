@@ -1,6 +1,8 @@
-export const PUBLIC_INVENTORY_DATE_LABEL = "March 19, 2026";
+export const PUBLIC_INVENTORY_DATE_LABEL = "July 20, 2026";
 export const PANAY_PLANTING_COUNT = "800";
-export const DEFAULT_INVENTORY_DATE_ISO = "2026-03-19T00:00:00.000Z";
+export const DEFAULT_INVENTORY_DATE_ISO = "2026-07-20T00:00:00.000Z";
+export const AGARWOOD_BUFFER_STOCK = 4600;
+export const MANGO_BUFFER_STOCK = 1600;
 
 export const physicalInventory = [
   {
@@ -17,28 +19,23 @@ export const physicalInventory = [
 
 export const saleInventory = [
   {
-    label: "Agarwood seedlings available for sale",
+    label: "Agarwood tree-equivalent shares available",
     field: "saleAgarwoodSeedlings",
-    note: "Current inventory",
+    note: "Sub-Fund A launch allocation",
   },
   {
-    label: "Sweet Elena mango seedlings available for sale",
+    label: "Sweet Elena mango tree-equivalent shares available",
     field: "saleMangoSeedlings",
-    note: "Current inventory",
-  },
-  {
-    label: "Carabao mango inventory available for sale",
-    field: "saleCarabaoMango",
-    note: "Current inventory",
+    note: "Sub-Fund B launch allocation",
   },
 ] as const;
 
 export const defaultInventoryValues = {
-  agarwoodSeedlings: 40000,
-  mangoSeedlings: 15000,
+  agarwoodSeedlings: 27600,
+  mangoSeedlings: 9600,
   panayPlanted: 800,
-  saleAgarwoodSeedlings: 34000,
-  saleMangoSeedlings: 14000,
-  saleCarabaoMango: 750,
+  saleAgarwoodSeedlings: 23000,
+  saleMangoSeedlings: 8000,
+  saleCarabaoMango: 0,
   inventoryDate: DEFAULT_INVENTORY_DATE_ISO,
 } as const;

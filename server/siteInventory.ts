@@ -10,15 +10,24 @@ export type SiteInventorySettings = {
 
 export const defaultSiteInventorySettings: SiteInventorySettings = {
   panayPlanted: 800,
-  saleAgarwoodSeedlings: 34000,
-  saleMangoSeedlings: 14000,
-  saleCarabaoMango: 750,
-  inventoryDate: "2026-03-19T00:00:00.000Z",
+  saleAgarwoodSeedlings: 23000,
+  saleMangoSeedlings: 8000,
+  saleCarabaoMango: 0,
+  inventoryDate: "2026-07-20T00:00:00.000Z",
 };
 
 export async function readSiteInventorySettings(): Promise<SiteInventorySettings> {
   const latest = await storage.getLatestSiteInventorySettings();
   if (!latest) return defaultSiteInventorySettings;
+
+  // Transparently migrate the pre-July 2026 launch inventory retained in existing databases.
+  if (
+    latest.saleAgarwoodSeedlings === 34000 &&
+    latest.saleMangoSeedlings === 14000 &&
+    latest.saleCarabaoMango === 750
+  ) {
+    return defaultSiteInventorySettings;
+  }
 
   return {
     panayPlanted: latest.panayPlanted,

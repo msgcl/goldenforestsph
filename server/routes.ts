@@ -677,7 +677,7 @@ async function seedDatabase() {
     await storage.createOperationalUpdate({
       title: "Reforestation Programme Launch",
       description:
-        "Initiated 1:1 native tree reforestation programme. For every commercial tree sold, one native species (Narra, Molave, or Agoho) planted in designated conservation areas.",
+        "Initiated the 1:1 native-tree reforestation programme. One native species tree (Narra, Molave, or Agoho) is planted for each corresponding underlying commercial tree represented in the sub-fund allocation model.",
       category: "Impact",
       date: new Date("2026-01-28"),
       imageUrl: null,

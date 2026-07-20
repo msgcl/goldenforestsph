@@ -19,7 +19,7 @@ const disclaimerSections = [
   {
     title: "Nature of Investment",
     body:
-      "Investment in agroforestry plantation assets is long-term and illiquid in nature. There is no established secondary market for tree ownership and investors may not be able to realise the value of their investment within a predictable timeframe. Investments of this nature carry biological, environmental, market, operational and regulatory risks.",
+      "Subscriptions are for shares in a pooled, ring-fenced sub-fund and do not confer legal ownership of any specific tree, planting block, land or plantation asset. These private sub-fund shareholdings are long-term and illiquid; there is no established public market or guaranteed redemption or exit mechanism. They carry biological, environmental, market, operational, counterparty and regulatory risks.",
   },
   {
     title: "Regulatory Compliance",
@@ -29,7 +29,7 @@ const disclaimerSections = [
   {
     title: "Jurisdiction",
     body:
-      "This website and the information it contains are directed at sophisticated and professional investors only. Persons accessing this website are responsible for ensuring compliance with all applicable laws and regulations in their own jurisdiction. This website does not constitute a public offer or financial promotion in any jurisdiction where such an offer or promotion would require regulatory authorisation.",
+      "This website and the information it contains are directed at eligible professional investors only. Any opportunity is communicated through appropriately licensed private-placement intermediaries, subject to investor classification, suitability, anti-money-laundering, source-of-funds and jurisdictional requirements. This website is not a public offer or financial promotion.",
   },
   {
     title: "Confidentiality",

@@ -127,7 +127,7 @@ export default function Home() {
               <p className={font("saleHeaderPrefix", "text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8C5A16]")}>
                 {copy.saleHeaderPrefix} {inventoryDateLabel}
               </p>
-              <div className="mt-4 grid gap-3 md:grid-cols-3">
+              <div className="mt-4 grid gap-3 md:grid-cols-2">
                 {saleInventory.map((item, index) => (
                   <article
                     key={item.field}

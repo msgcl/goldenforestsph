@@ -329,7 +329,7 @@ export const siteCopySchema = z.object({
 
 export type SiteCopy = z.infer<typeof siteCopySchema>;
 
-const defaultSiteCopyUpdatedAt = "2026-03-22T00:00:00.000Z";
+const defaultSiteCopyUpdatedAt = "2026-07-20T00:00:00.000Z";
 
 export const defaultSiteCopy: SiteCopy = {
   typography: {
@@ -404,16 +404,16 @@ export const defaultSiteCopy: SiteCopy = {
     },
     overviewTitle: "Corporate Overview",
     overviewParagraphs: [
-      "Golden Forests operates on a global model specifically tailored for professional investors. This model is structured to cater to the unique requirements and high standards of major investment markets.",
-      "The company’s core offerings include agarwood oud wood chips and mango fruits. These products have been strategically selected due to their significant demand in international markets, ensuring that Golden Forests remain competitive and relevant among professional investors.",
-      "Under this structure, CADI executes nursery propagation, out-planting, maintenance, inoculation scheduling, harvest support, product sales, and reporting for client-owned trees in Zambales province.",
+      "Golden Forests provides eligible professional investors with access to managed Philippine agroforestry through shares in dedicated, ring-fenced sub-funds of a Singapore Variable Capital Company (VCC). Subscriptions are introduced through appropriately licensed private-placement intermediaries and remain subject to the definitive offering documents and investor eligibility checks.",
+      "The two sub-funds provide separate exposure to income derived from harvested Aquilaria crassna agarwood and Sweet Elena Carabao mango. Each share is valued on a tree-equivalent basis for economic allocation and accounting only; shareholders do not own any specific tree, planting block, land, or plantation asset.",
+      "CADI is the Philippine operating company responsible for nursery propagation, out-planting, maintenance, inoculation scheduling, harvest support, product sales, and operational reporting in Zambales province. The VCC's licensed fund manager and administrator oversee share issuance, controlled disbursement of proceeds, and fund-level governance and reporting.",
     ],
     mandateTitle: "Operating Mandate",
     mandateItems: [
-      "Dual-Crop Delivery: Integrated management of Aquilaria crassna agarwood and Sweet Elena Carabao Mango to diversify cash flow across short and long maturity timelines.",
-      "Regulatory Execution: Operating workflows align with DENR and CITES II requirements with traceable ownership, export documentations, and internationally recognized export standards.",
+      "Dual-Crop Delivery: Separate agarwood and mango sub-funds provide exposure to short- and long-maturity harvest-income profiles.",
+      "Regulated Access: Professional-client subscriptions are made through licensed private-placement intermediaries into ring-fenced Singapore VCC sub-funds.",
       "Agroforestry Intelligence: AI-enabled monitoring, sensors, and drones support yield optimization and risk-managed operations.",
-      "Stewardship Commitment: For each commercial tree purchased, CADI plants one exotic species tree. With 50,000 trees available for investment and 50,000 local exotic trees planted alongside them, the programme manages 100,000 trees in total.",
+      "Stewardship Commitment: One native Philippine tree is planted for each corresponding underlying tree represented in the sub-fund share-allocation model.",
     ],
   },
   compliance: {
@@ -429,7 +429,7 @@ export const defaultSiteCopy: SiteCopy = {
     highlightItems: [
       "Pre-established permitting foundations for Aquilaria crassna operations",
       "CITES-aligned export pathway integrated into operational planning",
-      "Structured ownership contracts with annual audits and GPS verification",
+      "Ring-fenced sub-funds with licensed fund-management and administration controls",
       "PEFC/FSC certification pathway targeted for 2027",
       "Regional Wildlife Culture permit for plantation operations",
       "Bureau of Customs (BOC) certifications for import and export",
@@ -444,7 +444,7 @@ export const defaultSiteCopy: SiteCopy = {
       "Golden Forests is positioned as a first mover with regulatory approvals for Aquilaria crassna cultivation in the Philippines.",
       "Operations are structured for CITES-aligned documentation, traceability, and legal trade workflows for agarwood exports.",
       "Program roadmap targets PEFC and FSC certification by 2027 to strengthen responsible supply chain credibility.",
-      "Sales and management contracts, annual audits, GPS verification, and portal reporting are embedded into the client model.",
+      "Subscription documents, shareholder records, fund-level reporting, and independent audit processes support the professional-client model.",
     ],
     mandatesTitle: "Further Legal Mandates",
     mandateTitles: [
@@ -455,7 +455,7 @@ export const defaultSiteCopy: SiteCopy = {
     mandateDescriptions: [
       "The mango program targets PEFC (Programme for the Endorsement of Forest Certification) certification by 2027 to support responsible environmental stewardship, sustainable practices, and premium export market access.",
       "The agarwood program targets FSC (Forest Stewardship Council) certification, with the application scheduled for Q4 2027, to strengthen compliant forestry operations and premium market access.",
-      "The client model is supported by sales and management contracts, annual reporting protocols, and governance controls designed for transparent operational oversight.",
+      "The client model is supported by definitive subscription and constitutional documents, licensed fund oversight, annual reporting protocols, and governance controls designed for transparent operational oversight.",
     ],
   },
   technology: {
@@ -497,7 +497,7 @@ export const defaultSiteCopy: SiteCopy = {
     },
     cardTitles: ["1:1 Reforestation Programme", "Local Employment & Training"],
     cardDescriptions: [
-      "For each commercial agarwood or mango tree purchased, one exotic species tree is planted alongside it. With 50,000 trees available for investment and 50,000 local exotic trees planted in parallel, the reforestation programme manages 100,000 trees in total.",
+      "One native Philippine tree is planted for each corresponding underlying tree represented in the sub-fund share-allocation model, linking the programme's commercial scale to measurable reforestation activity.",
       "Operations prioritize local employment and community engagement, with field teams trained on plantation care, monitoring procedures, and responsible production practices.",
     ],
     standardsTitle: "Responsible Production Standards",
@@ -509,26 +509,26 @@ export const defaultSiteCopy: SiteCopy = {
       badge: "Asset Administration",
       title: "Client Services",
       description:
-        "Client services are structured around secure ownership, lifecycle management, and transparent reporting across the full plantation cycle.",
+        "Client services support professional shareholders through regulated onboarding, fund governance, operational visibility, and transparent reporting across the plantation lifecycle.",
     },
-    serviceTitles: ["Individual Tree Tracking", "Professional Reporting"],
+    serviceTitles: ["Sub-Fund Shareholding & Governance", "Professional Reporting"],
     serviceDescriptions: [
-      "Each client receives individually an identified geotagged tree and ownership certificate under sales and management contracts with GPS-verified allocation.",
-      "Reporting frameworks are designed for private and institutional clients requiring annual audited updates and continuous lifecycle visibility.",
+      "Eligible professional clients subscribe through licensed private-placement intermediaries and receive shares in the relevant ring-fenced VCC sub-fund. A share is valued on a tree-equivalent basis but does not convey ownership of an individual tree or other plantation asset.",
+      "Reporting is designed to provide professional shareholders with periodic visibility at sub-fund, planting-block, and biological-asset-pool level, subject to the definitive documents and administrator capabilities.",
     ],
     serviceBullets: [
       [
-        "Identified asset records per client holding",
-        "GPS-geotagged reference location mapping",
-        "Official ownership certificate per allocation",
-        "Digital portal access for all clients",
-        "Ownership can be transferred or inherited",
+        "Subscription Agreement and applicable governing documents",
+        "Evidence of shares issued and entry in the shareholder register",
+        "Licensed fund-manager and administrator oversight",
+        "Ring-fenced accounting for each crop sub-fund",
+        "Share transfers subject to eligibility, approvals, and compliance checks",
       ],
       [
-        "Annual independent plantation reports",
-        "Photo and field progress updates",
-        "GPS-verified replacement tree reporting",
-        "Real-time dashboard and documentation access",
+        "Periodic fund and plantation-operations reports",
+        "Independent audit and field-verification outputs",
+        "Harvest, yield, and material-exception reporting",
+        "Shareholder communications and document access",
       ],
     ],
     visitationTitle: "Client Visitation Programme",
@@ -557,22 +557,22 @@ export const defaultSiteCopy: SiteCopy = {
     ],
     insuranceTitle: "Harvest Guarantee Insurance",
     insuranceDescription:
-      "Mango risk controls prioritize capital protection through conservative assumptions, surplus planting, and replacement commitments under managed operations.",
+      "Mango risk controls use conservative productive-tree assumptions, a 20% replacement buffer, and managed operational protocols. These controls mitigate selected biological risks but do not guarantee capital, income, or distributions.",
     insurancePoints: [
       "20% surplus trees are planted as mortality buffer.",
       "100% replacement guarantee is applied for covered loss events.",
       "Yield and pricing assumptions use conservative baselines.",
       "Only 80% of planted mango trees are assumed to produce fruit in projections.",
     ],
-    benefitsTitle: "Client Benefits",
+    benefitsTitle: "Professional Shareholder Structure",
     benefitsPoints: [
-      "Legal sales and management contracts with identified tree allocation.",
-      "Owner certificate with GPS coordinates for full traceability.",
-      "Digital portal access and annual audited plantation reporting.",
-      "Tree ownership is transferable and inheritable.",
+      "Shares in a dedicated, ring-fenced mango sub-fund administered within a Singapore VCC structure.",
+      "USD 437.08 Year 0 subscription price per mango tree-equivalent share.",
+      "Share issuance, fund administration, controlled use of proceeds, and reporting overseen through licensed service providers.",
+      "Share transfers are governed by the fund documents and remain subject to professional-investor eligibility and compliance checks.",
       "Plantation visit program for on-site inspection and management briefings.",
-      "One endemic native tree planted for each commercial tree sold.",
-      "Net proceeds are distributed after 20% management commission as defined in contract.",
+      "One native Philippine tree planted for each corresponding underlying tree represented by the allocation model.",
+      "Potential net distributions are subject to realized harvest proceeds, a 20% mango harvesting commission, permitted deductions, fund requirements, and the definitive documents.",
     ],
     snapshotTitle: "Program Snapshot",
     snapshotLabels: [
@@ -580,21 +580,27 @@ export const defaultSiteCopy: SiteCopy = {
       "Commercial Fruiting",
       "Yield Assumption",
       "Mature Yield Assumption",
-      "Base Tree Sales Price",
-      "Management Commission",
-      "Surplus Planting Buffer",
+      "Subscription Price per Share",
+      "Illustrative USD 100,000 Subscription",
+      "Years 5-15 Net Income / Annualised IRR",
+      "Years 16-25 Net Income / Annualised IRR",
+      "25-Year Net Income / Annualised IRR",
+      "Replacement Buffer",
     ],
     snapshotValues: [
       "25 years",
       "From year 5",
       "~30 kg per tree (year 5)",
       "~100 kg per tree (year 10+)",
-      "USD 592.50 per tree",
-      "20% of harvest revenue",
-      "20% additional trees",
+      "USD 437.08 per tree-equivalent share",
+      "Approximately 229 mango shares",
+      "USD 705,594 / 14.9%",
+      "USD 991,677 / 8.4%",
+      "USD 1,697,271 / 12.3%",
+      "1,600 trees (20% of the 8,000-tree launch inventory)",
     ],
     snapshotFootnote:
-      "Net client proceeds are distributed under contract after the 20% mango harvest commission, using conservative pricing and yield assumptions.",
+      "Illustrative management base case from the July 2026 professional-client presentation. Income and IRR are not guaranteed and depend on realized harvests and sales. Figures are shown after the stated 20% mango harvesting commission and applicable deductions; Years 5-15 also deduct the initial USD 100,000 subscription. Any distribution is subject to fund requirements and definitive documents.",
   },
   agarwoodLifeCycle: {
     header: {
@@ -609,18 +615,19 @@ export const defaultSiteCopy: SiteCopy = {
       "Agarwood is a premium commodity used in luxury fragrance, incense, oils, and wellness applications.",
       "Global demand is concentrated in the Middle East, Asia, and Europe, while legal wild supply is constrained by CITES controls.",
       "The model combines controlled inoculation, traceable production, and regulated export pathways.",
-      "The 2026 rollout targets 35,000 agarwood trees, scaling by 10% per year.",
+      "The 2026 launch inventory comprises 23,000 agarwood trees represented economically by the sub-fund share-allocation model, plus a 4,600-tree replacement buffer.",
     ],
     commercialTitle: "Commercial & Financial Model",
     commercialPoints: [
-      "Base tree sales assumptions use USD 292.50 per tree with market-linked export realization.",
+      "The Year 0 subscription price is USD 301.71 per agarwood tree-equivalent share, including a USD 173.10 segregated reserve for approved later-stage costs.",
       "Projected yield benchmarks are ~1.5 kg per tree in year 9 and ~2.0 kg in year 10.",
       "Harvest realization is modeled 50% in year 9 and 50% in year 10.",
-      "Net proceeds are distributed after 10% management commission under sales and management contracts.",
+      "The July 2026 professional-client presentation illustrates a USD 100,000 subscription as approximately 331 agarwood shares, with USD 416,336 net income over 10 years alongside a 17.8% annualised IRR.",
+      "Illustrative income and IRR are not guaranteed. Potential distributions depend on actual export sales, the 10% Agarwood Management Revenue Share, reserve requirements, fund controls, and definitive documents.",
     ],
     insuranceTitle: "Harvest Guarantee Insurance",
     insuranceDescription:
-      "Agarwood protection measures are structured to support long-cycle asset security through surplus planting, replacement coverage, and disciplined yield planning.",
+      "Agarwood risk controls include a 20% replacement buffer, managed cultivation protocols, and a segregated fund-administered reserve. These controls do not guarantee capital, income, or distributions.",
     insurancePoints: [
       "20% surplus trees are planted as mortality buffer.",
       "100% replacement guarantee is applied for covered loss events.",
@@ -648,7 +655,7 @@ export const defaultSiteCopy: SiteCopy = {
         "Premium client travel experiences linked to plantation oversight in Zambales province and onward island destinations via Clark International Airport.",
     },
     introParagraphs: [
-      "Through our exclusive ecotourism program, clients are welcomed to visit their plantation sites and see their assets performing on the ground. Each visit includes a two-night stay at a premium hotel and transportation, supported by dedicated staff to ensure a smooth, well-coordinated experience across the Philippines.",
+      "Through our exclusive ecotourism program, professional shareholders are welcomed to visit the plantation operations and, where applicable, view assets held by the relevant sub-fund. Each visit includes a two-night stay at a premium hotel and transportation, supported by dedicated staff.",
       "The program is designed to pair financial oversight with personal travel value. Clients can combine field visibility in Zambales province with convenient onward routes to Cebu, Coron, Boracay, Bohol, El Nido, and Surigao through Clark.",
     ],
     featuredVideoEyebrow: "Plantation Visit Video",
@@ -728,7 +735,7 @@ export const defaultSiteCopy: SiteCopy = {
     heroTitlePrefix: "Professionally Managed",
     heroTitleHighlight: "Agroforestry Investments",
     heroDescription:
-      "Crassna Agroforestry Development Inc. (CADI) manages Aquilaria crassna and Sweet Elena Carabao mango plantations in Zambales province for Golden Forests clients, combining professional operations, operations ownership and product sales.",
+      "Crassna Agroforestry Development Inc. (CADI) operates the Philippine plantations underlying Golden Forests' ring-fenced agarwood and mango sub-funds for eligible professional investors.",
     primaryCtaLabel: "Review Plantation Timeline",
     secondaryCtaLabel: "Open Nursery Dashboard",
     featuredVideoEyebrow: "Featured Video",
@@ -741,21 +748,20 @@ export const defaultSiteCopy: SiteCopy = {
       "Out-Planting Milestone",
       "Diversification Pathway",
     ],
-    statsValues: ["10 Years", "From Year 5", "July 2026", "100,000 Trees"],
+    statsValues: ["10 Years", "From Year 5", "July 2026", "31,000 Trees"],
     statsDescriptions: [
       "Managed resin cycle with harvest in years 9-10",
       "25-year orchard model with recurring annual harvests",
       "Zambales field deployment for both crop lines",
-      "50,000 investment trees + 50,000 local exotic trees managed",
+      "23,000 agarwood + 8,000 mango launch inventory",
     ],
     liveMetricsTitle: "Live Nursery Metrics",
     currentStockLabel: "Current nursery stock",
     stockLabels: ["Aquilaria crassna agarwood seedlings", "Sweet Elena Carabao mango seedlings"],
-    saleHeaderPrefix: "Available for sale as of",
+    saleHeaderPrefix: "Launch share availability as of",
     saleCardLabels: [
-      "Agarwood seedlings available for sale",
-      "Sweet Elena mango seedlings available for sale",
-      "Carabao mango inventory available for sale",
+      "Agarwood tree-equivalent shares available",
+      "Sweet Elena mango tree-equivalent shares available",
     ],
     summaryCardLabels: ["Field Deployment", "Panay Planting", "Inventory Date"],
     summaryCardDescriptions: [
@@ -772,13 +778,13 @@ export const defaultSiteCopy: SiteCopy = {
     snapshotCardDescriptions: [
       "Seedling propagation, grafting, health tracking, and staging for field transfer.",
       "Land preparation, deployment planning, and maintenance workflows.",
-      "Monitoring, geotagging, data capture, and reporting tools used in day-to-day operations and client reporting.",
+      "Monitoring, data capture, and reporting tools used in day-to-day operations and fund-level reporting.",
     ],
     governanceTitles: ["Regulatory Compliance", "Precision Operations", "Transparent Reporting"],
     governanceDescriptions: [
       "Operations are aligned with DENR and CITES II pathways, with legal documentation structured for export and stakeholder review.",
       "AI-enabled monitoring, soil sensors, agricultural drone, and smart irrigation support measurable field decisions across mango and agarwood plantations.",
-      "Clients receive GPS-verified ownership certificates, geotagged references, annual reports, and annual reports which portray visibility across the full asset lifecycle.",
+      "Professional shareholders receive periodic fund and plantation reporting designed to provide visibility at sub-fund, planting-block, and biological-asset-pool level.",
     ],
     visitsTitle: "Zambales Access and Client Visits",
     visitsDescription:
@@ -804,13 +810,12 @@ export const defaultSiteCopy: SiteCopy = {
       "Healthy nursery stock prepared for the current Aquilaria crassna program.",
       "Healthy nursery stock prepared for the current Sweet Elena Carabao program.",
     ],
-    saleHeaderPrefix: "Available for sale as of",
+    saleHeaderPrefix: "Launch share availability as of",
     saleCardLabels: [
-      "Agarwood seedlings available for sale",
-      "Sweet Elena mango seedlings available for sale",
-      "Carabao mango inventory available for sale",
+      "Agarwood tree-equivalent shares available",
+      "Sweet Elena mango tree-equivalent shares available",
     ],
-    saleCardNotes: ["Current inventory", "Current inventory", "Current inventory"],
+    saleCardNotes: ["Sub-Fund A launch allocation", "Sub-Fund B launch allocation"],
     galleryTitle: "Live Seedling Gallery",
     galleryLinkLabel: "View full gallery",
     propagationTitle: "Stock Propagation",
@@ -841,7 +846,7 @@ export const defaultSiteCopy: SiteCopy = {
       badge: "Field Execution",
       title: "Plantation Operations – Zambales",
       description:
-        "Operational rollout for Aquilaria crassna agarwood and Sweet Elena Carabao mango in Zambales province, including July 2026 deployment and 2026 scale targets of 35,000 agarwood trees and 15,000 mango trees.",
+        "Operational rollout for the 23,000-tree Aquilaria crassna agarwood and 8,000-tree Sweet Elena Carabao mango launch inventories in Zambales province, supported by respective replacement buffers of 4,600 and 1,600 trees.",
     },
     galleryTitle: "Secured Land & Preparations",
     galleryDescription: "Current documentation of field preparation and July 2026 deployment readiness.",
@@ -849,12 +854,12 @@ export const defaultSiteCopy: SiteCopy = {
     milestoneDescription:
       "The July 2026 program transitions nursery stock into field planting. Deployment includes spacing compliance, irrigation setup, AI-assisted monitoring readiness, and early-stage intercropping of cassava for agarwood shade (Years 1-2).",
     milestoneLabels: ["Agarwood Spacing", "Mango Spacing", "Cassava Intercrop", "2026 Plantation Scale"],
-    milestoneValues: ["3m x 2m", "6m x 4m", "Years 1-2", "50,000 Trees"],
+    milestoneValues: ["3m x 2m", "6m x 4m", "Years 1-2", "31,000 Trees"],
     milestoneNotes: [
       "Approx. 1,667 trees per hectare",
       "Approx. 416 trees per hectare",
       "Shade support for young agarwood trees",
-      "35,000 agarwood + 15,000 mango, each scaling by 10% p.a.",
+      "23,000 agarwood + 8,000 mango launch inventory",
     ],
     landPreparationTitle: "Land Preparation",
     soilProtocolTitle: "Soil Protocol",
@@ -958,60 +963,55 @@ export const defaultSiteCopy: SiteCopy = {
   },
 };
 
-function removeIrrReferences(siteCopy: SiteCopy): SiteCopy {
+function migrateLegacyBusinessModel(siteCopy: SiteCopy): SiteCopy {
+  const serialized = JSON.stringify(siteCopy).toLowerCase();
+  const legacyMarkers = [
+    "client-owned trees",
+    "ownership certificate",
+    "tree ownership is transferable",
+    "gps-geotagged",
+    "usd 592.50 per tree",
+    "usd 292.50 per tree",
+    "35,000 agarwood",
+    "50,000 investment trees",
+  ];
+
+  if (!legacyMarkers.some((marker) => serialized.includes(marker))) return siteCopy;
+
   return {
     ...siteCopy,
+    about: defaultSiteCopy.about,
+    compliance: defaultSiteCopy.compliance,
+    impact: defaultSiteCopy.impact,
+    clientServices: defaultSiteCopy.clientServices,
+    mangoProgram: defaultSiteCopy.mangoProgram,
+    agarwoodLifeCycle: defaultSiteCopy.agarwoodLifeCycle,
+    ecotourism: {
+      ...siteCopy.ecotourism,
+      introParagraphs: defaultSiteCopy.ecotourism.introParagraphs,
+    },
     home: {
       ...siteCopy.home,
-      statsLabels: [
-        "Agarwood Lifecycle",
-        "Mango Fruiting Window",
-        "Out-Planting Milestone",
-        "Diversification Pathway",
-      ],
-      statsValues: ["10 Years", "From Year 5", "July 2026", "100,000 Trees"],
-      statsDescriptions: [
-        "Managed resin cycle with harvest in years 9-10",
-        "25-year orchard model with recurring annual harvests",
-        siteCopy.home.statsDescriptions[2] ?? defaultSiteCopy.home.statsDescriptions[2],
-        siteCopy.home.statsDescriptions[3] ?? defaultSiteCopy.home.statsDescriptions[3],
-      ],
+      heroDescription: defaultSiteCopy.home.heroDescription,
+      statsLabels: defaultSiteCopy.home.statsLabels,
+      statsValues: defaultSiteCopy.home.statsValues,
+      statsDescriptions: defaultSiteCopy.home.statsDescriptions,
+      saleHeaderPrefix: defaultSiteCopy.home.saleHeaderPrefix,
+      saleCardLabels: defaultSiteCopy.home.saleCardLabels,
+      snapshotCardDescriptions: defaultSiteCopy.home.snapshotCardDescriptions,
+      governanceDescriptions: defaultSiteCopy.home.governanceDescriptions,
     },
-    mangoProgram: {
-      ...siteCopy.mangoProgram,
-      header: {
-        ...siteCopy.mangoProgram.header,
-        description:
-          "Executive summary of the Sweet Elena Carabao mango program, including market demand, plantation parameters, and long-term operating assumptions.",
-      },
-      snapshotTitle: "Program Snapshot",
-      snapshotLabels: [
-        "Lifecycle Duration",
-        "Commercial Fruiting",
-        "Yield Assumption",
-        "Mature Yield Assumption",
-        "Base Tree Sales Price",
-        "Management Commission",
-        "Surplus Planting Buffer",
-      ],
-      snapshotValues: [
-        "25 years",
-        "From year 5",
-        "~30 kg per tree (year 5)",
-        "~100 kg per tree (year 10+)",
-        "USD 592.50 per tree",
-        "20% of harvest revenue",
-        "20% additional trees",
-      ],
+    nursery: {
+      ...siteCopy.nursery,
+      saleHeaderPrefix: defaultSiteCopy.nursery.saleHeaderPrefix,
+      saleCardLabels: defaultSiteCopy.nursery.saleCardLabels,
+      saleCardNotes: defaultSiteCopy.nursery.saleCardNotes,
     },
-    agarwoodLifeCycle: {
-      ...siteCopy.agarwoodLifeCycle,
-      commercialPoints: [
-        "Base tree sales assumptions use USD 292.50 per tree with market-linked export realization.",
-        "Projected yield benchmarks are ~1.5 kg per tree in year 9 and ~2.0 kg in year 10.",
-        "Harvest realization is modeled 50% in year 9 and 50% in year 10.",
-        "Net proceeds are distributed after 10% management commission under sales and management contracts.",
-      ],
+    plantation: {
+      ...siteCopy.plantation,
+      header: defaultSiteCopy.plantation.header,
+      milestoneValues: defaultSiteCopy.plantation.milestoneValues,
+      milestoneNotes: defaultSiteCopy.plantation.milestoneNotes,
     },
   };
 }
@@ -1154,5 +1154,5 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
     },
   });
 
-  return removeIrrReferences(normalized);
+  return migrateLegacyBusinessModel(normalized);
 }

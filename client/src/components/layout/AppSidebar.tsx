@@ -109,7 +109,7 @@ export function AppSidebar() {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
-                      isActive={isItemActive(item.url, "external" in item ? item.external : false)}
+                      isActive={isItemActive(item.url, "external" in item && item.external === true)}
                       className="my-0 rounded-xl transition-all data-[active=true]:bg-white/10 data-[active=true]:shadow-sm"
                     >
                       {"external" in item && item.external ? (

@@ -60,7 +60,7 @@ const pageCatalog: Array<{
   { key: "compliance", label: "Compliance", eyebrow: "Regulatory", description: "Legal positioning, highlight items, and mandate descriptions." },
   { key: "technology", label: "Technology", eyebrow: "AI Stack", description: "Technology stack messaging and operational benefits." },
   { key: "impact", label: "Impact", eyebrow: "Impact Page", description: "Environmental and social impact language." },
-  { key: "clientServices", label: "Client Services", eyebrow: "Client Care", description: "Ownership, reporting, and visitation services copy." },
+  { key: "clientServices", label: "Client Services", eyebrow: "Client Care", description: "Shareholder reporting, governance, and visitation services copy." },
   { key: "mangoProgram", label: "Mango Program", eyebrow: "Program Detail", description: "Mango program overview, benefits, and return snapshot." },
   { key: "agarwoodLifeCycle", label: "Agarwood Life Cycle", eyebrow: "Program Detail", description: "Agarwood lifecycle, insurance, and commercial model copy." },
   { key: "ecotourism", label: "Ecotourism", eyebrow: "Travel", description: "Travel program details, routes, and destination copy." },
