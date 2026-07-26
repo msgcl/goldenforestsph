@@ -56,21 +56,6 @@ export default function MangoProgram() {
         </Card>
       </div>
 
-      <Card className="border-border/60 mb-8 hover-elevate">
-        <CardHeader>
-          <CardTitle className={font("benefitsTitle", "text-2xl font-outfit text-accent")}>{copy.benefitsTitle}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className={font("benefitsPoints", "space-y-3")}>
-            {copy.benefitsPoints.map((point) => (
-              <li key={point} className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                • {point}
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-
       <Card className="border-border/60 hover-elevate">
         <CardHeader>
           <CardTitle className={font("snapshotTitle", "text-2xl font-outfit text-accent")}>{copy.snapshotTitle}</CardTitle>

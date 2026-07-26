@@ -79,6 +79,12 @@ export const aboutPageCopySchema = z.object({
   header: pageHeaderSchema,
   overviewTitle: nonEmptyString,
   overviewParagraphs: nonEmptyStringArray,
+  visionTitle: nonEmptyString,
+  visionDescription: nonEmptyString,
+  missionTitle: nonEmptyString,
+  missionDescription: nonEmptyString,
+  coreValuesTitle: nonEmptyString,
+  coreValues: nonEmptyStringArray,
   mandateTitle: nonEmptyString,
   mandateItems: nonEmptyStringArray,
 });
@@ -236,6 +242,7 @@ export const nurseryPageCopySchema = z.object({
 export const plantationPageCopySchema = z.object({
   header: pageHeaderSchema,
   galleryTitle: nonEmptyString,
+  contractNegotiationsStatement: nonEmptyString,
   galleryDescription: nonEmptyString,
   milestoneTitle: nonEmptyString,
   milestoneDescription: nonEmptyString,
@@ -329,7 +336,7 @@ export const siteCopySchema = z.object({
 
 export type SiteCopy = z.infer<typeof siteCopySchema>;
 
-const defaultSiteCopyUpdatedAt = "2026-07-20T00:00:00.000Z";
+const defaultSiteCopyUpdatedAt = "2026-07-26T00:00:00.000Z";
 
 export const defaultSiteCopy: SiteCopy = {
   typography: {
@@ -402,11 +409,24 @@ export const defaultSiteCopy: SiteCopy = {
       description:
         "Crassna Agroforestry Development Inc. (CADI) is the Philippine plantation management company within the Golden Forests group, executing agarwood and mango operations for global clients.",
     },
-    overviewTitle: "Corporate Overview",
+    overviewTitle: "Company Overview",
     overviewParagraphs: [
-      "Golden Forests provides eligible professional investors with access to managed Philippine agroforestry through shares in dedicated, ring-fenced sub-funds of a Singapore Variable Capital Company (VCC). Subscriptions are introduced through appropriately licensed private-placement intermediaries and remain subject to the definitive offering documents and investor eligibility checks.",
-      "The two sub-funds provide separate exposure to income derived from harvested Aquilaria crassna agarwood and Sweet Elena Carabao mango. Each share is valued on a tree-equivalent basis for economic allocation and accounting only; shareholders do not own any specific tree, planting block, land, or plantation asset.",
-      "CADI is the Philippine operating company responsible for nursery propagation, out-planting, maintenance, inoculation scheduling, harvest support, product sales, and operational reporting in Zambales province. The VCC's licensed fund manager and administrator oversee share issuance, controlled disbursement of proceeds, and fund-level governance and reporting.",
+      "CADI is the Philippine operating company responsible for nursery propagation, out-planting, maintenance, inoculation scheduling, harvest support, product sales, and operational reporting in Zambales and Negros province.",
+    ],
+    visionTitle: "Vision",
+    visionDescription:
+      "To advance sustainable agroforestry in Asia through disciplined cultivation, scientific research and technology-enabled operations, supporting long-term asset stewardship, resilient ecosystems and community development.",
+    missionTitle: "Mission",
+    missionDescription:
+      "Our mission is to operate a sustainable and professionally managed agroforestry platform focused on premium crops with long cultivation cycles and real-economy harvest income. The underlying strategy is designed for long-term capital participation in productive agricultural assets. Through structured governance, production standards and community partnership, we seek to support responsible capital formation, environmental sustainability and enduring operational value for shareholders, ecosystems and the communities we serve.",
+    coreValuesTitle: "Core Values",
+    coreValues: [
+      "Integrity: We uphold honesty, transparency, and accountability in all aspects of our operations.",
+      "Professionalism: We strive for excellence, maintaining the highest standards in service, management, and product quality.",
+      "Sustainable and Ethical: We are dedicated to responsible and sustainable cultivation of agarwood, mango, and durian, ensuring ethical sourcing and full compliance with international standards.",
+      "Quality: We employ rigorous propagation and cultivation methods to produce consistently premium-quality products that meet the expectations of discerning global clients.",
+      "Investment Opportunity: Golden Forests offers a unique opportunity for professional and corporate investors seeking participation in a future-focused and environmentally sustainable agroforestry venture.",
+      "Community Empowerment: We prioritise local engagement, creating employment, building skills, and supporting social initiatives that enhance livelihoods and long-term community wellbeing.",
     ],
     mandateTitle: "Operating Mandate",
     mandateItems: [
@@ -544,14 +564,14 @@ export const defaultSiteCopy: SiteCopy = {
   mangoProgram: {
     header: {
       badge: "Mango Initiative",
-      title: "Sweet Elena Carabao Mango Program",
+      title: "Sweet Elena Mango Program",
       description:
-        "Executive summary of the Sweet Elena Carabao mango program, including market demand, plantation parameters, and long-term operating assumptions.",
+        "Executive summary of the Sweet Elena mango program, including market demand, plantation parameters, and long-term operating assumptions.",
     },
     overviewTitle: "Program Overview",
     overviewPoints: [
       "Focus crop: proprietary Carabao x Elena dwarf mango, selectively grafted to improve sweetness and quality, with dwarfing techniques applied to provide high density planting",
-      "Commercial planting in Zambales province is aligned to the July 2026 rollout, with density of 416 trees per hectare.",
+      "Commercial planting in Zambales province is aligned to the 3rd quarter rollout, with density of 416 trees per hectare.",
       "Induced flowering protocols are designed to support year-round production windows and recurring annual income.",
       "The mango model is integrated into Agroforestry Intelligence with real-time monitoring for irrigation, pests, and productivity.",
     ],
@@ -611,7 +631,7 @@ export const defaultSiteCopy: SiteCopy = {
     },
     overviewTitle: "General Agarwood Overview",
     overviewPoints: [
-      "Aquilaria crassna is cultivated in Zambales province under a professionally managed 10-year plantation cycle.",
+      "Aquilaria crassna is cultivated in Negros under a professionally managed 10-year plantation cycle.",
       "Agarwood is a premium commodity used in luxury fragrance, incense, oils, and wellness applications.",
       "Global demand is concentrated in the Middle East, Asia, and Europe, while legal wild supply is constrained by CITES controls.",
       "The model combines controlled inoculation, traceable production, and regulated export pathways.",
@@ -641,7 +661,7 @@ export const defaultSiteCopy: SiteCopy = {
     ],
     stagePeriods: ["Year 0", "Years 1 to 6", "Years 7 to 8", "Years 9 to 10"],
     stageDetails: [
-      "Nursery propagation supports July 2026 out-planting in Zambales province. Planting density is targeted at about 1,667 trees per hectare, with cassava intercropping during years 1-2 to support early canopy protection.",
+      "Nursery propagation supports 3rd Quarter 2026 out-planting in Negros. Planting density is targeted at about 1,667 trees per hectare, with cassava intercropping during years 1-2 to support early canopy protection.",
       "Trees are managed under structured maintenance protocols including irrigation, nutrition, and health monitoring. This phase focuses on vigorous growth and orchard stability before resin induction.",
       "Controlled inoculation induces resin formation in mature trees. Golden Forests applies exclusively licensed inoculation technology and technical protocols to support quality and consistency in oud formation.",
       "Harvesting and oud/resin chip extraction are scheduled across two seasons, typically 50% in year 9 and 50% in year 10. Returns remain linked to actual export sales using conservative assumptions.",
@@ -656,7 +676,7 @@ export const defaultSiteCopy: SiteCopy = {
     },
     introParagraphs: [
       "Through our exclusive ecotourism program, professional shareholders are welcomed to visit the plantation operations and, where applicable, view assets held by the relevant sub-fund. Each visit includes a two-night stay at a premium hotel and transportation, supported by dedicated staff.",
-      "The program is designed to pair financial oversight with personal travel value. Clients can combine field visibility in Zambales province with convenient onward routes to Cebu, Coron, Boracay, Bohol, El Nido, and Surigao through Clark.",
+      "The program is designed to pair financial oversight with personal travel value. Clients can combine field visibility in Zambales and Negros province with convenient onward routes to Cebu, Coron, Boracay, Bohol, El Nido, and Surigao through Clark.",
     ],
     featuredVideoEyebrow: "Plantation Visit Video",
     featuredVideoTitle: "Experience the Visit Before You Arrive",
@@ -669,7 +689,7 @@ export const defaultSiteCopy: SiteCopy = {
       "Clark International Airport (CRK), Pampanga",
       "Flight routes to Cebu, Coron, El Nido, Bohol, Surigao, and Boracay",
     ],
-    flightsTitle: "Clark Flight Destinations",
+    flightsTitle: "Clark and Manila Flight Destinations",
     flightItems: [
       "Cebu (CEB)",
       "Coron / Busuanga (USU)",
@@ -686,11 +706,12 @@ export const defaultSiteCopy: SiteCopy = {
       "Travel east to Clark International Airport (about 2 hours by car).",
       "Fly from Clark to Cebu, Coron, Surigao, El Nido, Bohol, or Boracay.",
     ],
-    contextTitle: "Travel Context",
+    contextTitle: "Suggested Route to Negros",
     contextItems: [
-      "Zambales combines plantation oversight with high-value leisure access.",
-      "Clark International Airport functions as the practical connector for island circuits.",
-      "Clients can structure visits as: Zambales coast + resort + island destination.",
+      "Domestic flight to Bacolod.",
+      "1 hour travel to the Negros plantation.",
+      "Several 5-star hotels to stay at, including Seda Hotel, L'Fisher Hotel, and Park Inn hotel.",
+      "Return to Manila to travel to other Philippine destinations.",
     ],
     galleryTitle: "Destination Gallery",
     featuredDestinationNames: [
@@ -748,16 +769,16 @@ export const defaultSiteCopy: SiteCopy = {
       "Out-Planting Milestone",
       "Diversification Pathway",
     ],
-    statsValues: ["10 Years", "From Year 5", "July 2026", "31,000 Trees"],
+    statsValues: ["10 Years", "From Year 5", "3rd Quarter 2026", "31,000 Trees"],
     statsDescriptions: [
       "Managed resin cycle with harvest in years 9-10",
       "25-year orchard model with recurring annual harvests",
-      "Zambales field deployment for both crop lines",
+      "Zambales and Negros field deployment for both crop lines",
       "23,000 agarwood + 8,000 mango launch inventory",
     ],
     liveMetricsTitle: "Live Nursery Metrics",
     currentStockLabel: "Current nursery stock",
-    stockLabels: ["Aquilaria crassna agarwood seedlings", "Sweet Elena Carabao mango seedlings"],
+    stockLabels: ["Aquilaria crassna agarwood seedlings", "Sweet Elena mango seedlings"],
     saleHeaderPrefix: "Launch share availability as of",
     saleCardLabels: [
       "Agarwood tree-equivalent shares available",
@@ -765,11 +786,11 @@ export const defaultSiteCopy: SiteCopy = {
     ],
     summaryCardLabels: ["Field Deployment", "Panay Planting", "Inventory Date"],
     summaryCardDescriptions: [
-      "Zambales rollout for agarwood and Sweet Elena mango",
+      "Zambales and Negros rollout for agarwood and Sweet Elena mango",
       "Carabao mango trees currently planted in Panay",
       "Current stock and sales inventory shown as of this date",
     ],
-    deploymentMilestoneValue: "July 2026",
+    deploymentMilestoneValue: "3rd Quarter 2026",
     nurseryCtaLabel: "View Full Dashboard",
     snapshotTitle: "Operations Snapshot",
     snapshotDescription: "Visual documentation from nursery, plantation, and support facilities.",
@@ -800,15 +821,15 @@ export const defaultSiteCopy: SiteCopy = {
       badge: "Propagation Site",
       title: "Nursery Operations",
       description:
-        "The nursery facility in Zambales province prepares agarwood and mango planting stock for July 2026 deployment, with continuous visual documentation for client transparency.",
+        "Our nursery facility in Zambales and Negros province prepares agarwood and mango planting stock for 3rd Quarter 2026 deployment, with continuous visual documentation for client transparency.",
     },
     overviewEyebrow: "Current nursery stock",
     overviewTitle: "Propagation Overview",
-    overviewDescription: "Live nursery counts for Aquilaria crassna agarwood and Sweet Elena Carabao mango.",
-    stockLabels: ["Aquilaria crassna agarwood seedlings", "Sweet Elena Carabao mango seedlings"],
+    overviewDescription: "Live nursery counts for Aquilaria crassna agarwood and Sweet Elena mango.",
+    stockLabels: ["Aquilaria crassna agarwood seedlings", "Sweet Elena mango seedlings"],
     stockDescriptions: [
       "Healthy nursery stock prepared for the current Aquilaria crassna program.",
-      "Healthy nursery stock prepared for the current Sweet Elena Carabao program.",
+      "Healthy nursery stock prepared for the current Sweet Elena program.",
     ],
     saleHeaderPrefix: "Launch share availability as of",
     saleCardLabels: [
@@ -827,7 +848,7 @@ export const defaultSiteCopy: SiteCopy = {
     growthLabels: ["Agarwood Height", "Mango Height"],
     growthDescriptions: [
       "Average tracked nursery growth for Aquilaria crassna.",
-      "Average tracked nursery growth for Sweet Elena Carabao mango.",
+      "Average tracked nursery growth for Sweet Elena mango.",
     ],
     mortalityLabel: "Mortality Rate",
     updatedPrefix: "Updated:",
@@ -844,15 +865,17 @@ export const defaultSiteCopy: SiteCopy = {
   plantation: {
     header: {
       badge: "Field Execution",
-      title: "Plantation Operations – Zambales",
+      title: "Plantation Operations",
       description:
-        "Operational rollout for the 23,000-tree Aquilaria crassna agarwood and 8,000-tree Sweet Elena Carabao mango launch inventories in Zambales province, supported by respective replacement buffers of 4,600 and 1,600 trees.",
+        "Operational rollout for the 23,000-tree Aquilaria crassna agarwood and 8,000-tree Sweet Elena mango launch inventories in Zambales and Negros province, supported by respective replacement buffers of 4,600 and 1,600 trees.",
     },
     galleryTitle: "Secured Land & Preparations",
-    galleryDescription: "Current documentation of field preparation and July 2026 deployment readiness.",
-    milestoneTitle: "July 2026: Field Deployment Milestone",
+    contractNegotiationsStatement:
+      "Under contract negotiations: 29 hectares in Zambales for mango plantations and 18 hectares in Negros for agarwood plantations.",
+    galleryDescription: "Current documentation of our field preparation and 3rd Quarter 2026 deployment readiness.",
+    milestoneTitle: "Quarter Three 2026: Field Deployment Milestone",
     milestoneDescription:
-      "The July 2026 program transitions nursery stock into field planting. Deployment includes spacing compliance, irrigation setup, AI-assisted monitoring readiness, and early-stage intercropping of cassava for agarwood shade (Years 1-2).",
+      "The 3rd Quarter 2026 program transitions nursery stock into field planting. Deployment includes spacing compliance, irrigation setup, AI-assisted monitoring readiness, and early-stage intercropping of cassava for agarwood shade (Years 1-2).",
     milestoneLabels: ["Agarwood Spacing", "Mango Spacing", "Cassava Intercrop", "2026 Plantation Scale"],
     milestoneValues: ["3m x 2m", "6m x 4m", "Years 1-2", "31,000 Trees"],
     milestoneNotes: [
@@ -903,7 +926,7 @@ export const defaultSiteCopy: SiteCopy = {
       badge: "Leadership",
       title: "Management Team",
       description:
-        "Our operations are guided by a multi-disciplinary team combining 80 years within corporate governance, agricultural science, and large-scale operational logistics.",
+        "Our operations are guided by a multi-disciplinary team combining 140 years within corporate governance, agricultural science, and large-scale operational logistics.",
     },
     helperText: "Click any profile card to view the member's full profile.",
     categoryTitles: ["Executive Management", "Board of Directors", "Senior Management"],
@@ -1012,6 +1035,115 @@ function migrateLegacyBusinessModel(siteCopy: SiteCopy): SiteCopy {
       header: defaultSiteCopy.plantation.header,
       milestoneValues: defaultSiteCopy.plantation.milestoneValues,
       milestoneNotes: defaultSiteCopy.plantation.milestoneNotes,
+    },
+  };
+}
+
+function applyJuly2026ContentUpdate(siteCopy: SiteCopy): SiteCopy {
+  const updated = JSON.parse(
+    JSON.stringify(siteCopy).replace(/Sweet Elena Carabao/gi, "Sweet Elena"),
+  ) as SiteCopy;
+
+  return {
+    ...updated,
+    about: {
+      ...updated.about,
+      overviewTitle: "Company Overview",
+      overviewParagraphs: [
+        "CADI is the Philippine operating company responsible for nursery propagation, out-planting, maintenance, inoculation scheduling, harvest support, product sales, and operational reporting in Zambales and Negros province.",
+      ],
+    },
+    mangoProgram: {
+      ...updated.mangoProgram,
+      header: {
+        ...updated.mangoProgram.header,
+        title: "Sweet Elena Mango Program",
+        description:
+          "Executive summary of the Sweet Elena mango program, including market demand, plantation parameters, and long-term operating assumptions.",
+      },
+      overviewPoints: updated.mangoProgram.overviewPoints.map((point, index) =>
+        index === 1
+          ? "Commercial planting in Zambales province is aligned to the 3rd quarter rollout, with density of 416 trees per hectare."
+          : point,
+      ),
+    },
+    agarwoodLifeCycle: {
+      ...updated.agarwoodLifeCycle,
+      overviewPoints: updated.agarwoodLifeCycle.overviewPoints.map((point, index) =>
+        index === 0
+          ? "Aquilaria crassna is cultivated in Negros under a professionally managed 10-year plantation cycle."
+          : point,
+      ),
+      stageDetails: updated.agarwoodLifeCycle.stageDetails.map((detail, index) =>
+        index === 0
+          ? "Nursery propagation supports 3rd Quarter 2026 out-planting in Negros. Planting density is targeted at about 1,667 trees per hectare, with cassava intercropping during years 1-2 to support early canopy protection."
+          : detail,
+      ),
+    },
+    ecotourism: {
+      ...updated.ecotourism,
+      introParagraphs: updated.ecotourism.introParagraphs.map((paragraph, index) =>
+        index === 1
+          ? "The program is designed to pair financial oversight with personal travel value. Clients can combine field visibility in Zambales and Negros province with convenient onward routes to Cebu, Coron, Boracay, Bohol, El Nido, and Surigao through Clark."
+          : paragraph,
+      ),
+      flightsTitle: "Clark and Manila Flight Destinations",
+      contextTitle: "Suggested Route to Negros",
+      contextItems: [
+        "Domestic flight to Bacolod.",
+        "1 hour travel to the Negros plantation.",
+        "Several 5-star hotels to stay at, including Seda Hotel, L'Fisher Hotel, and Park Inn hotel.",
+        "Return to Manila to travel to other Philippine destinations.",
+      ],
+    },
+    home: {
+      ...updated.home,
+      statsValues: updated.home.statsValues.map((value, index) =>
+        index === 2 ? "3rd Quarter 2026" : value,
+      ),
+      statsDescriptions: updated.home.statsDescriptions.map((description, index) =>
+        index === 2 ? "Zambales and Negros field deployment for both crop lines" : description,
+      ),
+      summaryCardDescriptions: updated.home.summaryCardDescriptions.map((description, index) =>
+        index === 0 ? "Zambales and Negros rollout for agarwood and Sweet Elena mango" : description,
+      ),
+      deploymentMilestoneValue: "3rd Quarter 2026",
+    },
+    nursery: {
+      ...updated.nursery,
+      header: {
+        ...updated.nursery.header,
+        description:
+          "Our nursery facility in Zambales and Negros province prepares agarwood and mango planting stock for 3rd Quarter 2026 deployment, with continuous visual documentation for client transparency.",
+      },
+    },
+    plantation: {
+      ...updated.plantation,
+      header: {
+        ...updated.plantation.header,
+        title: "Plantation Operations",
+        description:
+          "Operational rollout for the 23,000-tree Aquilaria crassna agarwood and 8,000-tree Sweet Elena mango launch inventories in Zambales and Negros province, supported by respective replacement buffers of 4,600 and 1,600 trees.",
+      },
+      contractNegotiationsStatement:
+        "Under contract negotiations: 29 hectares in Zambales for mango plantations and 18 hectares in Negros for agarwood plantations.",
+      galleryDescription:
+        "Current documentation of our field preparation and 3rd Quarter 2026 deployment readiness.",
+      milestoneTitle: "Quarter Three 2026: Field Deployment Milestone",
+      milestoneDescription: updated.plantation.milestoneDescription.replace(
+        /(?:Our |The )?July 2026 program(?:me)?/i,
+        "The 3rd Quarter 2026 program",
+      ),
+    },
+    management: {
+      ...updated.management,
+      header: {
+        ...updated.management.header,
+        description: updated.management.header.description.replace(
+          /combining 80 years/i,
+          "combining 140 years",
+        ),
+      },
     },
   };
 }
@@ -1154,5 +1286,5 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
     },
   });
 
-  return migrateLegacyBusinessModel(normalized);
+  return applyJuly2026ContentUpdate(migrateLegacyBusinessModel(normalized));
 }

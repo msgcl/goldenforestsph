@@ -21,7 +21,7 @@ export default function AgarwoodLifeCycle() {
         siteCopy={resolvedSiteCopy}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
         <Card className="border-border/60 hover-elevate">
           <CardHeader>
             <CardTitle className={font("overviewTitle", "text-2xl font-outfit text-accent")}>{copy.overviewTitle}</CardTitle>
@@ -29,21 +29,6 @@ export default function AgarwoodLifeCycle() {
           <CardContent>
             <ul className={font("overviewPoints", "space-y-3")}>
               {copy.overviewPoints.map((point) => (
-                <li key={point} className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                  • {point}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border/60 hover-elevate">
-          <CardHeader>
-            <CardTitle className={font("commercialTitle", "text-2xl font-outfit text-accent")}>{copy.commercialTitle}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className={font("commercialPoints", "space-y-3")}>
-              {copy.commercialPoints.map((point) => (
                 <li key={point} className="text-sm md:text-base text-muted-foreground leading-relaxed">
                   • {point}
                 </li>

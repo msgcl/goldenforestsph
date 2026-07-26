@@ -239,7 +239,7 @@ export default function Nursery() {
                 <div className="w-12 h-12 mb-3 rounded-full bg-accent/15 border border-accent/30 flex items-center justify-center">
                   <span className="text-2xl leading-none" role="img" aria-label="Mango">🥭</span>
                 </div>
-                <span className="font-bold text-xl font-outfit text-center text-accent">Sweet Elena Carabao<br/>Mango</span>
+                <span className="font-bold text-xl font-outfit text-center text-accent">Sweet Elena<br/>Mango</span>
               </div>
               <div className="p-6 sm:w-2/3">
                 <p className={font("propagationDescriptions", "text-muted-foreground text-sm leading-relaxed")}>

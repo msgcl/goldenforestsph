@@ -84,9 +84,9 @@ export default function PlantationVisit() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className={font("contextItems", "space-y-2 text-muted-foreground")}>
-              {copy.contextItems.map((item) => <li key={item}>• {item}</li>)}
-            </ul>
+            <ol className={font("contextItems", "space-y-2 text-muted-foreground list-decimal pl-5")}>
+              {copy.contextItems.map((item) => <li key={item}>{item}</li>)}
+            </ol>
           </CardContent>
         </Card>
       </div>

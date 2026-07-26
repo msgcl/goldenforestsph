@@ -33,6 +33,30 @@ export default function About() {
                 {paragraph}
               </p>
             ))}
+
+            <div className="mt-8 space-y-7 border-t border-border/60 pt-7">
+              <section>
+                <h4 className={font("visionTitle", "mb-2 text-xl font-bold font-outfit text-accent")}>{copy.visionTitle}</h4>
+                <p className={font("visionDescription", "text-muted-foreground leading-relaxed")}>{copy.visionDescription}</p>
+              </section>
+
+              <section>
+                <h4 className={font("missionTitle", "mb-2 text-xl font-bold font-outfit text-accent")}>{copy.missionTitle}</h4>
+                <p className={font("missionDescription", "text-muted-foreground leading-relaxed")}>{copy.missionDescription}</p>
+              </section>
+
+              <section>
+                <h4 className={font("coreValuesTitle", "mb-3 text-xl font-bold font-outfit text-accent")}>{copy.coreValuesTitle}</h4>
+                <ul className={font("coreValues", "space-y-3 text-muted-foreground")}>
+                  {copy.coreValues.map((value) => (
+                    <li key={value} className="flex items-start gap-3">
+                      <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"></div>
+                      <p className="leading-relaxed">{value}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </div>
           </CardContent>
         </Card>
 

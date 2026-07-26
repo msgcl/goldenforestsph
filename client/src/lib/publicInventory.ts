@@ -11,7 +11,7 @@ export const physicalInventory = [
     note: "Healthy nursery stock",
   },
   {
-    label: "Sweet Elena Carabao mango seedlings in nursery",
+    label: "Sweet Elena mango seedlings in nursery",
     field: "mangoSeedlings",
     note: "Nursery propagation inventory",
   },

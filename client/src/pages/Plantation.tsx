@@ -78,6 +78,9 @@ export default function Plantation() {
       {/* Land Preparation Photo Gallery */}
       <div className="mb-10 py-4">
         <h2 className={font("galleryTitle", "mb-3 text-[1.9rem] font-bold sm:text-3xl")}>{copy.galleryTitle}</h2>
+        <p className={font("contractNegotiationsStatement", "mb-3 max-w-5xl rounded-xl border border-accent/30 bg-accent/10 px-5 py-4 text-lg font-bold leading-relaxed text-accent sm:text-xl")}>
+          {copy.contractNegotiationsStatement}
+        </p>
         <p className={font("galleryDescription", "mb-8 text-base text-muted-foreground sm:text-lg")}>{copy.galleryDescription}</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {plantationGalleryItems.map((item) => (
