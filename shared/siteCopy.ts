@@ -431,7 +431,6 @@ export const defaultSiteCopy: SiteCopy = {
     mandateTitle: "Operating Mandate",
     mandateItems: [
       "Dual-Crop Delivery: Separate agarwood and mango sub-funds provide exposure to short- and long-maturity harvest-income profiles.",
-      "Regulated Access: Professional-client subscriptions are made through licensed private-placement intermediaries into ring-fenced Singapore VCC sub-funds.",
       "Agroforestry Intelligence: AI-enabled monitoring, sensors, and drones support yield optimization and risk-managed operations.",
       "Stewardship Commitment: One native Philippine tree is planted for each corresponding underlying tree represented in the sub-fund share-allocation model.",
     ],
@@ -1052,6 +1051,11 @@ function applyJuly2026ContentUpdate(siteCopy: SiteCopy): SiteCopy {
       overviewParagraphs: [
         "CADI is the Philippine operating company responsible for nursery propagation, out-planting, maintenance, inoculation scheduling, harvest support, product sales, and operational reporting in Zambales and Negros province.",
       ],
+      mandateItems: updated.about.mandateItems.filter(
+        (item) =>
+          item !==
+          "Regulated Access: Professional-client subscriptions are made through licensed private-placement intermediaries into ring-fenced Singapore VCC sub-funds.",
+      ),
     },
     mangoProgram: {
       ...updated.mangoProgram,
