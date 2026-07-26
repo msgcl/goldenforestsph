@@ -56,24 +56,6 @@ export default function MangoProgram() {
         </Card>
       </div>
 
-      <Card className="border-border/60 hover-elevate">
-        <CardHeader>
-          <CardTitle className={font("snapshotTitle", "text-2xl font-outfit text-accent")}>{copy.snapshotTitle}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            {copy.snapshotLabels.map((label, index) => (
-              <div key={`${label}-${index}`} className="rounded-xl border border-border/60 p-4 bg-card">
-                <p className={font("snapshotLabels", "text-muted-foreground")}>{label}</p>
-                <p className={font("snapshotValues", "text-foreground font-semibold")}>{copy.snapshotValues[index] ?? ""}</p>
-              </div>
-            ))}
-          </div>
-          <p className={font("snapshotFootnote", "text-xs text-muted-foreground")}>
-            {copy.snapshotFootnote}
-          </p>
-        </CardContent>
-      </Card>
     </AnimatedPage>
   );
 }

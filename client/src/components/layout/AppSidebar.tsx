@@ -3,7 +3,6 @@ import {
   Building2, 
   Sprout, 
   TreePine, 
-  Handshake, 
   ShieldCheck, 
   Cpu, 
   HeartHandshake, 
@@ -58,9 +57,8 @@ const navigationGroups = [
     ],
   },
   {
-    label: "Client & Media",
+    label: null,
     items: [
-      { title: "Client Services", url: "/services", icon: Handshake },
       { title: "Contact Us", url: "/contact", icon: PhoneCall },
       { title: "Photo Gallery", url: "/photo-gallery", icon: ImageIcon },
     ],
@@ -99,10 +97,15 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent className="overflow-y-auto py-3">
         {navigationGroups.map((group) => (
-          <SidebarGroup key={group.label} className="py-1">
-            <SidebarGroupLabel className="mb-1 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#C8A070]/88">
-              {group.label}
-            </SidebarGroupLabel>
+          <SidebarGroup
+            key={group.label ?? "contact-and-gallery"}
+            className={group.label ? "py-1" : "mt-2 border-t border-white/10 pt-3 pb-1"}
+          >
+            {group.label && (
+              <SidebarGroupLabel className="mb-1 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#C8A070]/88">
+                {group.label}
+              </SidebarGroupLabel>
+            )}
             <SidebarGroupContent>
               <SidebarMenu>
                 {group.items.map((item) => (

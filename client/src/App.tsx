@@ -13,7 +13,6 @@ import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Nursery from "@/pages/Nursery";
 import Plantation from "@/pages/Plantation";
-import ClientServices from "@/pages/ClientServices";
 import Compliance from "@/pages/Compliance";
 import Technology from "@/pages/Technology";
 import Impact from "@/pages/Impact";
@@ -38,7 +37,6 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/nursery" component={Nursery} />
       <Route path="/plantation" component={Plantation} />
-      <Route path="/services" component={ClientServices} />
       <Route path="/location" component={PlantationVisit} />
       <Route path="/compliance" component={Compliance} />
       <Route path="/technology" component={Technology} />
