@@ -83,8 +83,6 @@ export const aboutPageCopySchema = z.object({
   visionDescription: nonEmptyString,
   missionTitle: nonEmptyString,
   missionDescription: nonEmptyString,
-  coreValuesTitle: nonEmptyString,
-  coreValues: nonEmptyStringArray,
   mandateTitle: nonEmptyString,
   mandateItems: nonEmptyStringArray,
 });
@@ -419,15 +417,6 @@ export const defaultSiteCopy: SiteCopy = {
     missionTitle: "Mission",
     missionDescription:
       "Our mission is to operate a sustainable and professionally managed agroforestry platform focused on premium crops with long cultivation cycles and real-economy harvest income. The underlying strategy is designed for long-term capital participation in productive agricultural assets. Through structured governance, production standards and community partnership, we seek to support responsible capital formation, environmental sustainability and enduring operational value for shareholders, ecosystems and the communities we serve.",
-    coreValuesTitle: "Core Values",
-    coreValues: [
-      "Integrity: We uphold honesty, transparency, and accountability in all aspects of our operations.",
-      "Professionalism: We strive for excellence, maintaining the highest standards in service, management, and product quality.",
-      "Sustainable and Ethical: We are dedicated to responsible and sustainable cultivation of agarwood, mango, and durian, ensuring ethical sourcing and full compliance with international standards.",
-      "Quality: We employ rigorous propagation and cultivation methods to produce consistently premium-quality products that meet the expectations of discerning global clients.",
-      "Investment Opportunity: Golden Forests offers a unique opportunity for professional and corporate investors seeking participation in a future-focused and environmentally sustainable agroforestry venture.",
-      "Community Empowerment: We prioritise local engagement, creating employment, building skills, and supporting social initiatives that enhance livelihoods and long-term community wellbeing.",
-    ],
     mandateTitle: "Operating Mandate",
     mandateItems: [
       "Dual-Crop Delivery: Separate agarwood and mango sub-funds provide exposure to short- and long-maturity harvest-income profiles.",
