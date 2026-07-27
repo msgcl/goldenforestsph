@@ -252,7 +252,7 @@ export default function Home() {
           </div>
           <div className="grid gap-2 self-center">
             {copy.visitsBullets.map((bullet, index) => {
-              const BulletIcon = [MapPin, PlaneTakeoff, Sprout][index] ?? Sprout;
+              const BulletIcon = [MapPin, PlaneTakeoff, PlaneTakeoff, Sprout][index] ?? Sprout;
               return (
                 <div key={bullet} className="inline-flex items-center gap-2 text-sm font-medium text-[#FBFCF7]">
                   <BulletIcon className="h-4 w-4 shrink-0 text-[#C8A070]" />

@@ -29,7 +29,7 @@ export function PageHeader({ title, description, badge, pageKey, siteCopy }: Pag
         <h1 className={typography("header.title", "brand-hero-title mb-4 max-w-4xl font-outfit text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl")}>
           {title}
         </h1>
-        <p className={typography("header.description", "brand-hero-copy max-w-3xl text-base leading-relaxed sm:text-lg md:text-xl")}>
+        <p className={typography("header.description", "brand-hero-copy max-w-3xl whitespace-pre-line text-base leading-relaxed sm:text-lg md:text-xl")}>
           {description}
         </p>
       </motion.div>

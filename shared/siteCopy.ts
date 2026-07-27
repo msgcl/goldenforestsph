@@ -335,6 +335,8 @@ export const siteCopySchema = z.object({
 export type SiteCopy = z.infer<typeof siteCopySchema>;
 
 const defaultSiteCopyUpdatedAt = "2026-07-26T00:00:00.000Z";
+const plantationVisitHeaderDescription =
+  "Premium client travel experiences provide plantation oversight in Zambales and Negros. Zambales sites are approximately one and a half hours from Clark International Airport, while Negros sites are approximately one and a half hours from Bacolod–Silay Airport, with onward connections to island destinations available through Clark and Manila’s Ninoy Aquino International Airport.";
 
 export const defaultSiteCopy: SiteCopy = {
   typography: {
@@ -659,8 +661,7 @@ export const defaultSiteCopy: SiteCopy = {
     header: {
       badge: "Experience Program",
       title: "Ecotourism: Experience Your Investment",
-      description:
-        "Premium client travel experiences linked to plantation oversight in Zambales province and onward island destinations via Clark International Airport.",
+      description: plantationVisitHeaderDescription,
     },
     introParagraphs: [
       "Through our exclusive ecotourism program, professional shareholders are welcomed to visit the plantation operations and, where applicable, view assets held by the relevant sub-fund. Each visit includes a two-night stay at a premium hotel and transportation, supported by dedicated staff.",
@@ -705,7 +706,7 @@ export const defaultSiteCopy: SiteCopy = {
     featuredDestinationNames: [
       "San Antonio Beaches, Zambales",
       "Sundowners Resort, Botolan",
-      "Clark International Airport (CRK)",
+      "Manami Resort, Sipalay, Negros",
       "Cebu",
       "Oslob, Cebu",
       "Coron",
@@ -717,7 +718,7 @@ export const defaultSiteCopy: SiteCopy = {
     featuredDestinationDetails: [
       "Pundaquit, Anawangin, Nagsasa, and Capones",
       "Signature luxury stop in the Zambales route",
-      "Primary flight gateway to island destinations",
+      "Luxury nature resort in Sipalay, Negros Occidental",
       "Historical landmarks and beach destinations",
       "Whale shark watching + snorkelling",
       "Lagoons, limestone cliffs, and diving routes",
@@ -729,7 +730,7 @@ export const defaultSiteCopy: SiteCopy = {
     featuredDestinationImages: [
       "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352600/golden-forests/ecotourism-san-antonio-beaches.jpg",
       "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352600/golden-forests/ecotourism-sundowners-resort.jpg",
-      "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352676/golden-forests/ecotourism-clark-airport.jpg",
+      "/gallery/manami-resort-sipalay.jpg",
       "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352804/golden-forests/ecotourism-cebu.jpg",
       "https://res.cloudinary.com/dz49fckfu/image/upload/v1774413175/golden-forests/ecotourism-oslob-cebu-whale-shark-snorkelling.jpg",
       "https://res.cloudinary.com/dz49fckfu/image/upload/v1774352601/golden-forests/ecotourism-coron.jpg",
@@ -795,12 +796,13 @@ export const defaultSiteCopy: SiteCopy = {
       "AI-enabled monitoring, soil sensors, agricultural drone, and smart irrigation support measurable field decisions across mango and agarwood plantations.",
       "Professional shareholders receive periodic fund and plantation reporting designed to provide visibility at sub-fund, planting-block, and biological-asset-pool level.",
     ],
-    visitsTitle: "Zambales Access and Client Visits",
+    visitsTitle: "Zambales & Negros Access and Client Visits",
     visitsDescription:
       "Client visits include a plantation program with premium two nights hotel stay, plus Clark-linked access to Cebu, Coron, Boracay, Bohol, El Nido, and Surigao.",
     visitsBullets: [
       "Zambales province operations corridor",
       "Accessible from Clark and Subic routes",
+      "Negros province accessible from Manila airport",
       "On-site nursery and field readiness monitoring",
     ],
   },
@@ -914,7 +916,7 @@ export const defaultSiteCopy: SiteCopy = {
       badge: "Leadership",
       title: "Management Team",
       description:
-        "Our operations are guided by a multi-disciplinary team combining 140 years within corporate governance, agricultural science, and large-scale operational logistics.",
+        "Our operations are guided by a multi-disciplinary team combining 80 years within corporate governance, agricultural science, and large-scale operational logistics.",
     },
     helperText: "Click any profile card to view the member's full profile.",
     categoryTitles: ["Executive Management", "Board of Directors", "Senior Management"],
@@ -1133,8 +1135,8 @@ function applyJuly2026ContentUpdate(siteCopy: SiteCopy): SiteCopy {
       header: {
         ...updated.management.header,
         description: updated.management.header.description.replace(
-          /combining 80 years/i,
-          "combining 140 years",
+          /combining 140 years/i,
+          "combining 80 years",
         ),
       },
     },
@@ -1169,6 +1171,17 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
   }
 
   const normalizedEcotourism = { ...defaultSiteCopy.ecotourism, ...(data.ecotourism ?? {}) };
+  const normalizedEcotourismHeader = {
+    ...defaultSiteCopy.ecotourism.header,
+    ...(data.ecotourism?.header ?? {}),
+  };
+  if (
+    normalizedEcotourismHeader.description.includes(
+      "Premium client travel experiences linked to plantation oversight in Zambales province",
+    )
+  ) {
+    normalizedEcotourismHeader.description = plantationVisitHeaderDescription;
+  }
   const ecotourismImageMap = new Map<string, string>([
     ["https://upload.wikimedia.org/wikipedia/commons/c/cf/Anawangin_Cove_at_Sunrise.jpg", defaultSiteCopy.ecotourism.featuredDestinationImages[0]],
     ["/gallery/sundowners.jpg", defaultSiteCopy.ecotourism.featuredDestinationImages[1]],
@@ -1196,6 +1209,35 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
     normalizedEcotourism.featuredDestinationNames.splice(insertAt, 0, oslobName);
     normalizedEcotourism.featuredDestinationDetails.splice(insertAt, 0, oslobDetail);
     normalizedEcotourism.featuredDestinationImages.splice(insertAt, 0, oslobImage);
+  }
+
+  const clarkDestinationIndex = normalizedEcotourism.featuredDestinationNames.indexOf(
+    "Clark International Airport (CRK)",
+  );
+  if (clarkDestinationIndex >= 0) {
+    normalizedEcotourism.featuredDestinationNames = [...normalizedEcotourism.featuredDestinationNames];
+    normalizedEcotourism.featuredDestinationDetails = [...normalizedEcotourism.featuredDestinationDetails];
+    normalizedEcotourism.featuredDestinationImages = [...normalizedEcotourism.featuredDestinationImages];
+    normalizedEcotourism.featuredDestinationNames[clarkDestinationIndex] =
+      "Manami Resort, Sipalay, Negros";
+    normalizedEcotourism.featuredDestinationDetails[clarkDestinationIndex] =
+      "Luxury nature resort in Sipalay, Negros Occidental";
+    normalizedEcotourism.featuredDestinationImages[clarkDestinationIndex] =
+      "/gallery/manami-resort-sipalay.jpg";
+  }
+
+  const normalizedHome = { ...defaultSiteCopy.home, ...(data.home ?? {}) };
+  if (normalizedHome.visitsTitle === "Zambales Access and Client Visits") {
+    normalizedHome.visitsTitle = defaultSiteCopy.home.visitsTitle;
+  }
+
+  const negrosAccessBullet = "Negros province accessible from Manila airport";
+  if (!normalizedHome.visitsBullets.includes(negrosAccessBullet)) {
+    const clarkAccessIndex = normalizedHome.visitsBullets.indexOf("Accessible from Clark and Subic routes");
+    if (clarkAccessIndex >= 0) {
+      normalizedHome.visitsBullets = [...normalizedHome.visitsBullets];
+      normalizedHome.visitsBullets.splice(clarkAccessIndex + 1, 0, negrosAccessBullet);
+    }
   }
 
   const normalized = siteCopySchema.parse({
@@ -1250,9 +1292,9 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
     ecotourism: {
       ...defaultSiteCopy.ecotourism,
       ...normalizedEcotourism,
-      header: { ...defaultSiteCopy.ecotourism.header, ...(data.ecotourism?.header ?? {}) },
+      header: normalizedEcotourismHeader,
     },
-    home: { ...defaultSiteCopy.home, ...(data.home ?? {}) },
+    home: normalizedHome,
     nursery: {
       ...defaultSiteCopy.nursery,
       ...(data.nursery ?? {}),
