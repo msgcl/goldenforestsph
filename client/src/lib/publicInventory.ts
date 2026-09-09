@@ -19,14 +19,14 @@ export const physicalInventory = [
 
 export const saleInventory = [
   {
-    label: "Agarwood tree-equivalent shares available",
+    label: "Agarwood trees allocated for deployment",
     field: "saleAgarwoodSeedlings",
-    note: "Sub-Fund A launch allocation",
+    note: "Agarwood programme allocation",
   },
   {
-    label: "Sweet Elena mango tree-equivalent shares available",
+    label: "Sweet Elena mango trees allocated for deployment",
     field: "saleMangoSeedlings",
-    note: "Sub-Fund B launch allocation",
+    note: "Mango programme allocation",
   },
 ] as const;
 

@@ -359,8 +359,7 @@ export const defaultSiteCopy: SiteCopy = {
     badge: "Direct Contact",
     intro: "Get in touch with Golden Forests for partnership, operations, and client\u00A0support.",
     formTitle: "Contact us",
-    formDescription:
-      "Complete the registration request form below and our team will review your details and respond through the appropriate Pipedrive workflow.",
+    formDescription: "Send your enquiry and our team will get back to you.",
     firstNameLabel: "First name",
     lastNameLabel: "Last name",
     emailLabel: "Email *",
@@ -393,7 +392,7 @@ export const defaultSiteCopy: SiteCopy = {
       "ADGM, Office 3702, Floor 37, Addax Port Office Tower, Tamouh, Abu Dhabi, Al Reem Island, United Arab Emirates",
     ],
     salesOfficeTitle: "Sales & Marketing",
-    salesOfficeCompany: "Golden Forests Agroforestry Intelligence Investment in Agricultural Enterprises & Management FZCO",
+    salesOfficeCompany: "Golden Forests Dubai Sales & Marketing Office",
     salesOfficeAddress: [
       "IDZA Business Park, DDP 75773-001, A1-3641379065, Dubai Digital Park, Dubai Silicon Oasis, Dubai, UAE",
     ],
@@ -418,12 +417,12 @@ export const defaultSiteCopy: SiteCopy = {
       "To advance sustainable agroforestry in Asia through disciplined cultivation, scientific research and technology-enabled operations, supporting long-term asset stewardship, resilient ecosystems and community development.",
     missionTitle: "Mission",
     missionDescription:
-      "Our mission is to operate a sustainable and professionally managed agroforestry platform focused on premium crops with long cultivation cycles and real-economy harvest income. The underlying strategy is designed for long-term capital participation in productive agricultural assets. Through structured governance, production standards and community partnership, we seek to support responsible capital formation, environmental sustainability and enduring operational value for shareholders, ecosystems and the communities we serve.",
+      "Our mission is to operate a sustainable and professionally managed agroforestry platform focused on premium crops with long cultivation cycles. Through structured governance, production standards, and community partnerships, we support environmental sustainability, resilient ecosystems, and enduring operational value for the communities we serve.",
     mandateTitle: "Operating Mandate",
     mandateItems: [
-      "Dual-Crop Delivery: Separate agarwood and mango sub-funds provide exposure to short- and long-maturity harvest-income profiles.",
+      "Dual-Crop Delivery: Separate agarwood and mango programmes support distinct cultivation, maintenance, and harvest cycles.",
       "Agroforestry Intelligence: AI-enabled monitoring, sensors, and drones support yield optimization and risk-managed operations.",
-      "Stewardship Commitment: One native Philippine tree is planted for each corresponding underlying tree represented in the sub-fund share-allocation model.",
+      "Stewardship Commitment: Native Philippine trees are planted alongside the commercial plantation programme to support reforestation and biodiversity.",
     ],
   },
   compliance: {
@@ -439,7 +438,7 @@ export const defaultSiteCopy: SiteCopy = {
     highlightItems: [
       "Pre-established permitting foundations for Aquilaria crassna operations",
       "CITES-aligned export pathway integrated into operational planning",
-      "Ring-fenced sub-funds with licensed fund-management and administration controls",
+      "Documented plantation governance and administration controls",
       "PEFC/FSC certification pathway targeted for 2027",
       "Regional Wildlife Culture permit for plantation operations",
       "Bureau of Customs (BOC) certifications for import and export",
@@ -454,7 +453,7 @@ export const defaultSiteCopy: SiteCopy = {
       "Golden Forests is positioned as a first mover with regulatory approvals for Aquilaria crassna cultivation in the Philippines.",
       "Operations are structured for CITES-aligned documentation, traceability, and legal trade workflows for agarwood exports.",
       "Program roadmap targets PEFC and FSC certification by 2027 to strengthen responsible supply chain credibility.",
-      "Subscription documents, shareholder records, fund-level reporting, and independent audit processes support the professional-client model.",
+      "Permit records, operational reports, and independent verification processes support transparent plantation governance.",
     ],
     mandatesTitle: "Further Legal Mandates",
     mandateTitles: [
@@ -465,7 +464,7 @@ export const defaultSiteCopy: SiteCopy = {
     mandateDescriptions: [
       "The mango program targets PEFC (Programme for the Endorsement of Forest Certification) certification by 2027 to support responsible environmental stewardship, sustainable practices, and premium export market access.",
       "The agarwood program targets FSC (Forest Stewardship Council) certification, with the application scheduled for Q4 2027, to strengthen compliant forestry operations and premium market access.",
-      "The client model is supported by definitive subscription and constitutional documents, licensed fund oversight, annual reporting protocols, and governance controls designed for transparent operational oversight.",
+      "The operating model is supported by documented procedures, annual reporting protocols, and governance controls designed for transparent operational oversight.",
     ],
   },
   technology: {
@@ -503,11 +502,11 @@ export const defaultSiteCopy: SiteCopy = {
       badge: "Community & Environment",
       title: "Positive Impact",
       description:
-        "The investment model links commercial performance with measurable environmental and social outcomes in Zambales province.",
+        "The plantation programme links responsible operations with measurable environmental and social outcomes in Zambales province.",
     },
     cardTitles: ["1:1 Reforestation Programme", "Local Employment & Training"],
     cardDescriptions: [
-      "One native Philippine tree is planted for each corresponding underlying tree represented in the sub-fund share-allocation model, linking the programme's commercial scale to measurable reforestation activity.",
+      "Native Philippine trees are planted alongside the commercial plantation programme, linking operational scale to measurable reforestation activity.",
       "Operations prioritize local employment and community engagement, with field teams trained on plantation care, monitoring procedures, and responsible production practices.",
     ],
     standardsTitle: "Responsible Production Standards",
@@ -516,29 +515,29 @@ export const defaultSiteCopy: SiteCopy = {
   },
   clientServices: {
     header: {
-      badge: "Asset Administration",
-      title: "Client Services",
+      badge: "Operational Support",
+      title: "Plantation Services",
       description:
-        "Client services support professional shareholders through regulated onboarding, fund governance, operational visibility, and transparent reporting across the plantation lifecycle.",
+        "Plantation services provide operational visibility, documented governance, and transparent reporting across the cultivation lifecycle.",
     },
-    serviceTitles: ["Sub-Fund Shareholding & Governance", "Professional Reporting"],
+    serviceTitles: ["Operations Governance", "Plantation Reporting"],
     serviceDescriptions: [
-      "Eligible professional clients subscribe through licensed private-placement intermediaries and receive shares in the relevant ring-fenced VCC sub-fund. A share is valued on a tree-equivalent basis but does not convey ownership of an individual tree or other plantation asset.",
-      "Reporting is designed to provide professional shareholders with periodic visibility at sub-fund, planting-block, and biological-asset-pool level, subject to the definitive documents and administrator capabilities.",
+      "Documented procedures support nursery propagation, field planting, maintenance, traceability, harvest preparation, and product-sales coordination.",
+      "Reporting provides periodic visibility at programme, planting-block, and biological-inventory level, supported by field records and operational data.",
     ],
     serviceBullets: [
       [
-        "Subscription Agreement and applicable governing documents",
-        "Evidence of shares issued and entry in the shareholder register",
-        "Licensed fund-manager and administrator oversight",
-        "Ring-fenced accounting for each crop sub-fund",
-        "Share transfers subject to eligibility, approvals, and compliance checks",
+        "Documented operating procedures and governance records",
+        "Planting-block and biological-inventory records",
+        "Management and administrative oversight",
+        "Separate operational accounting for each crop programme",
+        "Controlled document review and approval processes",
       ],
       [
-        "Periodic fund and plantation-operations reports",
+        "Periodic plantation-operations reports",
         "Independent audit and field-verification outputs",
         "Harvest, yield, and material-exception reporting",
-        "Shareholder communications and document access",
+        "Stakeholder communications and controlled document access",
       ],
     ],
     visitationTitle: "Client Visitation Programme",
@@ -562,27 +561,27 @@ export const defaultSiteCopy: SiteCopy = {
     overviewPoints: [
       "Focus crop: proprietary Carabao x Elena dwarf mango, selectively grafted to improve sweetness and quality, with dwarfing techniques applied to provide high density planting",
       "Commercial planting in Zambales province is aligned to the 3rd quarter rollout, with density of 416 trees per hectare.",
-      "Induced flowering protocols are designed to support year-round production windows and recurring annual income.",
+      "Induced flowering protocols are designed to support year-round production windows and recurring annual harvests.",
       "The mango model is integrated into Agroforestry Intelligence with real-time monitoring for irrigation, pests, and productivity.",
     ],
-    insuranceTitle: "Harvest Guarantee Insurance",
+    insuranceTitle: "Biological Risk Controls",
     insuranceDescription:
-      "Mango risk controls use conservative productive-tree assumptions, a 20% replacement buffer, and managed operational protocols. These controls mitigate selected biological risks but do not guarantee capital, income, or distributions.",
+      "Mango risk controls use conservative productive-tree assumptions, a 20% replacement buffer, and managed operational protocols to mitigate selected biological risks.",
     insurancePoints: [
       "20% surplus trees are planted as mortality buffer.",
-      "100% replacement guarantee is applied for covered loss events.",
-      "Yield and pricing assumptions use conservative baselines.",
+      "Replacement planting is applied for eligible loss events.",
+      "Yield assumptions use conservative agronomic baselines.",
       "Only 80% of planted mango trees are assumed to produce fruit in projections.",
     ],
-    benefitsTitle: "Professional Shareholder Structure",
+    benefitsTitle: "Operational Programme Controls",
     benefitsPoints: [
-      "Shares in a dedicated, ring-fenced mango sub-fund administered within a Singapore VCC structure.",
-      "USD 437.08 Year 0 subscription price per mango tree-equivalent share.",
-      "Share issuance, fund administration, controlled use of proceeds, and reporting overseen through licensed service providers.",
-      "Share transfers are governed by the fund documents and remain subject to professional-investor eligibility and compliance checks.",
+      "A dedicated mango programme with defined nursery, planting, maintenance, and harvest procedures.",
+      "High-density planting at approximately 416 trees per hectare.",
+      "Documented administration, operational controls, and periodic reporting.",
+      "Traceability records maintained at programme and planting-block level.",
       "Plantation visit program for on-site inspection and management briefings.",
-      "One native Philippine tree planted for each corresponding underlying tree represented by the allocation model.",
-      "Potential net distributions are subject to realized harvest proceeds, a 20% mango harvesting commission, permitted deductions, fund requirements, and the definitive documents.",
+      "Native Philippine trees planted alongside the commercial plantation programme.",
+      "Harvest planning is based on actual tree health, fruit quality, yield, and market conditions.",
     ],
     snapshotTitle: "Program Snapshot",
     snapshotLabels: [
@@ -590,11 +589,11 @@ export const defaultSiteCopy: SiteCopy = {
       "Commercial Fruiting",
       "Yield Assumption",
       "Mature Yield Assumption",
-      "Subscription Price per Share",
-      "Illustrative USD 100,000 Subscription",
-      "Years 5-15 Net Income / Annualised IRR",
-      "Years 16-25 Net Income / Annualised IRR",
-      "25-Year Net Income / Annualised IRR",
+      "Planting Density",
+      "Initial Programme Inventory",
+      "Flowering Approach",
+      "Monitoring Approach",
+      "Harvest Approach",
       "Replacement Buffer",
     ],
     snapshotValues: [
@@ -602,15 +601,15 @@ export const defaultSiteCopy: SiteCopy = {
       "From year 5",
       "~30 kg per tree (year 5)",
       "~100 kg per tree (year 10+)",
-      "USD 437.08 per tree-equivalent share",
-      "Approximately 229 mango shares",
-      "USD 705,594 / 14.9%",
-      "USD 991,677 / 8.4%",
-      "USD 1,697,271 / 12.3%",
+      "Approximately 416 trees per hectare",
+      "8,000 mango trees",
+      "Managed flower induction",
+      "Field, sensor, and crop-health records",
+      "Annual harvests from productive maturity",
       "1,600 trees (20% of the 8,000-tree launch inventory)",
     ],
     snapshotFootnote:
-      "Illustrative management base case from the July 2026 professional-client presentation. Income and IRR are not guaranteed and depend on realized harvests and sales. Figures are shown after the stated 20% mango harvesting commission and applicable deductions; Years 5-15 also deduct the initial USD 100,000 subscription. Any distribution is subject to fund requirements and definitive documents.",
+      "Operational planning assumptions are indicative and depend on actual tree health, fruit quality, weather, field conditions, harvest performance, and realized product sales.",
   },
   agarwoodLifeCycle: {
     header: {
@@ -625,23 +624,23 @@ export const defaultSiteCopy: SiteCopy = {
       "Agarwood is a premium commodity used in luxury fragrance, incense, oils, and wellness applications.",
       "Global demand is concentrated in the Middle East, Asia, and Europe, while legal wild supply is constrained by CITES controls.",
       "The model combines controlled inoculation, traceable production, and regulated export pathways.",
-      "The 2026 launch inventory comprises 23,000 agarwood trees represented economically by the sub-fund share-allocation model, plus a 4,600-tree replacement buffer.",
+      "The 2026 programme inventory comprises 23,000 agarwood trees plus a 4,600-tree replacement buffer.",
     ],
-    commercialTitle: "Commercial & Financial Model",
+    commercialTitle: "Yield and Harvest Model",
     commercialPoints: [
-      "The Year 0 subscription price is USD 301.71 per agarwood tree-equivalent share, including a USD 173.10 segregated reserve for approved later-stage costs.",
+      "Planting density is targeted at approximately 1,667 trees per hectare, supported by documented field and maintenance protocols.",
       "Projected yield benchmarks are ~1.5 kg per tree in year 9 and ~2.0 kg in year 10.",
       "Harvest realization is modeled 50% in year 9 and 50% in year 10.",
-      "The July 2026 professional-client presentation illustrates a USD 100,000 subscription as approximately 331 agarwood shares, with USD 416,336 net income over 10 years alongside a 17.8% annualised IRR.",
-      "Illustrative income and IRR are not guaranteed. Potential distributions depend on actual export sales, the 10% Agarwood Management Revenue Share, reserve requirements, fund controls, and definitive documents.",
+      "Controlled inoculation is scheduled for mature trees during years 7 and 8 to support resin formation.",
+      "Operational outcomes depend on tree health, inoculation performance, harvest quality, field conditions, and realized product sales.",
     ],
-    insuranceTitle: "Harvest Guarantee Insurance",
+    insuranceTitle: "Biological Risk Controls",
     insuranceDescription:
-      "Agarwood risk controls include a 20% replacement buffer, managed cultivation protocols, and a segregated fund-administered reserve. These controls do not guarantee capital, income, or distributions.",
+      "Agarwood risk controls include a 20% replacement buffer and managed cultivation protocols designed to mitigate selected biological and operational risks.",
     insurancePoints: [
       "20% surplus trees are planted as mortality buffer.",
-      "100% replacement guarantee is applied for covered loss events.",
-      "Yield and pricing assumptions use conservative baselines.",
+      "Replacement planting is applied for eligible loss events.",
+      "Yield assumptions use conservative agronomic baselines.",
     ],
     stageTitles: [
       "1. Propagation and Field Planting",
@@ -654,18 +653,18 @@ export const defaultSiteCopy: SiteCopy = {
       "Nursery propagation supports 3rd Quarter 2026 out-planting in Negros. Planting density is targeted at about 1,667 trees per hectare, with cassava intercropping during years 1-2 to support early canopy protection.",
       "Trees are managed under structured maintenance protocols including irrigation, nutrition, and health monitoring. This phase focuses on vigorous growth and orchard stability before resin induction.",
       "Controlled inoculation induces resin formation in mature trees. Golden Forests applies exclusively licensed inoculation technology and technical protocols to support quality and consistency in oud formation.",
-      "Harvesting and oud/resin chip extraction are scheduled across two seasons, typically 50% in year 9 and 50% in year 10. Returns remain linked to actual export sales using conservative assumptions.",
+      "Harvesting and oud/resin chip extraction are scheduled across two seasons, typically 50% in year 9 and 50% in year 10. Final outcomes depend on actual tree health, resin formation, harvest quality, and product sales.",
     ],
   },
   ecotourism: {
     header: {
       badge: "Experience Program",
-      title: "Ecotourism: Experience Your Investment",
+      title: "Plantation Visits",
       description: plantationVisitHeaderDescription,
     },
     introParagraphs: [
-      "Through our exclusive ecotourism program, professional shareholders are welcomed to visit the plantation operations and, where applicable, view assets held by the relevant sub-fund. Each visit includes a two-night stay at a premium hotel and transportation, supported by dedicated staff.",
-      "The program is designed to pair financial oversight with personal travel value. Clients can combine field visibility in Zambales and Negros province with convenient onward routes to Cebu, Coron, Boracay, Bohol, El Nido, and Surigao through Clark.",
+      "Visitors are welcomed to view plantation operations through a structured programme that includes a two-night stay at a premium hotel and transportation, supported by dedicated staff.",
+      "The programme pairs operational visibility with access to nearby destinations. Visitors can combine field visits in Zambales and Negros province with convenient onward routes to Cebu, Coron, Boracay, Bohol, El Nido, and Surigao through Clark.",
     ],
     featuredVideoEyebrow: "Plantation Visit Video",
     featuredVideoTitle: "Experience the Visit Before You Arrive",
@@ -743,9 +742,9 @@ export const defaultSiteCopy: SiteCopy = {
   home: {
     heroBadge: "Golden Forests Philippines",
     heroTitlePrefix: "Professionally Managed",
-    heroTitleHighlight: "Agroforestry Investments",
+    heroTitleHighlight: "Plantation Operations",
     heroDescription:
-      "Crassna Agroforestry Development Inc. (CADI) is a plantation management company based in the Philippines.",
+      "Crassna Agroforestry Development Inc. (CADI) is the plantation management company based in the Philippines.",
     primaryCtaLabel: "Review Plantation Timeline",
     secondaryCtaLabel: "Open Nursery Dashboard",
     featuredVideoEyebrow: "Featured Video",
@@ -768,16 +767,16 @@ export const defaultSiteCopy: SiteCopy = {
     liveMetricsTitle: "Live Nursery Metrics",
     currentStockLabel: "Current nursery stock",
     stockLabels: ["Aquilaria crassna agarwood seedlings", "Sweet Elena mango seedlings"],
-    saleHeaderPrefix: "Launch share availability as of",
+    saleHeaderPrefix: "Deployment inventory as of",
     saleCardLabels: [
-      "Agarwood tree-equivalent shares available",
-      "Sweet Elena mango tree-equivalent shares available",
+      "Agarwood trees allocated for deployment",
+      "Sweet Elena mango trees allocated for deployment",
     ],
     summaryCardLabels: ["Field Deployment", "Panay Planting", "Inventory Date"],
     summaryCardDescriptions: [
       "Zambales and Negros rollout for agarwood and Sweet Elena mango",
       "Carabao mango trees currently planted in Panay",
-      "Current stock and sales inventory shown as of this date",
+      "Current stock and deployment inventory shown as of this date",
     ],
     deploymentMilestoneValue: "3rd Quarter 2026",
     nurseryCtaLabel: "View Full Dashboard",
@@ -788,13 +787,13 @@ export const defaultSiteCopy: SiteCopy = {
     snapshotCardDescriptions: [
       "Seedling propagation, grafting, health tracking, and staging for field transfer.",
       "Land preparation, deployment planning, and maintenance workflows.",
-      "Monitoring, data capture, and reporting tools used in day-to-day operations and fund-level reporting.",
+      "Monitoring, data capture, and reporting tools used in day-to-day plantation operations.",
     ],
     governanceTitles: ["Regulatory Compliance", "Precision Operations", "Transparent Reporting"],
     governanceDescriptions: [
       "Operations are aligned with DENR and CITES II pathways, with legal documentation structured for export and stakeholder review.",
       "AI-enabled monitoring, soil sensors, agricultural drone, and smart irrigation support measurable field decisions across mango and agarwood plantations.",
-      "Professional shareholders receive periodic fund and plantation reporting designed to provide visibility at sub-fund, planting-block, and biological-asset-pool level.",
+      "Periodic plantation reporting provides visibility at programme, planting-block, and biological-inventory level.",
     ],
     visitsTitle: "Zambales & Negros Access and Client Visits",
     visitsDescription:
@@ -821,12 +820,12 @@ export const defaultSiteCopy: SiteCopy = {
       "Healthy nursery stock prepared for the current Aquilaria crassna program.",
       "Healthy nursery stock prepared for the current Sweet Elena program.",
     ],
-    saleHeaderPrefix: "Launch share availability as of",
+    saleHeaderPrefix: "Deployment inventory as of",
     saleCardLabels: [
-      "Agarwood tree-equivalent shares available",
-      "Sweet Elena mango tree-equivalent shares available",
+      "Agarwood trees allocated for deployment",
+      "Sweet Elena mango trees allocated for deployment",
     ],
-    saleCardNotes: ["Sub-Fund A launch allocation", "Sub-Fund B launch allocation"],
+    saleCardNotes: ["Agarwood programme allocation", "Mango programme allocation"],
     galleryTitle: "Live Seedling Gallery",
     galleryLinkLabel: "View full gallery",
     propagationTitle: "Stock Propagation",
@@ -1144,10 +1143,12 @@ function applyJuly2026ContentUpdate(siteCopy: SiteCopy): SiteCopy {
 }
 
 function applySeptember2026HomeRewording(siteCopy: SiteCopy): SiteCopy {
-  const previousHeroDescription =
-    "Crassna Agroforestry Development Inc. (CADI) operates the Philippine plantations underlying Golden Forests' ring-fenced agarwood and mango sub-funds for eligible professional investors.";
+  const previousHeroDescriptions = [
+    "Crassna Agroforestry Development Inc. (CADI) operates the Philippine plantations underlying Golden Forests' ring-fenced agarwood and mango sub-funds for eligible professional investors.",
+    "Crassna Agroforestry Development Inc. (CADI) is a plantation management company based in the Philippines.",
+  ];
 
-  if (siteCopy.home.heroDescription !== previousHeroDescription) return siteCopy;
+  if (!previousHeroDescriptions.includes(siteCopy.home.heroDescription)) return siteCopy;
 
   return {
     ...siteCopy,
@@ -1158,10 +1159,95 @@ function applySeptember2026HomeRewording(siteCopy: SiteCopy): SiteCopy {
   };
 }
 
+function applySeptember2026OperationsOnlyCopy(siteCopy: SiteCopy): SiteCopy {
+  const serialized = JSON.stringify(siteCopy).toLowerCase();
+  const legacyMarkers = [
+    "agroforestry investments",
+    "experience your investment",
+    "ring-fenced sub-funds",
+    "professional shareholder structure",
+    "eligible professional clients subscribe",
+    "fund-level reporting",
+    "sub-fund share-allocation",
+  ];
+
+  if (!legacyMarkers.some((marker) => serialized.includes(marker))) return siteCopy;
+
+  return {
+    ...siteCopy,
+    about: {
+      ...siteCopy.about,
+      missionDescription: defaultSiteCopy.about.missionDescription,
+      mandateItems: defaultSiteCopy.about.mandateItems,
+    },
+    compliance: {
+      ...siteCopy.compliance,
+      highlightItems: defaultSiteCopy.compliance.highlightItems,
+      complianceDescriptions: defaultSiteCopy.compliance.complianceDescriptions,
+      mandateDescriptions: defaultSiteCopy.compliance.mandateDescriptions,
+    },
+    impact: defaultSiteCopy.impact,
+    clientServices: defaultSiteCopy.clientServices,
+    mangoProgram: {
+      ...siteCopy.mangoProgram,
+      overviewPoints: defaultSiteCopy.mangoProgram.overviewPoints,
+      insuranceTitle: defaultSiteCopy.mangoProgram.insuranceTitle,
+      insuranceDescription: defaultSiteCopy.mangoProgram.insuranceDescription,
+      insurancePoints: defaultSiteCopy.mangoProgram.insurancePoints,
+      benefitsTitle: defaultSiteCopy.mangoProgram.benefitsTitle,
+      benefitsPoints: defaultSiteCopy.mangoProgram.benefitsPoints,
+      snapshotLabels: defaultSiteCopy.mangoProgram.snapshotLabels,
+      snapshotValues: defaultSiteCopy.mangoProgram.snapshotValues,
+      snapshotFootnote: defaultSiteCopy.mangoProgram.snapshotFootnote,
+    },
+    agarwoodLifeCycle: {
+      ...siteCopy.agarwoodLifeCycle,
+      overviewPoints: defaultSiteCopy.agarwoodLifeCycle.overviewPoints,
+      commercialTitle: defaultSiteCopy.agarwoodLifeCycle.commercialTitle,
+      commercialPoints: defaultSiteCopy.agarwoodLifeCycle.commercialPoints,
+      insuranceTitle: defaultSiteCopy.agarwoodLifeCycle.insuranceTitle,
+      insuranceDescription: defaultSiteCopy.agarwoodLifeCycle.insuranceDescription,
+      insurancePoints: defaultSiteCopy.agarwoodLifeCycle.insurancePoints,
+      stageDetails: defaultSiteCopy.agarwoodLifeCycle.stageDetails,
+    },
+    ecotourism: {
+      ...siteCopy.ecotourism,
+      header: {
+        ...siteCopy.ecotourism.header,
+        title: defaultSiteCopy.ecotourism.header.title,
+      },
+      introParagraphs: defaultSiteCopy.ecotourism.introParagraphs,
+    },
+    home: {
+      ...siteCopy.home,
+      heroTitleHighlight: defaultSiteCopy.home.heroTitleHighlight,
+      heroDescription: defaultSiteCopy.home.heroDescription,
+      saleHeaderPrefix: defaultSiteCopy.home.saleHeaderPrefix,
+      saleCardLabels: defaultSiteCopy.home.saleCardLabels,
+      summaryCardDescriptions: defaultSiteCopy.home.summaryCardDescriptions,
+      snapshotCardDescriptions: defaultSiteCopy.home.snapshotCardDescriptions,
+      governanceDescriptions: defaultSiteCopy.home.governanceDescriptions,
+    },
+    nursery: {
+      ...siteCopy.nursery,
+      saleHeaderPrefix: defaultSiteCopy.nursery.saleHeaderPrefix,
+      saleCardLabels: defaultSiteCopy.nursery.saleCardLabels,
+      saleCardNotes: defaultSiteCopy.nursery.saleCardNotes,
+    },
+  };
+}
+
 export function normalizeSiteCopy(parsed: unknown): SiteCopy {
   const data = (parsed ?? {}) as Partial<SiteCopy> & Record<string, any>;
 
   const normalizedContact = { ...defaultSiteCopy.contact, ...(data.contact ?? {}) };
+
+  if (
+    normalizedContact.formDescription === "Share your enquiry and our team will get back to you." ||
+    normalizedContact.formDescription.startsWith("Complete the registration request form")
+  ) {
+    normalizedContact.formDescription = defaultSiteCopy.contact.formDescription;
+  }
 
   if (!normalizedContact.holdingCompanyAddress.some((line) => line.includes("Golden Forests ADGM Holding SPV LTD"))) {
     normalizedContact.holdingCompanyAddress = [
@@ -1171,11 +1257,10 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
   }
 
   if (
-    normalizedContact.salesOfficeCompany !==
+    normalizedContact.salesOfficeCompany ===
     "Golden Forests Agroforestry Intelligence Investment in Agricultural Enterprises & Management FZCO"
   ) {
-    normalizedContact.salesOfficeCompany =
-      "Golden Forests Agroforestry Intelligence Investment in Agricultural Enterprises & Management FZCO";
+    normalizedContact.salesOfficeCompany = defaultSiteCopy.contact.salesOfficeCompany;
   }
 
   if (!normalizedContact.managementOfficeAddress.some((line) => line.includes("Crassna Agroforestry Development Inc. (CADI)"))) {
@@ -1336,7 +1421,9 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
     },
   });
 
-  return applySeptember2026HomeRewording(
-    applyJuly2026ContentUpdate(migrateLegacyBusinessModel(normalized)),
+  return applySeptember2026OperationsOnlyCopy(
+    applySeptember2026HomeRewording(
+      applyJuly2026ContentUpdate(migrateLegacyBusinessModel(normalized)),
+    ),
   );
 }

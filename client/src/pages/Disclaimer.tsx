@@ -4,22 +4,22 @@ const disclaimerSections = [
   {
     title: "Important Notice",
     body:
-      "This website is published by Crassna Agroforestry Development Inc. (CADI), a corporation registered in the Philippines and the operational plantation management platform of Golden Forests Group. It is provided for informational and operational transparency purposes only. Nothing on this website constitutes a financial promotion, investment advice, a solicitation to invest or an offer to purchase any investment product or asset.",
+      "This website is published by Crassna Agroforestry Development Inc. (CADI), the plantation management company based in the Philippines. It is provided for general information and operational transparency.",
   },
   {
-    title: "Projected Returns",
+    title: "Operational Information",
     body:
-      "Any commercial, operational, or yield information referenced on this website is based on modelling assumptions, planned plantation operations, and historical agricultural data where available. It is not a guarantee, promise, or representation of future performance. Actual outcomes may differ materially from any projections. The value of biological assets and income derived from them may go down as well as up.",
+      "Any operational, production, or yield information referenced on this website is based on planning assumptions, current plantation activity, and historical agricultural data where available. Actual outcomes may differ because of biological, environmental, and operating conditions.",
   },
   {
     title: "Operational Data",
     body:
-      "Nursery stock figures, plantation metrics and operational data displayed on this website are updated periodically and are provided for client transparency purposes only. They are indicative and subject to change. CADI accepts no liability for any decisions made on the basis of data contained on this website.",
+      "Nursery stock figures, plantation metrics, and operational data displayed on this website are updated periodically for transparency. They are indicative and subject to change. CADI accepts no liability for decisions made solely on the basis of information contained on this website.",
   },
   {
-    title: "Nature of Investment",
+    title: "Plantation Operations",
     body:
-      "Subscriptions are for shares in a pooled, ring-fenced sub-fund and do not confer legal ownership of any specific tree, planting block, land or plantation asset. These private sub-fund shareholdings are long-term and illiquid; there is no established public market or guaranteed redemption or exit mechanism. They carry biological, environmental, market, operational, counterparty and regulatory risks.",
+      "Plantation information may cover nursery propagation, planting blocks, maintenance, inoculation scheduling, harvest preparation, product sales, and related reporting. Timelines and results remain subject to field conditions, permits, weather, crop health, and other operational factors.",
   },
   {
     title: "Regulatory Compliance",
@@ -27,9 +27,9 @@ const disclaimerSections = [
       "CADI operates in full compliance with Philippine environmental, agricultural and corporate regulations including all requirements of the Department of Environment and Natural Resources (DENR) and applicable CITES obligations in respect of Aquilaria crassna cultivation.",
   },
   {
-    title: "Jurisdiction",
+    title: "Permitted Use",
     body:
-      "This website and the information it contains are directed at eligible professional investors only. Any opportunity is communicated through appropriately licensed private-placement intermediaries, subject to investor classification, suitability, anti-money-laundering, source-of-funds and jurisdictional requirements. This website is not a public offer or financial promotion.",
+      "The information on this website is intended for general company and operational reference. It may not be copied, altered, or presented out of context in a manner that misrepresents CADI's activities or responsibilities.",
   },
   {
     title: "Confidentiality",
@@ -44,7 +44,7 @@ const disclaimerSections = [
   {
     title: "Contact",
     body:
-      "For queries regarding these disclaimers or your investment please contact office@goldenforests.ai",
+      "For queries regarding this website or CADI's plantation operations, please contact office@goldenforests.ai",
   },
 ];
 
@@ -54,7 +54,7 @@ export default function Disclaimer() {
       <section className="rounded-[2rem] border border-[#35584B] bg-[linear-gradient(180deg,#17392E_0%,#123128_100%)] p-5 shadow-[0_24px_56px_rgba(9,39,34,0.2)] sm:p-7 md:p-8">
         <div className="border-b border-[#35584B] pb-5">
           <h1 className="text-3xl font-semibold tracking-tight text-[#F5EADB] sm:text-4xl">
-            Risk Warning and Disclaimer
+            Website Disclaimer
           </h1>
           <p className="mt-2 text-base leading-7 text-[#E7DCC8]">
             Crassna Agroforestry Development Inc. (CADI)
@@ -77,7 +77,7 @@ export default function Disclaimer() {
                   <p className="mt-2 text-sm leading-7 text-[#E3D9C8] sm:text-[0.98rem]">
                     {section.title === "Contact" ? (
                       <>
-                        For queries regarding these disclaimers or your investment please contact{" "}
+                        For queries regarding this website or CADI&apos;s plantation operations, please contact{" "}
                         <a
                           href="mailto:office@goldenforests.ai"
                           className="font-semibold text-[#E9C48B] underline decoration-[#E9C48B] decoration-2 underline-offset-4 hover:text-[#F5EADB]"

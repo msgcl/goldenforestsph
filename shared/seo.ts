@@ -10,7 +10,7 @@ export const seoPages: Record<string, SeoPage> = {
   "/": {
     title: "CADI | Plantation Management Company in the Philippines",
     description:
-      "Crassna Agroforestry Development Inc. (CADI) is a plantation management company based in the Philippines.",
+      "Crassna Agroforestry Development Inc. (CADI) is the plantation management company based in the Philippines.",
     indexable: true,
   },
   "/about": {

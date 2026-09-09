@@ -57,8 +57,8 @@ export default function Home() {
             </div>
             <div className="sm:block">
               <h1 className={font("heroTitlePrefix", "max-w-[12ch] text-[clamp(1.85rem,8vw,4.5rem)] font-medium leading-[1.04] text-[#C8A070] [text-shadow:0_2px_10px_rgba(9,39,34,0.35)] sm:max-w-[16ch] sm:text-[clamp(2.05rem,4.3vw,4.5rem)] xl:max-w-[13.5ch] xl:text-[clamp(1.95rem,3.7vw,4rem)] 2xl:max-w-[15ch] 2xl:text-[clamp(2.05rem,4vw,4.35rem)]")}>
-                <span className="block text-balance sm:whitespace-nowrap">Professionally Managed</span>
-                <span className="block text-balance sm:whitespace-nowrap">Agroforestry Investments</span>
+                <span className="block text-balance sm:whitespace-nowrap">{copy.heroTitlePrefix}</span>
+                <span className="block text-balance sm:whitespace-nowrap">{copy.heroTitleHighlight}</span>
               </h1>
             </div>
             <p className={font("heroDescription", "mt-4 max-w-[44rem] text-[0.98rem] leading-relaxed text-[#C8A070] sm:mt-5 sm:text-lg")}>

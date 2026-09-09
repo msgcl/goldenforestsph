@@ -32,9 +32,9 @@ export function AppFooter() {
         </div>
 
         <p className="max-w-5xl text-xs leading-6 text-[#1B1B1B]/68 dark:text-muted-foreground">
-          This website is published by Crassna Agroforestry Development Inc. (CADI), the Philippine operational platform of Golden Forests Group. This website does not constitute a financial promotion, investment advice or a solicitation to invest. See our full{" "}
+          This website is published by Crassna Agroforestry Development Inc. (CADI), the plantation management company based in the Philippines. Information is provided for operational transparency and general reference. See our full{" "}
           <Link href="/disclaimer" className="font-medium text-[#17392E] underline underline-offset-4 hover:text-[#0E241D] dark:text-foreground dark:hover:text-foreground/85">
-            Risk Warning and Disclaimer
+            Website Disclaimer
           </Link>{" "}
           for details.
         </p>

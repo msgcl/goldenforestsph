@@ -486,7 +486,7 @@ async function seedDatabase() {
       title: "Chairman",
       category: "Executive Management",
       experience:
-        "Seasoned executive with over 30 years of leadership in asset management and fixed-income investments across London, Frankfurt, and Sydney, including senior roles at Deutsche Morgan Grenfell, Aberdeen Asset Management, JP Morgan Asset Management, and Fidelity International.",
+        "Seasoned executive with over 30 years of leadership in asset management and fixed-income markets across London, Frankfurt, and Sydney, including senior roles at major international financial institutions.",
       expertise:
         "Institutional fixed-income strategy, portfolio leadership, and corporate governance; holds a BSc (Hons) in Economics from the University of Southampton and an MBA (Finance) from Bayes Business School, City, University of London.",
       imageUrl: null,
@@ -498,9 +498,9 @@ async function seedDatabase() {
       title: "Chief Executive Officer",
       category: "Executive Management",
       experience:
-        "Seasoned international entrepreneur and executive with 25+ years of experience structuring, financing, and scaling commercially viable projects across renewable energy, carbon markets, agroforestry, and sustainable infrastructure in emerging markets. He has founded, led, and advised ventures spanning biomass power, biofuels, carbon sequestration, agroforestry, and clean technologies, with a track record across concept design, financial modelling, capital raising, regulatory approvals, execution, and exit.",
+        "Seasoned international entrepreneur and executive with 25+ years of experience developing and scaling commercially viable projects across renewable energy, carbon markets, agroforestry, and sustainable infrastructure in emerging markets. He has founded, led, and advised ventures spanning biomass power, biofuels, carbon sequestration, agroforestry, and clean technologies, with a track record across concept design, project planning, regulatory approvals, and execution.",
       expertise:
-        "Founder and CEO of Crassna Agro forestry Development Inc. (Philippines), developing large-scale privately managed agarwood and high-density mango plantations through international IP licensing, long-term financial structuring, capital raising, permitting, and diversified downside-risk strategy. He also serves as a Member and Advisor to the Philippines British Business Council and brings deep expertise across carbon finance, emissions trading, renewable energy, waste-to-energy, international trade, financial analysis, and technology commercialization, with project execution experience across Asia, Africa, Europe, and the Middle East.",
+        "Founder and CEO of Crassna Agroforestry Development Inc. in the Philippines, developing large-scale managed agarwood and high-density mango plantations through international IP licensing, permitting, risk controls, and disciplined field execution. He also serves as a Member and Advisor to the Philippines British Business Council and brings deep expertise across carbon markets, renewable energy, waste-to-energy, international trade, and technology commercialization, with project experience across Asia, Africa, Europe, and the Middle East.",
       imageUrl: null,
       orderIndex: 2,
     });
@@ -510,9 +510,9 @@ async function seedDatabase() {
       title: "Director of Marketing & Sales",
       category: "Executive Management",
       experience:
-        "More than 20 years in financial advisory, family-office engagement, and international investor relations, with prior senior roles in European wealth and institutional capital networks and 12 years with Horbach Wirtschaftsberatung GmbH (Swiss Life Group Germany).",
+        "More than 20 years in international business development, relationship management, and commercial advisory, including senior roles across European corporate networks and 12 years with Horbach Wirtschaftsberatung GmbH.",
       expertise:
-        "Strategic marketing and sales leadership, investor development, and healthcare supply commercialization, including U.S. market execution of key medical equipment during the Covid-19 period; holds a Master’s in Business Administration and CFP certification.",
+        "Strategic marketing, sales leadership, international market development, and healthcare supply commercialization, including U.S. market execution of key medical equipment during the Covid-19 period; holds a Master’s in Business Administration and CFP certification.",
       imageUrl: null,
       orderIndex: 3,
     });
@@ -524,7 +524,7 @@ async function seedDatabase() {
       experience:
         "Experienced accountant and financial controller with over 20 years of measurable performance across financial management, tax preparation, audit, and financial modeling, supported by a Bachelor of Science in Accounting.",
       expertise:
-        "Regulatory and compliance leadership spanning Board of Investments tax incentives, SEC requirements, Bureau of Customs import protocols, and DENR/BPI permitting and reporting for agarwood propagation, planting, and trade.",
+        "Regulatory and compliance leadership spanning Philippine tax-incentive requirements, SEC requirements, Bureau of Customs import protocols, and DENR/BPI permitting and reporting for agarwood propagation, planting, and trade.",
       imageUrl: null,
       orderIndex: 4,
     });
@@ -603,6 +603,51 @@ async function seedDatabase() {
   }
 
   const latestMembers = await storage.getTeamMembers();
+  const operationsOnlyProfiles: Record<string, { experience: string; expertise: string }> = {
+    "charles mckenzie": {
+      experience:
+        "Seasoned executive with over 30 years of leadership in asset management and fixed-income markets across London, Frankfurt, and Sydney, including senior roles at major international financial institutions.",
+      expertise:
+        "Institutional fixed-income strategy, portfolio leadership, and corporate governance; holds a BSc (Hons) in Economics from the University of Southampton and an MBA (Finance) from Bayes Business School, City, University of London.",
+    },
+    "mark lm quinn": {
+      experience:
+        "Seasoned international entrepreneur and executive with 25+ years of experience developing and scaling commercially viable projects across renewable energy, carbon markets, agroforestry, and sustainable infrastructure in emerging markets. He has founded, led, and advised ventures spanning biomass power, biofuels, carbon sequestration, agroforestry, and clean technologies, with a track record across concept design, project planning, regulatory approvals, and execution.",
+      expertise:
+        "Founder and CEO of Crassna Agroforestry Development Inc. in the Philippines, developing large-scale managed agarwood and high-density mango plantations through international IP licensing, permitting, risk controls, and disciplined field execution. He also serves as a Member and Advisor to the Philippines British Business Council and brings deep expertise across carbon markets, renewable energy, waste-to-energy, international trade, and technology commercialization, with project experience across Asia, Africa, Europe, and the Middle East.",
+    },
+    "cord kabus-duprée": {
+      experience:
+        "More than 20 years in international business development, relationship management, and commercial advisory, including senior roles across European corporate networks and 12 years with Horbach Wirtschaftsberatung GmbH.",
+      expertise:
+        "Strategic marketing, sales leadership, international market development, and healthcare supply commercialization, including U.S. market execution of key medical equipment during the Covid-19 period; holds a Master’s in Business Administration and CFP certification.",
+    },
+    "angie brion": {
+      experience:
+        "Experienced accountant and financial controller with over 20 years of measurable performance across financial management, tax preparation, audit, and financial modeling, supported by a Bachelor of Science in Accounting.",
+      expertise:
+        "Regulatory and compliance leadership spanning Philippine tax-incentive requirements, SEC requirements, Bureau of Customs import protocols, and DENR/BPI permitting and reporting for agarwood propagation, planting, and trade.",
+    },
+    "adele frances": {
+      experience:
+        "Adele serves as Commercial Director for Golden Forests, leading commercial strategy, brand positioning, and go-to-market execution across international markets. She works closely with the Dubai sales and marketing entity to support business relationships and market development across the UK, Europe, the Middle East, and Southeast Asia.",
+      expertise:
+        "With over 20 years of leadership across financial services, real estate, PropTech, and sustainable business, Adele has built commercial infrastructure for international scale-ups, designed go-to-market frameworks across 10 markets, and repositioned brands for growth.",
+    },
+  };
+
+  const financeProfileMarker =
+    /\binvest(or|ors|ment|ments)?\b|capital raising|financial structuring|board of investments/i;
+  for (const member of latestMembers) {
+    const replacement = operationsOnlyProfiles[member.name.trim().toLowerCase()];
+    if (
+      replacement &&
+      financeProfileMarker.test(`${member.experience ?? ""} ${member.expertise ?? ""}`)
+    ) {
+      await storage.updateTeamMember(member.id, replacement);
+    }
+  }
+
   const hasAdeleFrances = latestMembers.some(
     (member) => member.name.trim().toLowerCase() === "adele frances"
   );
@@ -630,9 +675,9 @@ async function seedDatabase() {
       title: "Commercial Director",
       category: "Board of Directors",
       experience:
-        "Adele serves as Commercial Director for Golden Forests, leading commercial strategy, brand positioning, and go-to-market execution across international markets. She works closely with the Dubai sales and marketing entity to support investor relations and market development across the UK, Europe, the Middle East, and Southeast Asia.",
+        "Adele serves as Commercial Director for Golden Forests, leading commercial strategy, brand positioning, and go-to-market execution across international markets. She works closely with the Dubai sales and marketing entity to support business relationships and market development across the UK, Europe, the Middle East, and Southeast Asia.",
       expertise:
-        "With over 20 years of leadership across financial services, real estate, PropTech, and sustainable investment, Adele has built commercial infrastructure for international scale-ups, designed go-to-market frameworks across 10 markets, and repositioned brands for growth. Her prior roles include RTP Global, Druce, MFS Investment Management, RBC Wealth Management, Invesco, and Brewin Dolphin.",
+        "With over 20 years of leadership across financial services, real estate, PropTech, and sustainable business, Adele has built commercial infrastructure for international scale-ups, designed go-to-market frameworks across 10 markets, and repositioned brands for growth.",
       imageUrl: null,
       orderIndex: 11,
     });
@@ -640,6 +685,15 @@ async function seedDatabase() {
   }
 
   const existingUpdates = await storage.getOperationalUpdates();
+
+  for (const update of existingUpdates) {
+    if (/sub-fund allocation model/i.test(update.description)) {
+      await storage.updateOperationalUpdate(update.id, {
+        description:
+          "Initiated the native-tree reforestation programme, planting Philippine species such as Narra, Molave, and Agoho alongside the commercial plantation programme.",
+      });
+    }
+  }
 
   if (existingUpdates.length === 0) {
     await storage.createOperationalUpdate({
@@ -681,7 +735,7 @@ async function seedDatabase() {
     await storage.createOperationalUpdate({
       title: "Reforestation Programme Launch",
       description:
-        "Initiated the 1:1 native-tree reforestation programme. One native species tree (Narra, Molave, or Agoho) is planted for each corresponding underlying commercial tree represented in the sub-fund allocation model.",
+        "Initiated the native-tree reforestation programme, planting Philippine species such as Narra, Molave, and Agoho alongside the commercial plantation programme.",
       category: "Impact",
       date: new Date("2026-01-28"),
       imageUrl: null,
