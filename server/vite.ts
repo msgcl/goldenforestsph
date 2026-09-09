@@ -5,6 +5,8 @@ import viteConfig from "../vite.config";
 import fs from "fs";
 import path from "path";
 import { nanoid } from "nanoid";
+import { renderSeoHtml } from "./seo";
+import { resolveSeoPage } from "@shared/seo";
 
 const viteLogger = createLogger();
 
@@ -29,9 +31,9 @@ export async function setupVite(server: Server, app: Express) {
     appType: "custom",
   });
 
-  app.use(vite.middlewares);
+  app.use(async (req, res, next) => {
+    if (req.method !== "GET" || !req.headers.accept?.includes("text/html")) return next();
 
-  app.use("/{*path}", async (req, res, next) => {
     const url = req.originalUrl;
 
     try {
@@ -49,10 +51,16 @@ export async function setupVite(server: Server, app: Express) {
         `src="/src/main.tsx?v=${nanoid()}"`,
       );
       const page = await vite.transformIndexHtml(url, template);
-      res.status(200).set({ "Content-Type": "text/html" }).end(page);
+      const { found } = resolveSeoPage(req.path);
+      res
+        .status(found || req.path.startsWith("/admin") ? 200 : 404)
+        .set({ "Content-Type": "text/html" })
+        .end(renderSeoHtml(page, req.path));
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
       next(e);
     }
   });
+
+  app.use(vite.middlewares);
 }

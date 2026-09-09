@@ -9,6 +9,7 @@ import path from "path";
 import fs from "fs";
 import { pool } from "./db";
 import { env } from "./env";
+import { legacyRouteCanonicals } from "@shared/seo";
 
 const app = express();
 const httpServer = createServer(app);
@@ -97,6 +98,10 @@ app.use((req, res, next) => {
 
   next();
 });
+
+for (const [legacyPath, canonicalPath] of Object.entries(legacyRouteCanonicals)) {
+  app.get(legacyPath, (_req, res) => res.redirect(301, canonicalPath));
+}
 
 (async () => {
   await registerRoutes(httpServer, app);

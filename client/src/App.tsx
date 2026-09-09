@@ -27,6 +27,7 @@ import AdminLogin from "@/pages/AdminLogin";
 import AdminDashboard from "@/pages/AdminDashboard";
 import logoImage from "@assets/logo.png";
 import { OptimizedImage } from "@/components/ui/optimized-media";
+import { SeoHead } from "@/components/SeoHead";
 
 function Router() {
   return (
@@ -64,6 +65,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <SeoHead />
       <RealtimeContentSync />
       <TooltipProvider>
         {isAdminRoute ? (

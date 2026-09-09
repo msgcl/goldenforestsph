@@ -745,7 +745,7 @@ export const defaultSiteCopy: SiteCopy = {
     heroTitlePrefix: "Professionally Managed",
     heroTitleHighlight: "Agroforestry Investments",
     heroDescription:
-      "Crassna Agroforestry Development Inc. (CADI) operates the Philippine plantations underlying Golden Forests' ring-fenced agarwood and mango sub-funds for eligible professional investors.",
+      "Crassna Agroforestry Development Inc. (CADI) is a plantation management company based in the Philippines.",
     primaryCtaLabel: "Review Plantation Timeline",
     secondaryCtaLabel: "Open Nursery Dashboard",
     featuredVideoEyebrow: "Featured Video",
@@ -1143,6 +1143,21 @@ function applyJuly2026ContentUpdate(siteCopy: SiteCopy): SiteCopy {
   };
 }
 
+function applySeptember2026HomeRewording(siteCopy: SiteCopy): SiteCopy {
+  const previousHeroDescription =
+    "Crassna Agroforestry Development Inc. (CADI) operates the Philippine plantations underlying Golden Forests' ring-fenced agarwood and mango sub-funds for eligible professional investors.";
+
+  if (siteCopy.home.heroDescription !== previousHeroDescription) return siteCopy;
+
+  return {
+    ...siteCopy,
+    home: {
+      ...siteCopy.home,
+      heroDescription: defaultSiteCopy.home.heroDescription,
+    },
+  };
+}
+
 export function normalizeSiteCopy(parsed: unknown): SiteCopy {
   const data = (parsed ?? {}) as Partial<SiteCopy> & Record<string, any>;
 
@@ -1321,5 +1336,7 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
     },
   });
 
-  return applyJuly2026ContentUpdate(migrateLegacyBusinessModel(normalized));
+  return applySeptember2026HomeRewording(
+    applyJuly2026ContentUpdate(migrateLegacyBusinessModel(normalized)),
+  );
 }
