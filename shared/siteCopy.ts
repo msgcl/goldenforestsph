@@ -560,7 +560,7 @@ export const defaultSiteCopy: SiteCopy = {
     overviewTitle: "Program Overview",
     overviewPoints: [
       "Focus crop: proprietary Carabao x Elena dwarf mango, selectively grafted to improve sweetness and quality, with dwarfing techniques applied to provide high density planting",
-      "Commercial planting in Zambales province is aligned to the 3rd quarter rollout, with density of 416 trees per hectare.",
+      "Commercial planting in Zambales province is aligned to the 4th quarter rollout, with density of 416 trees per hectare.",
       "Induced flowering protocols are designed to support year-round production windows and recurring annual harvests.",
       "The mango model is integrated into Agroforestry Intelligence with real-time monitoring for irrigation, pests, and productivity.",
     ],
@@ -650,7 +650,7 @@ export const defaultSiteCopy: SiteCopy = {
     ],
     stagePeriods: ["Year 0", "Years 1 to 6", "Years 7 to 8", "Years 9 to 10"],
     stageDetails: [
-      "Nursery propagation supports 3rd Quarter 2026 out-planting in Negros. Planting density is targeted at about 1,667 trees per hectare, with cassava intercropping during years 1-2 to support early canopy protection.",
+      "Nursery propagation supports 4th Quarter 2026 out-planting in Negros. Planting density is targeted at about 1,667 trees per hectare, with cassava intercropping during years 1-2 to support early canopy protection.",
       "Trees are managed under structured maintenance protocols including irrigation, nutrition, and health monitoring. This phase focuses on vigorous growth and orchard stability before resin induction.",
       "Controlled inoculation induces resin formation in mature trees. Golden Forests applies exclusively licensed inoculation technology and technical protocols to support quality and consistency in oud formation.",
       "Harvesting and oud/resin chip extraction are scheduled across two seasons, typically 50% in year 9 and 50% in year 10. Final outcomes depend on actual tree health, resin formation, harvest quality, and product sales.",
@@ -757,7 +757,7 @@ export const defaultSiteCopy: SiteCopy = {
       "Out-Planting Milestone",
       "Diversification Pathway",
     ],
-    statsValues: ["10 Years", "From Year 5", "3rd Quarter 2026", "31,000 Trees"],
+    statsValues: ["10 Years", "From Year 5", "4th Quarter 2026", "31,000 Trees"],
     statsDescriptions: [
       "Managed resin cycle with harvest in years 9-10",
       "25-year orchard model with recurring annual harvests",
@@ -778,7 +778,7 @@ export const defaultSiteCopy: SiteCopy = {
       "Carabao mango trees currently planted in Panay",
       "Current stock and deployment inventory shown as of this date",
     ],
-    deploymentMilestoneValue: "3rd Quarter 2026",
+    deploymentMilestoneValue: "4th Quarter 2026",
     nurseryCtaLabel: "View Full Dashboard",
     snapshotTitle: "Operations Snapshot",
     snapshotDescription: "Visual documentation from nursery, plantation, and support facilities.",
@@ -810,7 +810,7 @@ export const defaultSiteCopy: SiteCopy = {
       badge: "Propagation Site",
       title: "Nursery Operations",
       description:
-        "Our nursery facility in Zambales and Negros province prepares agarwood and mango planting stock for 3rd Quarter 2026 deployment, with continuous visual documentation for client transparency.",
+        "Our nursery facility in Zambales and Negros province prepares agarwood and mango planting stock for 4th Quarter 2026 deployment, with continuous visual documentation for client transparency.",
     },
     overviewEyebrow: "Current nursery stock",
     overviewTitle: "Propagation Overview",
@@ -836,8 +836,8 @@ export const defaultSiteCopy: SiteCopy = {
     dashboardTitle: "Growth Dashboard",
     growthLabels: ["Agarwood Height", "Mango Height"],
     growthDescriptions: [
-      "Average tracked nursery growth for Aquilaria crassna.",
-      "Average tracked nursery growth for Sweet Elena mango.",
+      "Current nursery seedling height range for Aquilaria crassna.",
+      "Current nursery seedling height range for Sweet Elena mango.",
     ],
     mortalityLabel: "Mortality Rate",
     updatedPrefix: "Updated:",
@@ -861,10 +861,10 @@ export const defaultSiteCopy: SiteCopy = {
     galleryTitle: "Secured Land & Preparations",
     contractNegotiationsStatement:
       "Under contract negotiations: 29 hectares in Zambales for mango plantations and 18 hectares in Negros for agarwood plantations.",
-    galleryDescription: "Current documentation of our field preparation and 3rd Quarter 2026 deployment readiness.",
-    milestoneTitle: "Quarter Three 2026: Field Deployment Milestone",
+    galleryDescription: "Current documentation of our field preparation and 4th Quarter 2026 deployment readiness.",
+    milestoneTitle: "Quarter Four 2026: Field Deployment Milestone",
     milestoneDescription:
-      "The 3rd Quarter 2026 program transitions nursery stock into field planting. Deployment includes spacing compliance, irrigation setup, AI-assisted monitoring readiness, and early-stage intercropping of cassava for agarwood shade (Years 1-2).",
+      "The 4th Quarter 2026 program transitions nursery stock into field planting. Deployment includes spacing compliance, irrigation setup, AI-assisted monitoring readiness, and early-stage intercropping of cassava for agarwood shade (Years 1-2).",
     milestoneLabels: ["Agarwood Spacing", "Mango Spacing", "Cassava Intercrop", "2026 Plantation Scale"],
     milestoneValues: ["3m x 2m", "6m x 4m", "Years 1-2", "31,000 Trees"],
     milestoneNotes: [
@@ -1015,6 +1015,7 @@ function migrateLegacyBusinessModel(siteCopy: SiteCopy): SiteCopy {
     },
     nursery: {
       ...siteCopy.nursery,
+      growthDescriptions: defaultSiteCopy.nursery.growthDescriptions,
       saleHeaderPrefix: defaultSiteCopy.nursery.saleHeaderPrefix,
       saleCardLabels: defaultSiteCopy.nursery.saleCardLabels,
       saleCardNotes: defaultSiteCopy.nursery.saleCardNotes,
@@ -1057,7 +1058,7 @@ function applyJuly2026ContentUpdate(siteCopy: SiteCopy): SiteCopy {
       },
       overviewPoints: updated.mangoProgram.overviewPoints.map((point, index) =>
         index === 1
-          ? "Commercial planting in Zambales province is aligned to the 3rd quarter rollout, with density of 416 trees per hectare."
+          ? "Commercial planting in Zambales province is aligned to the 4th quarter rollout, with density of 416 trees per hectare."
           : point,
       ),
     },
@@ -1070,7 +1071,7 @@ function applyJuly2026ContentUpdate(siteCopy: SiteCopy): SiteCopy {
       ),
       stageDetails: updated.agarwoodLifeCycle.stageDetails.map((detail, index) =>
         index === 0
-          ? "Nursery propagation supports 3rd Quarter 2026 out-planting in Negros. Planting density is targeted at about 1,667 trees per hectare, with cassava intercropping during years 1-2 to support early canopy protection."
+          ? "Nursery propagation supports 4th Quarter 2026 out-planting in Negros. Planting density is targeted at about 1,667 trees per hectare, with cassava intercropping during years 1-2 to support early canopy protection."
           : detail,
       ),
     },
@@ -1093,7 +1094,7 @@ function applyJuly2026ContentUpdate(siteCopy: SiteCopy): SiteCopy {
     home: {
       ...updated.home,
       statsValues: updated.home.statsValues.map((value, index) =>
-        index === 2 ? "3rd Quarter 2026" : value,
+        index === 2 ? "4th Quarter 2026" : value,
       ),
       statsDescriptions: updated.home.statsDescriptions.map((description, index) =>
         index === 2 ? "Zambales and Negros field deployment for both crop lines" : description,
@@ -1101,14 +1102,14 @@ function applyJuly2026ContentUpdate(siteCopy: SiteCopy): SiteCopy {
       summaryCardDescriptions: updated.home.summaryCardDescriptions.map((description, index) =>
         index === 0 ? "Zambales and Negros rollout for agarwood and Sweet Elena mango" : description,
       ),
-      deploymentMilestoneValue: "3rd Quarter 2026",
+      deploymentMilestoneValue: "4th Quarter 2026",
     },
     nursery: {
       ...updated.nursery,
       header: {
         ...updated.nursery.header,
         description:
-          "Our nursery facility in Zambales and Negros province prepares agarwood and mango planting stock for 3rd Quarter 2026 deployment, with continuous visual documentation for client transparency.",
+          "Our nursery facility in Zambales and Negros province prepares agarwood and mango planting stock for 4th Quarter 2026 deployment, with continuous visual documentation for client transparency.",
       },
     },
     plantation: {
@@ -1122,11 +1123,11 @@ function applyJuly2026ContentUpdate(siteCopy: SiteCopy): SiteCopy {
       contractNegotiationsStatement:
         "Under contract negotiations: 29 hectares in Zambales for mango plantations and 18 hectares in Negros for agarwood plantations.",
       galleryDescription:
-        "Current documentation of our field preparation and 3rd Quarter 2026 deployment readiness.",
-      milestoneTitle: "Quarter Three 2026: Field Deployment Milestone",
+        "Current documentation of our field preparation and 4th Quarter 2026 deployment readiness.",
+      milestoneTitle: "Quarter Four 2026: Field Deployment Milestone",
       milestoneDescription: updated.plantation.milestoneDescription.replace(
         /(?:Our |The )?July 2026 program(?:me)?/i,
-        "The 3rd Quarter 2026 program",
+        "The 4th Quarter 2026 program",
       ),
     },
     management: {
@@ -1230,6 +1231,7 @@ function applySeptember2026OperationsOnlyCopy(siteCopy: SiteCopy): SiteCopy {
     },
     nursery: {
       ...siteCopy.nursery,
+      growthDescriptions: defaultSiteCopy.nursery.growthDescriptions,
       saleHeaderPrefix: defaultSiteCopy.nursery.saleHeaderPrefix,
       saleCardLabels: defaultSiteCopy.nursery.saleCardLabels,
       saleCardNotes: defaultSiteCopy.nursery.saleCardNotes,
@@ -1421,9 +1423,13 @@ export function normalizeSiteCopy(parsed: unknown): SiteCopy {
     },
   });
 
-  return applySeptember2026OperationsOnlyCopy(
+  return applyOctober2026DeploymentUpdate(applySeptember2026OperationsOnlyCopy(
     applySeptember2026HomeRewording(
       applyJuly2026ContentUpdate(migrateLegacyBusinessModel(normalized)),
     ),
-  );
+  ));
+}
+
+function applyOctober2026DeploymentUpdate(copy: SiteCopy): SiteCopy {
+  return JSON.parse(JSON.stringify(copy).replace(/3rd Quarter 2026/g, "4th Quarter 2026").replace(/3rd quarter rollout/g, "4th quarter rollout").replace(/Quarter Three 2026/g, "Quarter Four 2026")) as SiteCopy;
 }

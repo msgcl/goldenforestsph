@@ -1,3 +1,4 @@
+import { UpcomingInventory } from "@/components/UpcomingInventory";
 import { AnimatedPage } from "@/components/layout/AnimatedPage";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, ShieldCheck, Cpu, Eye, MapPin, PlaneTakeoff, Sprout } from "lucide-react";
@@ -143,6 +144,7 @@ export default function Home() {
                 ))}
               </div>
             </section>
+            <UpcomingInventory />
           </div>
 
           <aside className="space-y-4">

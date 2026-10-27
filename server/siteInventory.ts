@@ -13,7 +13,7 @@ export const defaultSiteInventorySettings: SiteInventorySettings = {
   saleAgarwoodSeedlings: 23000,
   saleMangoSeedlings: 8000,
   saleCarabaoMango: 0,
-  inventoryDate: "2026-07-20T00:00:00.000Z",
+  inventoryDate: "2026-10-01T00:00:00.000Z",
 };
 
 export async function readSiteInventorySettings(): Promise<SiteInventorySettings> {
@@ -42,7 +42,10 @@ export async function readSiteInventorySettings(): Promise<SiteInventorySettings
     saleAgarwoodSeedlings: latest.saleAgarwoodSeedlings,
     saleMangoSeedlings: latest.saleMangoSeedlings,
     saleCarabaoMango: latest.saleCarabaoMango,
-    inventoryDate: latest.inventoryDate.toISOString(),
+    // Upgrade the previous inventory date without replacing later admin updates.
+    inventoryDate: latest.inventoryDate.toISOString() === "2026-07-20T00:00:00.000Z"
+      ? defaultSiteInventorySettings.inventoryDate
+      : latest.inventoryDate.toISOString(),
   };
 }
 

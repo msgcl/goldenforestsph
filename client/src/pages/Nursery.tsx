@@ -1,3 +1,4 @@
+import { UpcomingInventory } from "@/components/UpcomingInventory";
 import { AnimatedPage } from "@/components/layout/AnimatedPage";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -158,6 +159,7 @@ export default function Nursery() {
             ))}
           </div>
         </section>
+        <UpcomingInventory />
       </div>
 
       {/* Seedling Photo Gallery */}
@@ -265,7 +267,7 @@ export default function Nursery() {
                     <div className="space-y-1">
                       <p className={font("growthLabels", "text-xs text-muted-foreground font-medium")}>{copy.growthLabels[0] ?? ""}</p>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold text-primary">{stats.agarwoodHeightCm}</span>
+                        <span className="text-3xl font-bold text-primary">40 to 60</span>
                         <span className="text-sm text-muted-foreground">cm</span>
                       </div>
                       <p className={font("growthDescriptions", "text-sm text-muted-foreground")}>{copy.growthDescriptions[0] ?? ""}</p>
@@ -290,8 +292,8 @@ export default function Nursery() {
                     <div className="space-y-1">
                       <p className={font("growthLabels", "text-xs text-muted-foreground font-medium")}>{copy.growthLabels[1] ?? ""}</p>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold text-accent">{stats.mangoHeightCm}</span>
-                        <span className="text-sm text-muted-foreground">cm</span>
+                        <span className="text-3xl font-bold text-accent">1 to 1.5</span>
+                        <span className="text-sm text-muted-foreground">meters</span>
                       </div>
                       <p className={font("growthDescriptions", "text-sm text-muted-foreground")}>{copy.growthDescriptions[1] ?? ""}</p>
                     </div>
