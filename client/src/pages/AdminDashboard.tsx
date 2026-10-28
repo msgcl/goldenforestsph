@@ -600,10 +600,6 @@ export default function AdminDashboard() {
                       <Input id="metrics-sale-mango" type="number" value={statsForm.saleMangoSeedlings} onChange={(e) => setStatsForm((s) => ({ ...s, saleMangoSeedlings: Number(e.target.value) }))} placeholder="Mango Available for Sale" />
                     </div>
                     <div className="space-y-1">
-                      <Label htmlFor="metrics-sale-carabao">Carabao Mango Available for Sale</Label>
-                      <Input id="metrics-sale-carabao" type="number" value={statsForm.saleCarabaoMango} onChange={(e) => setStatsForm((s) => ({ ...s, saleCarabaoMango: Number(e.target.value) }))} placeholder="Carabao Mango Available for Sale" />
-                    </div>
-                    <div className="space-y-1">
                       <Label htmlFor="metrics-last-updated">Last Updated</Label>
                       <Input id="metrics-last-updated" type="date" value={statsForm.lastUpdated} readOnly disabled />
                     </div>

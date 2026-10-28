@@ -3,6 +3,11 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { siteCopySchema, type SiteCopy } from "./siteCopy";
 
+export const siteContentMigrations = pgTable("site_content_migrations", {
+  key: text("key").primaryKey(),
+  appliedAt: timestamp("applied_at").defaultNow().notNull(),
+});
+
 export const teamMembers = pgTable("team_members", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),

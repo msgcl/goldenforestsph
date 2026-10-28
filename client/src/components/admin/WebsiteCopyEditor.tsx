@@ -19,6 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { defaultSiteCopy, type SiteCopy } from "@shared/siteCopy";
 import { cn } from "@/lib/utils";
+import { editableSiteCopyFields } from "@/lib/editableSiteCopyFields";
 import {
   BRAND_FONT_OPTIONS,
   createPageTypography,
@@ -226,7 +227,9 @@ export function WebsiteCopyEditor({
 
   const selectedPageMeta = pageCatalog.find((page) => page.key === selectedPage) ?? pageCatalog[0];
   const selectedPageValue = value[selectedPage] as Record<string, unknown>;
-  const fields = useMemo(() => collectTextFields(selectedPageValue), [selectedPageValue]);
+  const fields = useMemo(() => collectTextFields(selectedPageValue).filter(field =>
+    editableSiteCopyFields[selectedPage]?.includes(field.path.split(".")[0]),
+  ), [selectedPageValue, selectedPage]);
   const selectedPageTypography = value.typography[selectedPage];
   const previewFont = createPageTypography(value, selectedPage);
 

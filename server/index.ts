@@ -9,6 +9,7 @@ import path from "path";
 import fs from "fs";
 import { pool } from "./db";
 import { env } from "./env";
+import { applyDeploymentContent } from "./deploymentContent";
 import { legacyRouteCanonicals } from "@shared/seo";
 
 const app = express();
@@ -105,6 +106,7 @@ for (const [legacyPath, canonicalPath] of Object.entries(legacyRouteCanonicals))
 
 (async () => {
   await registerRoutes(httpServer, app);
+  await applyDeploymentContent();
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

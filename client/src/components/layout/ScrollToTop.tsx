@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 
+export function scrollPageToTop() {
+  document.getElementById("app-scroll-container")?.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+}
+
 export function ScrollToTop() {
   const [location] = useLocation();
 
@@ -10,13 +15,7 @@ export function ScrollToTop() {
     }
 
     // Ensure route transitions always start from top.
-    const scrollTarget = document.getElementById("app-scroll-container");
-    if (scrollTarget) {
-      scrollTarget.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    }
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    scrollPageToTop();
   }, [location]);
 
   return null;
