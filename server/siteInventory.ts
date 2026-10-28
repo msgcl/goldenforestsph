@@ -13,39 +13,19 @@ export const defaultSiteInventorySettings: SiteInventorySettings = {
   saleAgarwoodSeedlings: 23000,
   saleMangoSeedlings: 8000,
   saleCarabaoMango: 0,
-  inventoryDate: "2026-10-01T00:00:00.000Z",
+  inventoryDate: "2026-10-28T09:29:41.457Z",
 };
 
 export async function readSiteInventorySettings(): Promise<SiteInventorySettings> {
   const latest = await storage.getLatestSiteInventorySettings();
   if (!latest) return defaultSiteInventorySettings;
 
-  // Transparently migrate known pre-July 2026 inventory snapshots retained in
-  // local and production databases. Future values entered through the admin
-  // dashboard remain untouched.
-  const isLegacyInventory = [
-    [34000, 14000, 750],
-    [32000, 12000, 640],
-  ].some(
-    ([agarwood, mango, carabao]) =>
-      latest.saleAgarwoodSeedlings === agarwood &&
-      latest.saleMangoSeedlings === mango &&
-      latest.saleCarabaoMango === carabao,
-  );
-
-  if (isLegacyInventory) {
-    return defaultSiteInventorySettings;
-  }
-
   return {
     panayPlanted: latest.panayPlanted,
     saleAgarwoodSeedlings: latest.saleAgarwoodSeedlings,
     saleMangoSeedlings: latest.saleMangoSeedlings,
     saleCarabaoMango: latest.saleCarabaoMango,
-    // Upgrade the previous inventory date without replacing later admin updates.
-    inventoryDate: latest.inventoryDate.toISOString() === "2026-07-20T00:00:00.000Z"
-      ? defaultSiteInventorySettings.inventoryDate
-      : latest.inventoryDate.toISOString(),
+    inventoryDate: latest.inventoryDate.toISOString(),
   };
 }
 

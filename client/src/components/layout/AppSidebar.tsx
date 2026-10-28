@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/sidebar";
 import { OptimizedImage } from "@/components/ui/optimized-media";
 import logoImage from "@assets/logo.png";
+import { scrollPageToTop } from "./ScrollToTop";
 
 const navigationGroups = [
   {
@@ -68,6 +69,11 @@ const navigationGroups = [
 export function AppSidebar() {
   const [location] = useLocation();
   const { isMobile, setOpenMobile } = useSidebar();
+  const handleNavigationClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    scrollPageToTop();
+    if (isMobile) setOpenMobile(false);
+  };
   const isItemActive = (url: string, external?: boolean) =>
     external ? false : url === "/" ? location === "/" : location.startsWith(url);
 
@@ -75,7 +81,7 @@ export function AppSidebar() {
     <Sidebar variant="inset" className="bg-transparent">
       <SidebarHeader className="border-b border-white/8 p-4">
         <div className="flex items-center justify-center rounded-[1.5rem] border border-[#C8A070]/18 bg-white/5 px-3 py-5 shadow-inner shadow-black/10">
-          <Link href="/" className="inline-flex flex-col items-center justify-center gap-0.5">
+          <Link href="/" onClick={handleNavigationClick} className="inline-flex flex-col items-center justify-center gap-0.5">
             <OptimizedImage
               src={logoImage}
               alt="Golden Forests Agroforestry Intelligence"
@@ -134,11 +140,7 @@ export function AppSidebar() {
                         <Link
                           href={item.url}
                           className="flex items-center gap-2.5 rounded-xl px-3 py-2.5"
-                          onClick={() => {
-                            if (isMobile) {
-                              setOpenMobile(false);
-                            }
-                          }}
+                          onClick={handleNavigationClick}
                         >
                           <item.icon className="h-3.5 w-3.5 text-[#C8A070]" />
                           <span className="text-[13px] font-medium text-[#FBFCF7]/92">{item.title}</span>

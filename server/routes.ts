@@ -7,11 +7,12 @@ import { api } from "@shared/routes";
 import { isCloudinaryConfigured, uploadDataUrlToCloudinary } from "./cloudinary";
 import {
   readSiteInventorySettings,
-  writeSiteInventorySettings,
 } from "./siteInventory";
 import { readSiteCopy, writeSiteCopy } from "./siteCopy";
 import { normalizeSiteCopy, siteCopySchema } from "@shared/siteCopy";
 import { env } from "./env";
+import { db } from "./db";
+import { nurseryStats, siteInventorySettings } from "@shared/schema";
 
 type RealtimeEventPayload = {
   queryKeys: string[];
@@ -143,11 +144,7 @@ export async function registerRoutes(
       return res.status(404).json({ message: "No nursery stats available" });
     }
     const inventorySettings = await readSiteInventorySettings();
-    const normalizedStats =
-      stats.agarwoodSeedlings === 40000 && stats.mangoSeedlings === 15000
-        ? { ...stats, agarwoodSeedlings: 27600, mangoSeedlings: 9600 }
-        : stats;
-    res.json({ ...normalizedStats, ...inventorySettings });
+    res.json({ ...stats, ...inventorySettings });
   });
 
   app.get(api.galleryMedia.list.path, async (_req, res) => {
@@ -318,18 +315,13 @@ export async function registerRoutes(
       saleAgarwoodSeedlings,
       saleMangoSeedlings,
       saleCarabaoMango,
+      inventoryDate: _inventoryDate,
       ...dbStats
     } = parsed.data;
-    const created = await storage.createNurseryStats({
-      ...dbStats,
-      lastUpdated: autoTimestamp,
-    });
-    await writeSiteInventorySettings({
-      panayPlanted,
-      saleAgarwoodSeedlings,
-      saleMangoSeedlings,
-      saleCarabaoMango,
-      inventoryDate: autoTimestamp.toISOString(),
+    const created = await db.transaction(async (tx) => {
+      const [stats] = await tx.insert(nurseryStats).values({ ...dbStats, lastUpdated: autoTimestamp }).returning();
+      await tx.insert(siteInventorySettings).values({ panayPlanted, saleAgarwoodSeedlings, saleMangoSeedlings, saleCarabaoMango, inventoryDate: autoTimestamp });
+      return stats;
     });
     sendRealtimeEvent({
       queryKeys: [api.nurseryStats.latest.path],
@@ -747,9 +739,9 @@ async function seedDatabase() {
   const existingStats = await storage.getLatestNurseryStats();
   if (!existingStats) {
     await storage.createNurseryStats({
-      agarwoodSeedlings: 42750,
-      mangoSeedlings: 8000,
-      agarwoodHeightCm: 52,
+      agarwoodSeedlings: 27600,
+      mangoSeedlings: 9600,
+      agarwoodHeightCm: 88,
       mangoHeightCm: 100,
       mortalityRate: "3.2%",
       lastUpdated: new Date(),
@@ -841,4 +833,3 @@ async function seedDatabase() {
   }
 
 }
-

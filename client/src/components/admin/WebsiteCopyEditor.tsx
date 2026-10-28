@@ -62,7 +62,7 @@ const pageCatalog: Array<{
   { key: "impact", label: "Impact", eyebrow: "Impact Page", description: "Environmental and social impact language." },
   { key: "mangoProgram", label: "Mango Program", eyebrow: "Program Detail", description: "Mango programme overview, controls, and operational snapshot." },
   { key: "agarwoodLifeCycle", label: "Agarwood Life Cycle", eyebrow: "Program Detail", description: "Agarwood lifecycle, risk controls, and harvest model copy." },
-  { key: "ecotourism", label: "Ecotourism", eyebrow: "Travel", description: "Travel program details, routes, and destination copy." },
+  { key: "ecotourism", label: "Plantation Visit", eyebrow: "Travel", description: "Plantation visit details, routes, and destination copy." },
   { key: "contact", label: "Contact", eyebrow: "Contact Page", description: "Contact labels, office details, and support microcopy." },
   { key: "nursery", label: "Nursery", eyebrow: "Operations", description: "Nursery metrics, propagation text, and technology notes." },
   { key: "plantation", label: "Plantation", eyebrow: "Operations", description: "Field deployment, lifecycle, and milestone messaging." },
@@ -401,12 +401,13 @@ export function WebsiteCopyEditor({
                     <div key={field.path} className="rounded-[1.4rem] border border-white/10 bg-[linear-gradient(180deg,#123831_0%,#102f2a_100%)] p-4 shadow-sm">
                       <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_220px]">
                         <div>
-                          <Label className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#d7c39d]/85">
+                          <Label htmlFor={`copy-${selectedPage}-${field.path}`} className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#d7c39d]/85">
                             {field.label}
                           </Label>
                           <div className="mt-3">
                             {field.multiline || field.isArray ? (
                               <Textarea
+                                id={`copy-${selectedPage}-${field.path}`}
                                 className={cn(editorInputClassName, "min-h-[120px]")}
                                 value={fieldText}
                                 onChange={(event) => updateFieldValue(field.path, event.target.value)}
@@ -414,6 +415,7 @@ export function WebsiteCopyEditor({
                               />
                             ) : (
                               <Input
+                                id={`copy-${selectedPage}-${field.path}`}
                                 className={editorInputClassName}
                                 value={fieldText}
                                 onChange={(event) => updateFieldValue(field.path, event.target.value)}

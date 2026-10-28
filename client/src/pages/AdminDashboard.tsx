@@ -4,9 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import {
   BarChart3,
-  Bell,
   Camera,
-  CalendarDays,
   ChevronDown,
   ChevronUp,
   FileText,
@@ -18,7 +16,6 @@ import {
   Users,
 } from "lucide-react";
 import { useTeamMembers } from "@/hooks/use-team-members";
-import { useOperationalUpdates } from "@/hooks/use-operational-updates";
 import { useNurseryStats } from "@/hooks/use-nursery-stats";
 import { useGalleryMedia } from "@/hooks/use-gallery-media";
 import { useSiteCopy } from "@/hooks/use-site-copy";
@@ -46,6 +43,8 @@ function inferMediaType(
   file: File | null,
   mediaUrl: string | null | undefined,
 ): "image" | "video" {
+  if (file?.type.startsWith("video/")) return "video";
+  if (file?.type.startsWith("image/")) return "image";
   const normalizedType = String(explicitType ?? "").trim().toLowerCase();
   if (normalizedType === "image" || normalizedType === "video") {
     return normalizedType;
@@ -114,11 +113,11 @@ const panelAnim = {
 export default function AdminDashboard() {
   const [, navigate] = useLocation();
   const { toast } = useToast();
+  const reportSaveError = (error: unknown) => toast({ title: "Save failed", description: error instanceof Error ? error.message : "Please try again.", variant: "destructive" });
   const [authChecked, setAuthChecked] = useState(false);
   const [adminUsername, setAdminUsername] = useState("");
 
   const { data: teamMembers = [] } = useTeamMembers();
-  const { data: updates = [] } = useOperationalUpdates();
   const { data: latestStats } = useNurseryStats();
   const { data: mediaItems = [] } = useGalleryMedia();
   const { data: siteCopy = defaultSiteCopy } = useSiteCopy();
@@ -157,14 +156,6 @@ export default function AdminDashboard() {
     imageUrl: "",
     orderIndex: 0,
   });
-  const [updateForm, setUpdateForm] = useState({
-    id: 0,
-    title: "",
-    description: "",
-    category: "Nursery",
-    date: "",
-    imageUrl: "",
-  });
   const [statsForm, setStatsForm] = useState({
     agarwoodSeedlings: latestStats?.agarwoodSeedlings ?? 0,
     mangoSeedlings: latestStats?.mangoSeedlings ?? 0,
@@ -193,7 +184,6 @@ export default function AdminDashboard() {
   const [siteCopyForm, setSiteCopyForm] = useState(defaultSiteCopy);
 
   const [selectedTeamUpload, setSelectedTeamUpload] = useState<File | null>(null);
-  const [selectedUpdateUpload, setSelectedUpdateUpload] = useState<File | null>(null);
   const [selectedUpload, setSelectedUpload] = useState<File | null>(null);
   const mediaFileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -268,44 +258,8 @@ export default function AdminDashboard() {
     },
   });
 
-  const updateMutation = useMutation({
-    mutationFn: async () => {
-      let imageUrl = updateForm.imageUrl;
-      if (selectedUpdateUpload) {
-        const dataUrl = await fileToDataUrl(selectedUpdateUpload);
-        const uploadRes = await apiRequest("POST", "/api/admin/uploads", {
-          fileName: selectedUpdateUpload.name,
-          dataUrl,
-        });
-        const uploadPayload = await uploadRes.json();
-        imageUrl = uploadPayload.url;
-      }
-      const payload = {
-        title: updateForm.title,
-        description: updateForm.description,
-        category: updateForm.category,
-        date: new Date(updateForm.date),
-        imageUrl: imageUrl || null,
-      };
-      if (updateForm.id) await apiRequest("PATCH", `/api/admin/operational-updates/${updateForm.id}`, payload);
-      else await apiRequest("POST", "/api/admin/operational-updates", payload);
-    },
-    onSuccess: async () => {
-      setUpdateForm({
-        id: 0,
-        title: "",
-        description: "",
-        category: "Nursery",
-        date: "",
-        imageUrl: "",
-      });
-      setSelectedUpdateUpload(null);
-      await queryClient.invalidateQueries({ queryKey: ["/api/operational-updates"] });
-      toast({ title: "Saved", description: "Operational update saved." });
-    },
-  });
-
   const statsMutation = useMutation({
+    onError: reportSaveError,
     mutationFn: async () => {
       const autoTimestamp = new Date();
       await apiRequest("POST", "/api/admin/nursery-stats", {
@@ -349,7 +303,10 @@ export default function AdminDashboard() {
       const parsedSortOrder = Number(mediaForm.sortOrder);
       const sortOrder = Number.isFinite(parsedSortOrder) ? parsedSortOrder : 0;
       const mediaType = inferMediaType(mediaForm.mediaType, file, mediaUrl);
-      const thumbnailUrl = mediaUrl || null;
+      const enteredThumbnail = String(mediaForm.thumbnailUrl ?? "").trim();
+      const thumbnailUrl = enteredThumbnail && (!file || enteredThumbnail !== mediaForm.mediaUrl)
+        ? enteredThumbnail
+        : mediaType === "image" ? mediaUrl : null;
       const date = mediaForm.date ? new Date(mediaForm.date) : new Date();
 
       if (!title || !description || !category || !location) {
@@ -495,7 +452,7 @@ export default function AdminDashboard() {
     Object.values(grouped).forEach((items) => {
       items.sort((a, b) => {
         if (a.sortOrder !== b.sortOrder) return a.sortOrder - b.sortOrder;
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
       });
     });
 
@@ -536,7 +493,6 @@ export default function AdminDashboard() {
 
   const statCards = [
     { label: "Team Profiles", value: teamMembers.length, icon: Users },
-    { label: "Updates", value: updates.length, icon: Bell },
     { label: "Gallery Assets", value: mediaItems.length, icon: Camera },
     { label: "Contact Messages", value: contactMessages.length, icon: Mail },
   ];
@@ -570,7 +526,7 @@ export default function AdminDashboard() {
           variants={panelAnim}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-2 md:grid-cols-4 gap-3"
+          className="grid grid-cols-2 md:grid-cols-3 gap-3"
         >
           {statCards.map((item) => (
             <Card key={item.label} className="border-border/70 shadow-sm">
@@ -588,12 +544,9 @@ export default function AdminDashboard() {
         </motion.section>
 
         <Tabs defaultValue="metrics" className="space-y-5">
-          <TabsList className="grid h-auto w-full grid-cols-2 gap-2 rounded-[28px] border border-border/60 bg-white/70 p-2 shadow-sm backdrop-blur md:grid-cols-6">
+          <TabsList className="grid h-auto w-full grid-cols-2 gap-2 rounded-[28px] border border-border/60 bg-white/70 p-2 shadow-sm backdrop-blur md:grid-cols-5">
             <TabsTrigger value="metrics" className="rounded-2xl border border-transparent bg-transparent px-3 py-3 data-[state=active]:border-primary/20 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <LayoutDashboard className="w-4 h-4 mr-2" /> Metrics
-            </TabsTrigger>
-            <TabsTrigger value="updates" className="rounded-2xl border border-transparent bg-transparent px-3 py-3 data-[state=active]:border-primary/20 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <CalendarDays className="w-4 h-4 mr-2" /> Updates
             </TabsTrigger>
             <TabsTrigger value="team" className="rounded-2xl border border-transparent bg-transparent px-3 py-3 data-[state=active]:border-primary/20 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Users className="w-4 h-4 mr-2" /> Team
@@ -614,6 +567,7 @@ export default function AdminDashboard() {
               <Card className="border-border/70 shadow-sm">
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2"><BarChart3 className="w-5 h-5 text-primary" /> Growth Dashboard Metrics</CardTitle>
+                  <p className="text-sm text-muted-foreground">Planting stock count, schedule, and highlight text can be edited under Website Copy → Nursery.</p>
                 </CardHeader>
                 <CardContent>
                   <form className="grid grid-cols-1 md:grid-cols-3 gap-3" onSubmit={(e) => { e.preventDefault(); statsMutation.mutate(); }}>
@@ -626,7 +580,7 @@ export default function AdminDashboard() {
                       <Input id="metrics-mango-seedlings" type="number" value={statsForm.mangoSeedlings} onChange={(e) => setStatsForm((s) => ({ ...s, mangoSeedlings: Number(e.target.value) }))} placeholder="Mango Seedlings" />
                     </div>
                     <div className="space-y-1">
-                      <Label htmlFor="metrics-agarwood-height">Agarwood Height (cm)</Label>
+                      <Label htmlFor="metrics-agarwood-height">Agarwood Average Measured Height (cm)</Label>
                       <Input id="metrics-agarwood-height" type="number" value={statsForm.agarwoodHeightCm} onChange={(e) => setStatsForm((s) => ({ ...s, agarwoodHeightCm: Number(e.target.value) }))} placeholder="Agarwood Height (cm)" />
                     </div>
                     <div className="space-y-1">
@@ -650,10 +604,6 @@ export default function AdminDashboard() {
                       <Input id="metrics-sale-carabao" type="number" value={statsForm.saleCarabaoMango} onChange={(e) => setStatsForm((s) => ({ ...s, saleCarabaoMango: Number(e.target.value) }))} placeholder="Carabao Mango Available for Sale" />
                     </div>
                     <div className="space-y-1">
-                      <Label htmlFor="metrics-mortality-rate">Mortality Rate</Label>
-                      <Input id="metrics-mortality-rate" value={statsForm.mortalityRate} onChange={(e) => setStatsForm((s) => ({ ...s, mortalityRate: e.target.value }))} placeholder="Mortality Rate" />
-                    </div>
-                    <div className="space-y-1">
                       <Label htmlFor="metrics-last-updated">Last Updated</Label>
                       <Input id="metrics-last-updated" type="date" value={statsForm.lastUpdated} readOnly disabled />
                     </div>
@@ -666,68 +616,6 @@ export default function AdminDashboard() {
                       <Button type="submit" disabled={statsMutation.isPending}><Save className="w-4 h-4 mr-2" />{statsMutation.isPending ? "Saving..." : "Save Metrics"}</Button>
                     </div>
                   </form>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </TabsContent>
-
-          <TabsContent value="updates">
-            <motion.div variants={panelAnim} initial="hidden" animate="visible" className="grid lg:grid-cols-2 gap-4">
-              <Card className="border-border/70 shadow-sm">
-                <CardHeader><CardTitle>Write Update</CardTitle></CardHeader>
-                <CardContent>
-                  <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); updateMutation.mutate(); }}>
-                    <div className="space-y-1">
-                      <Label htmlFor="update-title">Title</Label>
-                      <Input id="update-title" value={updateForm.title} onChange={(e) => setUpdateForm((s) => ({ ...s, title: e.target.value }))} placeholder="Title" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="update-category">Category</Label>
-                      <Input id="update-category" value={updateForm.category} onChange={(e) => setUpdateForm((s) => ({ ...s, category: e.target.value }))} placeholder="Category" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="update-date">Date</Label>
-                      <Input id="update-date" type="date" value={updateForm.date} onChange={(e) => setUpdateForm((s) => ({ ...s, date: e.target.value }))} />
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="update-image-url">Image/Video URL (optional)</Label>
-                      <Input id="update-image-url" value={updateForm.imageUrl} onChange={(e) => setUpdateForm((s) => ({ ...s, imageUrl: e.target.value }))} placeholder="Image/Video URL (optional)" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="update-file-upload">Upload Image or Video</Label>
-                      <Input id="update-file-upload" type="file" accept="image/*,video/*" onChange={(e: ChangeEvent<HTMLInputElement>) => setSelectedUpdateUpload(e.target.files?.[0] ?? null)} />
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="update-description">Description</Label>
-                      <Textarea id="update-description" value={updateForm.description} onChange={(e) => setUpdateForm((s) => ({ ...s, description: e.target.value }))} placeholder="Description" />
-                    </div>
-                    <div className="flex gap-2">
-                      <Button type="submit" disabled={updateMutation.isPending}>{updateForm.id ? "Update" : "Create"}</Button>
-                      {updateForm.id ? <Button type="button" variant="outline" onClick={() => { setUpdateForm({ id: 0, title: "", description: "", category: "Nursery", date: "", imageUrl: "" }); setSelectedUpdateUpload(null); }}>Cancel</Button> : null}
-                    </div>
-                  </form>
-                </CardContent>
-              </Card>
-              <Card className="border-border/70 shadow-sm">
-                <CardHeader><CardTitle>Latest Updates</CardTitle></CardHeader>
-                <CardContent className="space-y-2 max-h-[620px] overflow-auto">
-                  {updates.map((item) => (
-                    <div key={item.id} className="rounded-lg border border-border/70 p-3">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className="font-semibold text-sm">{item.title}</p>
-                          <div className="mt-1 flex items-center gap-2">
-                            <Badge variant="secondary">{item.category}</Badge>
-                            <span className="text-xs text-muted-foreground">{toDateInputValue(item.date)}</span>
-                          </div>
-                        </div>
-                        <div className="flex gap-1">
-                          <Button type="button" size="sm" variant="outline" onClick={() => setUpdateForm({ id: item.id, title: item.title, description: item.description, category: item.category, date: toDateInputValue(item.date), imageUrl: item.imageUrl ?? "" })}>Edit</Button>
-                          <Button type="button" size="sm" variant="destructive" onClick={() => doDelete(`/api/admin/operational-updates/${item.id}`, "/api/operational-updates")}>Delete</Button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
                 </CardContent>
               </Card>
             </motion.div>
@@ -880,11 +768,19 @@ export default function AdminDashboard() {
                         id="media-file-upload"
                         type="file"
                         accept="image/*,video/*"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setSelectedUpload(e.target.files?.[0] ?? null)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const file = e.target.files?.[0] ?? null;
+                          setSelectedUpload(file);
+                          if (file) setMediaForm(s => ({ ...s, mediaType: file.type.startsWith("video/") ? "video" : "image" }));
+                        }}
                       />
                       <p className="text-xs text-muted-foreground">
-                        The exact uploaded media is used as both the media URL and thumbnail source.
+                        New image and video files are uploaded to Cloudinary. A new file determines the media type automatically.
                       </p>
+                    </div>
+                    <div className="space-y-1">
+                      <Label htmlFor="media-thumbnail">Thumbnail / Video Poster URL (optional)</Label>
+                      <Input id="media-thumbnail" value={mediaForm.thumbnailUrl} onChange={(e) => setMediaForm(s => ({ ...s, thumbnailUrl: e.target.value }))} placeholder="https://res.cloudinary.com/..." />
                     </div>
                     <div className="space-y-1">
                       <Label htmlFor="media-description">Description</Label>
@@ -985,6 +881,7 @@ export default function AdminDashboard() {
                             <div className="flex items-start justify-between gap-3">
                               <div>
                                 <p className="font-semibold text-sm">{item.title}</p>
+                                <p className="text-xs text-muted-foreground">{item.location}</p>
                                 <p className="text-xs text-muted-foreground">{item.mediaType} | {toDateInputValue(item.date)}</p>
                                 <p className="text-xs text-muted-foreground">Display order: {item.sortOrder}</p>
                               </div>
@@ -1066,8 +963,6 @@ export default function AdminDashboard() {
     </div>
   );
 }
-
-
 
 
 

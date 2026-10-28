@@ -229,7 +229,6 @@ export const nurseryPageCopySchema = z.object({
   dashboardTitle: nonEmptyString,
   growthLabels: nonEmptyStringArray,
   growthDescriptions: nonEmptyStringArray,
-  mortalityLabel: nonEmptyString,
   updatedPrefix: nonEmptyString,
   emptyStateLabel: nonEmptyString,
   technologyTitle: nonEmptyString,
@@ -664,9 +663,9 @@ export const defaultSiteCopy: SiteCopy = {
     },
     introParagraphs: [
       "Visitors are welcomed to view plantation operations through a structured programme that includes a two-night stay at a premium hotel and transportation, supported by dedicated staff.",
-      "The programme pairs operational visibility with access to nearby destinations. Visitors can combine field visits in Zambales and Negros province with convenient onward routes to Cebu, Coron, Boracay, Bohol, El Nido, and Surigao through Clark.",
+      "The program is designed to pair financial oversight with personal travel value. Clients can combine field visibility in Zambales and Negros province with convenient onward routes to Cebu, Coron, Boracay, Bohol, El Nido, and Surigao through Clark.",
     ],
-    featuredVideoEyebrow: "Plantation Visit Video",
+    featuredVideoEyebrow: "Featured Video",
     featuredVideoTitle: "Experience the Visit Before You Arrive",
     featuredVideoDescription:
       "A preview of the plantation visit experience, connecting plantation oversight in Zambales with the wider travel programme, premium hospitality, and onward access through Clark to key island destinations.",
@@ -839,7 +838,6 @@ export const defaultSiteCopy: SiteCopy = {
       "Current nursery seedling height range for Aquilaria crassna.",
       "Current nursery seedling height range for Sweet Elena mango.",
     ],
-    mortalityLabel: "Mortality Rate",
     updatedPrefix: "Updated:",
     emptyStateLabel: "No data available",
     technologyTitle: "Nursery Technology Protocol",
@@ -1240,6 +1238,10 @@ function applySeptember2026OperationsOnlyCopy(siteCopy: SiteCopy): SiteCopy {
 }
 
 export function normalizeSiteCopy(parsed: unknown): SiteCopy {
+  // Complete saved documents are user-owned content. Legacy migrations must
+  // never overwrite edits to valid current copy on either save or read.
+  const current = siteCopySchema.safeParse(parsed);
+  if (current.success) return current.data;
   const data = (parsed ?? {}) as Partial<SiteCopy> & Record<string, any>;
 
   const normalizedContact = { ...defaultSiteCopy.contact, ...(data.contact ?? {}) };

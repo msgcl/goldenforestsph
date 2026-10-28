@@ -1,4 +1,5 @@
 import { AnimatedPage } from "@/components/layout/AnimatedPage";
+import { UpcomingInventory } from "@/components/UpcomingInventory";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -82,7 +83,7 @@ export default function PhotoGallery() {
       mediaItems.map((item) => ({
         ...item,
         image: item.mediaUrl,
-        thumbnail: item.mediaUrl,
+        thumbnail: item.thumbnailUrl || item.mediaUrl,
       })),
     [mediaItems],
   );
@@ -125,7 +126,7 @@ export default function PhotoGallery() {
   const categoryLabels = copy.categoryLabels;
   const categorySubtitles = copy.categorySubtitles;
   const getPreviewSrc = (photo: (typeof allPhotos)[number]) => {
-    return photo.image;
+    return photo.thumbnail;
   };
 
   const handlePrevImage = () => {
@@ -207,6 +208,8 @@ export default function PhotoGallery() {
           </div>
         </div>
       </section>
+
+      <div className="mt-8"><UpcomingInventory /></div>
 
       <section ref={collectionControlsRef} className="mt-8">
         <Card className="overflow-hidden border-accent/20 bg-[#F1E4CF] text-[#17392E] shadow-sm">
@@ -346,6 +349,7 @@ export default function PhotoGallery() {
                     <>
                       <OptimizedVideo
                         src={photo.image}
+                        poster={photo.thumbnail !== photo.image ? photo.thumbnail : undefined}
                         muted
                         playsInline
                         preload="metadata"
