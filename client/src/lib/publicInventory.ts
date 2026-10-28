@@ -40,4 +40,4 @@ export const defaultInventoryValues = {
   inventoryDate: DEFAULT_INVENTORY_DATE_ISO,
 } as const;
 
-export const AGARWOOD_2027_INVENTORY = 50000;
+export const AGARWOOD_2027_INVENTORY = 45000;
