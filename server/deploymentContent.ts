@@ -20,6 +20,11 @@ export async function applyDeploymentContent() {
     await client.query("BEGIN");
     await client.query("SELECT pg_advisory_xact_lock(20261029)");
     await client.query("CREATE TABLE IF NOT EXISTS site_content_migrations (key text PRIMARY KEY, applied_at timestamp NOT NULL DEFAULT now())");
+    const inventoryCorrectionKey = "2026-10-29-agarwood-nursery-27600-v1";
+    if (!(await client.query("SELECT key FROM site_content_migrations WHERE key=$1", [inventoryCorrectionKey])).rowCount) {
+      await client.query("INSERT INTO nursery_stats (agarwood_seedlings,mango_seedlings,agarwood_height_cm,mango_height_cm,mortality_rate,last_updated) SELECT 27600,mango_seedlings,agarwood_height_cm,mango_height_cm,mortality_rate,NOW() FROM nursery_stats ORDER BY id DESC LIMIT 1");
+      await client.query("INSERT INTO site_content_migrations (key) VALUES ($1)", [inventoryCorrectionKey]);
+    }
     if ((await client.query("SELECT key FROM site_content_migrations WHERE key=$1", [migrationKey])).rowCount) {
       await client.query("COMMIT");
       return { applied: false, added: 0 };
@@ -37,8 +42,8 @@ export async function applyDeploymentContent() {
     }
     const stats = (await client.query("SELECT * FROM nursery_stats ORDER BY id DESC LIMIT 1")).rows[0];
     if (!stats) throw new Error("Nursery must be initialized before applying deployment content");
-    if (stats.agarwood_seedlings !== 50000 || stats.agarwood_height_cm !== 88) {
-      await client.query("INSERT INTO nursery_stats (agarwood_seedlings,mango_seedlings,agarwood_height_cm,mango_height_cm,mortality_rate,last_updated) VALUES (50000,$1,88,$2,$3,NOW())", [stats.mango_seedlings, stats.mango_height_cm, stats.mortality_rate]);
+    if (stats.agarwood_seedlings !== 27600 || stats.agarwood_height_cm !== 88) {
+      await client.query("INSERT INTO nursery_stats (agarwood_seedlings,mango_seedlings,agarwood_height_cm,mango_height_cm,mortality_rate,last_updated) VALUES (27600,$1,88,$2,$3,NOW())", [stats.mango_seedlings, stats.mango_height_cm, stats.mortality_rate]);
     }
     const saved = (await client.query("SELECT data FROM site_copy_content ORDER BY id DESC LIMIT 1")).rows[0];
     const copy = normalizeSiteCopy(saved?.data ?? defaultSiteCopy);

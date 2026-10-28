@@ -4,7 +4,7 @@
 
 The server now applies the 19 new Cloudinary gallery entries and final requested
 captions automatically on its first startup after deployment. It also applies the
-50,000 agarwood nursery total, 88 cm average measured height, and June 2027
+27,600 agarwood nursery total, 88 cm average measured height, and June 2027
 planting highlight. No manual production import commands are needed for this batch.
 
 This runs in one database transaction with a migration marker and lock. Existing
@@ -14,7 +14,7 @@ bundled into the production server; original photographs and generated image
 outputs do not need to be pushed to Git or uploaded again.
 
 After the Git-connected deployment completes, verify `/api/gallery-media` contains
-all 19 manifest URLs and `/api/nursery-stats/latest` reports 50000 and 88.
+all 19 manifest URLs and `/api/nursery-stats/latest` reports 27600 and 88.
 
 This project is a full-stack Node.js app with PostgreSQL, sessions, and file uploads.
 
