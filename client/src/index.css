@@ -126,7 +126,9 @@
 }
 
 @layer base {
-  html,`r`n  body,`r`n  #root {
+  html,
+  body,
+  #root {
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
@@ -389,4 +391,3 @@
     filter: blur(0) saturate(1);
   }
 }
-
