@@ -20,6 +20,11 @@ export async function applyDeploymentContent() {
     await client.query("BEGIN");
     await client.query("SELECT pg_advisory_xact_lock(20261029)");
     await client.query("CREATE TABLE IF NOT EXISTS site_content_migrations (key text PRIMARY KEY, applied_at timestamp NOT NULL DEFAULT now())");
+    const inventoryDateCorrectionKey = "2026-10-29-inventory-date-october-1-v1";
+    if (!(await client.query("SELECT key FROM site_content_migrations WHERE key=$1", [inventoryDateCorrectionKey])).rowCount) {
+      await client.query("UPDATE site_inventory_settings SET inventory_date=$1,updated_at=NOW() WHERE id=(SELECT id FROM site_inventory_settings ORDER BY id DESC LIMIT 1)", ["2026-10-01T09:29:41.457Z"]);
+      await client.query("INSERT INTO site_content_migrations (key) VALUES ($1)", [inventoryDateCorrectionKey]);
+    }
     const inventoryCorrectionKey = "2026-10-29-agarwood-nursery-27600-v1";
     if (!(await client.query("SELECT key FROM site_content_migrations WHERE key=$1", [inventoryCorrectionKey])).rowCount) {
       await client.query("INSERT INTO nursery_stats (agarwood_seedlings,mango_seedlings,agarwood_height_cm,mango_height_cm,mortality_rate,last_updated) SELECT 27600,mango_seedlings,agarwood_height_cm,mango_height_cm,mortality_rate,NOW() FROM nursery_stats ORDER BY id DESC LIMIT 1");

@@ -13,7 +13,7 @@ export const defaultSiteInventorySettings: SiteInventorySettings = {
   saleAgarwoodSeedlings: 23000,
   saleMangoSeedlings: 8000,
   saleCarabaoMango: 0,
-  inventoryDate: "2026-10-28T09:29:41.457Z",
+  inventoryDate: "2026-10-01T09:29:41.457Z",
 };
 
 export async function readSiteInventorySettings(): Promise<SiteInventorySettings> {
